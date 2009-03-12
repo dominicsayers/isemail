@@ -249,6 +249,12 @@ echo unitTest("HM2Kinsists@(that comments are allowed)this.is.ok", true, "");
 echo unitTest("user%uucp!path@somehost.edu", true, "");
 echo unitTest("\"first(last)\"@example.com", true, "");
 echo unitTest(" \r\n (\r\n x \r\n ) \r\n first\r\n ( \r\n x\r\n ) \r\n .\r\n ( \r\n x) \r\n last \r\n (  x \r\n ) \r\n @example.com", true, "");
+echo unitTest("test. \r\n \r\n obs@syntax.com", true, "obs-fws allows multiple lines");
+echo unitTest("test. \r\n \r\n obs@syntax.com", true, "obs-fws allows multiple lines (test 2: space before break)");
+echo unitTest("test.\r\n\r\n obs@syntax.com", false, "obs-fws must have at least one WSP per line");
+echo unitTest("\"null \\\0\"@char.com", true, "can have escaped null character");
+echo unitTest("\"null \0\"@char.com", false, "cannot have unescaped null character");
+echo unitTest("null\\\0@char.com", false, "escaped null must be in quoted string");
 ?>
 </body>
 

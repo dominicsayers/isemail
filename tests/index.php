@@ -61,7 +61,8 @@ for ($i = 0; $i < $testList->length; $i++) {
 		}
 	}
 
-	$expected	= ($valid === 'true') ? true : false; // debug
+	$expected	= ($valid === 'true') ? true : false;
+	$address	= str_replace('\\0', chr(0), $address);	// Can't use &#00; in XML file
 	$address	= addslashes($address);
 	$address	= str_replace(array(chr(9),chr(10),chr(13)), array('\t','\n','\r'), $address);
 	$address	= str_replace('$', '\\$', $address);

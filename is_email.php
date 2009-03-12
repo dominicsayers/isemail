@@ -4,7 +4,7 @@ Copyright 2009 Dominic Sayers
 	dominic_sayers@hotmail.com
 	http://www.dominicsayers.com
 
-Version 1.6
+Version 1.7
 
 This source file is subject to the Common Public Attribution License Version 1.0 (CPAL) license.
 The license terms are available through the world-wide-web at http://www.opensource.org/licenses/cpal_1.0
@@ -344,12 +344,12 @@ The license terms are available through the world-wide-web at http://www.opensou
 		if ($partLength > 255) 						return false;	// Local part must be 64 characters or less
 
 		if (preg_match('/^[0-9]+$/', $element) > 0)	return false;	//	TLD can't be all-numeric
-	}
 
-	//	Check DNS?
-	if ($checkDNS && function_exists('checkdnsrr')) {
-		if (!(checkdnsrr($domain, 'A') || checkdnsrr($domain, 'MX'))) {
+		//	Check DNS?
+		if ($checkDNS && function_exists('checkdnsrr')) {
+			if (!(checkdnsrr($domain, 'A') || checkdnsrr($domain, 'MX'))) {
 													return false;	//	Domain doesn't actually exist
+			}
 		}
 	}
 

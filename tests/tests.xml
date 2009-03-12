@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tests version="1.6">
+<tests version="1.7">
 	<test>
 		<address>first.last@example.com</address>
 		<valid>true</valid>
@@ -1679,5 +1679,53 @@
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>222</id>
+	</test>
+	<test>
+		<address>test. &#13;&#10; &#13;&#10; obs@syntax.com</address>
+		<valid>true</valid>
+		<comment>obs-fws allows multiple lines</comment>
+		<source>George Pollard</source>
+		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<id>223</id>
+	</test>
+	<test>
+		<address>test. &#13;&#10; &#13;&#10; obs@syntax.com</address>
+		<valid>true</valid>
+		<comment>obs-fws allows multiple lines (test 2: space before break)</comment>
+		<source>George Pollard</source>
+		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<id>224</id>
+	</test>
+	<test>
+		<address>test.&#13;&#10;&#13;&#10; obs@syntax.com</address>
+		<valid>false</valid>
+		<comment>obs-fws must have at least one WSP per line</comment>
+		<source>George Pollard</source>
+		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<id>225</id>
+	</test>
+	<test>
+		<address>"null \\0"@char.com</address>
+		<valid>true</valid>
+		<comment>can have escaped null character</comment>
+		<source>George Pollard</source>
+		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<id>226</id>
+	</test>
+	<test>
+		<address>"null \0"@char.com</address>
+		<valid>false</valid>
+		<comment>cannot have unescaped null character</comment>
+		<source>George Pollard</source>
+		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<id>227</id>
+	</test>
+	<test>
+		<address>null\\0@char.com</address>
+		<valid>false</valid>
+		<comment>escaped null must be in quoted string</comment>
+		<source>George Pollard</source>
+		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<id>228</id>
 	</test>
 </tests>
