@@ -17,7 +17,7 @@ hr {clear:left;}
 
 <body>
 <?php
-require_once '..\is_email.php';
+require_once '../is_email.php';
 
 function unitTest ($email, $expected, $comment = '') {
 	$valid		= is_email($email);
