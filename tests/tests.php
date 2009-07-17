@@ -10,6 +10,8 @@ div {clear:left;}
 p {font-family:Segoe UI,Arial,Helvetica,sans-serif;font-size:12px;margin:0;padding:0;float:left;}
 p.valid {width:60px;}
 p.address {text-align:right;width:400px;overflow:hidden;margin-right:8px;}
+p.author {font-style:italic;}
+hr {clear:left;}
 </style>
 </head>
 
@@ -27,9 +29,11 @@ function unitTest ($email, $expected, $comment = '') {
 ";
 }
 
+echo "<h3>Email address validation test suite version 1.8</h3>\n";
+echo "<p class=\"author\">Dominic Sayers | <a href=\"mailto:dominic_sayers@hotmail.com\">dominic_sayers@hotmail.com</a> | <a href=\"http://www.dominicsayers.com/isemail\">RFC-compliant email address validation</a></p>\n<br>\n<hr>\n";
 echo unitTest("first.last@example.com", true, "");
 echo unitTest("1234567890123456789012345678901234567890123456789012345678901234@example.com", true, "");
-echo unitTest("\"first last\"@example.com", true, "");
+echo unitTest("first.last@sub.do,com", false, "Mistyped comma instead of dot (replaces old #3 which was the same as #57)");
 echo unitTest("\"first\\\"last\"@example.com", true, "");
 echo unitTest("first\\@last@example.com", false, "Escaping can only happen within a quoted string");
 echo unitTest("\"first@last\"@example.com", true, "");

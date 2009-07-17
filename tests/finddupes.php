@@ -9,7 +9,7 @@
 <body>
 
 <?php
-require_once '../is_email.php';				//	Dominic Sayers
+require_once '../is_email.php';				// Dominic Sayers
 
 $addresses	= array();
 $ids		= array();
@@ -48,7 +48,7 @@ for ($i = 0; $i < $testList->length; ++$i) {
 	} else {
 		$addresses[]				= $address;
 		
-		//	Add ID if it hasn't got one
+		// Add ID if it hasn't got one
 		if (!isset($id)) {
 			$dirty = true;
 			$test->appendChild($document->createElement((string) 'id', $i + 1));

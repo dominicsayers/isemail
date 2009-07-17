@@ -3,10 +3,39 @@
  * @package	isemail
  * @author	Dominic Sayers <dominic_sayers@hotmail.com>
  * @copyright	2009 Dominic Sayers
- * @license	http://www.opensource.org/licenses/cpal_1.0 Common Public Attribution License Version 1.0 (CPAL) license
+ * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	1.9 - Minor modifications to make it compatible with PHPLint
+ * @version	1.15 - Bug fix suggested by Andrew Campbell of Gloucester, MA
  */
+
+/*
+Copyright (c) 2008-2009, Dominic Sayers
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+ * Neither the name of Dominic Sayers nor the names of its contributors may be
+   used to endorse or promote products derived from this software without
+   specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 /*.
 	require_module 'standard';
 	require_module 'pcre';
@@ -28,16 +57,17 @@
 	// characters (including the punctuation and element separators)
 	// 	(http://tools.ietf.org/html/rfc5321#section-4.5.3.1.3)
 	$emailLength = strlen($email);
-	if ($emailLength > 256)	return false;	// Too long
+	if ($emailLength > 256)			return false;	// Too long
 
 	// Contemporary email addresses consist of a "local part" separated from
 	// a "domain part" (a fully-qualified domain name) by an at-sign ("@").
 	// 	(http://tools.ietf.org/html/rfc3696#section-3)
 	$atIndex = strrpos($email,'@');
 
-	if ($atIndex === false)		return false;	// No at-sign
-	if ($atIndex === 0)		return false;	// No local part
-	if ($atIndex === $emailLength)	return false;	// No domain part
+	if ($atIndex === false)			return false;	// No at-sign
+	if ($atIndex === 0)			return false;	// No local part
+	if ($atIndex === $emailLength - 1)	return false;	// No domain part
+// revision 1.14: Length test bug suggested by Andrew Campbell of Gloucester, MA
 	
 	// Sanitize comments
 	// - remove nested comments, quotes and dots in comments
@@ -103,7 +133,9 @@
 			}
 
 			$escapeThisChar = false;
-			if ($replaceChar) $email[$i] = 'x';	// Replace the offending character with something harmless
+//			if ($replaceChar) $email[$i] = 'x';	// Replace the offending character with something harmless
+// revision 1.12: Line above replaced because PHPLint doesn't like that syntax
+			if ($replaceChar) $email = (string) substr_replace($email, 'x', $i, 1);	// Replace the offending character with something harmless
 		}
 	}
 
@@ -123,11 +155,13 @@
 
 	foreach ($dotArray as $element) {
 		// Remove any leading or trailing FWS
-		$element = preg_replace("/^$FWS|$FWS\$/", '', $element);
+		$element	= preg_replace("/^$FWS|$FWS\$/", '', $element);
+		$elementLength	= strlen($element);
 
-		// Then we need to remove all valid comments (i.e. those at the start or end of the element
-		$elementLength = strlen($element);
+		if ($elementLength === 0)								return false;	// Can't have empty element (consecutive dots or dots at the start or end)
+// revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
 
+		// We need to remove any valid comments (i.e. those at the start or end of the element)
 		if ($element[0] === '(') {
 			$indexBrace = strpos($element, ')');
 			if ($indexBrace !== false) {
@@ -148,7 +182,7 @@
 				$element	= substr($element, 0, $indexBrace);
 				$elementLength	= strlen($element);
 			}
-		}			
+		}
 
 		// Remove any leading or trailing FWS around the element (inside any comments)
 		$element = preg_replace("/^$FWS|$FWS\$/", '', $element);
@@ -270,17 +304,24 @@
 		// RFC5321 precludes the use of a trailing dot in a domain name for SMTP purposes
 		// 	(http://tools.ietf.org/html/rfc5321#section-4.1.2)
 		$dotArray	= /*. (array[int]string) .*/ preg_split('/\\.(?=(?:[^\\"]*\\"[^\\"]*\\")*(?![^\\"]*\\"))/m', $domain);
-		$partLength = 0;
+		$partLength	= 0;
+		$element	= ''; // Since we use $element after the foreach loop let's make sure it has a value
+// revision 1.13: Line above added because PHPLint now checks for Definitely Assigned Variables
 
-		if (count($dotArray) === 1)					return false;	// Mail host can't be a TLD
+		if (count($dotArray) === 1)					return false;	// Mail host can't be a TLD (cite? What about localhost?)
 
 		foreach ($dotArray as $element) {
 			// Remove any leading or trailing FWS
-			$element = preg_replace("/^$FWS|$FWS\$/", '', $element);
+			$element	= preg_replace("/^$FWS|$FWS\$/", '', $element);
+			$elementLength	= strlen($element);
+	
+			// Each dot-delimited component must be of type atext
+			// A zero-length element implies a period at the beginning or end of the
+			// local part, or two periods together. Either way it's not allowed.
+			if ($elementLength === 0)				return false;	// Dots in wrong place
+// revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
 	
 			// Then we need to remove all valid comments (i.e. those at the start or end of the element
-			$elementLength = strlen($element);
-	
 			if ($element[0] === '(') {
 				$indexBrace = strpos($element, ')');
 				if ($indexBrace !== false) {
@@ -295,9 +336,9 @@
 			if ($element[$elementLength - 1] === ')') {
 				$indexBrace = strrpos($element, '(');
 				if ($indexBrace !== false) {
-					if (preg_match('/(?<!\\\\)(?:[\\(\\)])/', substr($element, $indexBrace + 1, $elementLength - $indexBrace - 2)) > 0) {
+					if (preg_match('/(?<!\\\\)(?:[\\(\\)])/', substr($element, $indexBrace + 1, $elementLength - $indexBrace - 2)) > 0)
 										return false;	// Illegal characters in comment
-					}
+
 					$element	= substr($element, 0, $indexBrace);
 					$elementLength	= strlen($element);
 				}
@@ -317,11 +358,6 @@
 			// 	(http://tools.ietf.org/html/rfc1123#section-6.1.3.5)
 			if ($elementLength > 63)				return false;	// Label must be 63 characters or less
 	
-			// Each dot-delimited component must be atext
-			// A zero-length element implies a period at the beginning or end of the
-			// local part, or two periods together. Either way it's not allowed.
-			if ($elementLength === 0)				return false;	// Dots in wrong place
-	
 			// Any ASCII graphic (printing) character other than the
 			// at-sign ("@"), backslash, double quote, comma, or square brackets may
 			// appear without quoting.  If any of that list of excluded characters
@@ -338,9 +374,9 @@
 			}
 		}
 
-		if ($partLength > 255) 						return false;	// Local part must be 64 characters or less
+		if ($partLength > 255) 						return false;	// Domain part must be 255 characters or less (http://tools.ietf.org/html/rfc1123#section-6.1.3.5)
 
-		if (preg_match('/^[0-9]+$/', $element) > 0)			return false;	// TLD can't be all-numeric
+		if (preg_match('/^[0-9]+$/', $element) > 0)			return false;	// TLD can't be all-numeric (http://www.apps.ietf.org/rfc/rfc3696.html#sec-2)
 
 		// Check DNS?
 		if ($checkDNS && function_exists('checkdnsrr')) {
