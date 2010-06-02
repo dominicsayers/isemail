@@ -2,14 +2,14 @@
 /**
  * @package	isemail
  * @author	Dominic Sayers <dominic_sayers@hotmail.com>
- * @copyright	2009 Dominic Sayers
+ * @copyright	2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	1.15 - Bug fix suggested by Andrew Campbell of Gloucester, MA
+ * @version	1.17 - Upper length limit corrected to 254 characters
  */
 
 /*
-Copyright (c) 2008-2009, Dominic Sayers
+Copyright (c) 2008-2010, Dominic Sayers
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -40,33 +40,64 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	require_module 'standard';
 	require_module 'pcre';
 .*/
-/*.boolean.*/ function is_email (/*.string.*/ $email, $checkDNS = false) {
+/*.mixed.*/ function is_email (/*.string.*/ $email, $checkDNS = false, $diagnose = false) {
 	// Check that $email is a valid address. Read the following RFCs to understand the constraints:
 	// 	(http://tools.ietf.org/html/rfc5322)
 	// 	(http://tools.ietf.org/html/rfc3696)
 	// 	(http://tools.ietf.org/html/rfc5321)
 	// 	(http://tools.ietf.org/html/rfc4291#section-2.2)
 	// 	(http://tools.ietf.org/html/rfc1123#section-2.1)
-	
-	// the upper limit on address lengths should normally be considered to be 256
+
+	if (!defined('ISEMAIL_VALID')) {
+		define('ISEMAIL_VALID'			, 0);
+		define('ISEMAIL_TOOLONG'		, 1);
+		define('ISEMAIL_NOAT'			, 2);
+		define('ISEMAIL_NOLOCALPART'		, 3);
+		define('ISEMAIL_NODOMAIN'		, 4);
+		define('ISEMAIL_ZEROLENGTHELEMENT'	, 5);
+		define('ISEMAIL_BADCOMMENT_START'	, 6);
+		define('ISEMAIL_BADCOMMENT_END'		, 7);
+		define('ISEMAIL_UNESCAPEDDELIM'		, 8);
+		define('ISEMAIL_EMPTYELEMENT'		, 9);
+		define('ISEMAIL_UNESCAPEDSPECIAL'	, 10);
+		define('ISEMAIL_LOCALTOOLONG'		, 11);
+		define('ISEMAIL_IPV4BADPREFIX'		, 12);
+		define('ISEMAIL_IPV6BADPREFIXMIXED'	, 13);
+		define('ISEMAIL_IPV6BADPREFIX'		, 14);
+		define('ISEMAIL_IPV6GROUPCOUNT'		, 15);
+		define('ISEMAIL_IPV6DOUBLEDOUBLECOLON'	, 16);
+		define('ISEMAIL_IPV6BADCHAR'		, 17);
+		define('ISEMAIL_IPV6TOOMANYGROUPS'	, 18);
+		define('ISEMAIL_TLD'			, 19);
+		define('ISEMAIL_DOMAINEMPTYELEMENT'	, 20);
+		define('ISEMAIL_DOMAINELEMENTTOOLONG'	, 21);
+		define('ISEMAIL_DOMAINBADCHAR'		, 22);
+		define('ISEMAIL_DOMAINTOOLONG'		, 23);
+		define('ISEMAIL_TLDNUMERIC'		, 24);
+		define('ISEMAIL_DOMAINNOTFOUND'		, 25);
+		define('ISEMAIL_NOTDEFINED'		, 99);
+	}
+
+	// the upper limit on address lengths should normally be considered to be 254
 	// 	(http://www.rfc-editor.org/errata_search.php?rfc=3696)
-	// 	NB I think John Klensin is misreading RFC 5321 and the the limit should actually be 254
-	// 	However, I will stick to the published number until it is changed.
+	// 	NB My erratum has now been verified by the IETF so the correct answer is 254
 	//
 	// The maximum total length of a reverse-path or forward-path is 256
 	// characters (including the punctuation and element separators)
 	// 	(http://tools.ietf.org/html/rfc5321#section-4.5.3.1.3)
+	//	NB There is a mandatory 2-character wrapper round the actual address
 	$emailLength = strlen($email);
-	if ($emailLength > 256)			return false;	// Too long
+	// revision 1.17: Max length reduced to 254 (see above)
+	if ($emailLength > 254)			return $diagnose ? ISEMAIL_TOOLONG	: false;	// Too long
 
 	// Contemporary email addresses consist of a "local part" separated from
 	// a "domain part" (a fully-qualified domain name) by an at-sign ("@").
 	// 	(http://tools.ietf.org/html/rfc3696#section-3)
 	$atIndex = strrpos($email,'@');
 
-	if ($atIndex === false)			return false;	// No at-sign
-	if ($atIndex === 0)			return false;	// No local part
-	if ($atIndex === $emailLength - 1)	return false;	// No domain part
+	if ($atIndex === false)			return $diagnose ? ISEMAIL_NOAT		: false;	// No at-sign
+	if ($atIndex === 0)			return $diagnose ? ISEMAIL_NOLOCALPART	: false;	// No local part
+	if ($atIndex === $emailLength - 1)	return $diagnose ? ISEMAIL_NODOMAIN	: false;	// No domain part
 // revision 1.14: Length test bug suggested by Andrew Campbell of Gloucester, MA
 	
 	// Sanitize comments
@@ -158,7 +189,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		$element	= preg_replace("/^$FWS|$FWS\$/", '', $element);
 		$elementLength	= strlen($element);
 
-		if ($elementLength === 0)								return false;	// Can't have empty element (consecutive dots or dots at the start or end)
+		if ($elementLength === 0)								return $diagnose ? ISEMAIL_ZEROLENGTHELEMENT	: false;	// Can't have empty element (consecutive dots or dots at the start or end)
 // revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
 
 		// We need to remove any valid comments (i.e. those at the start or end of the element)
@@ -166,7 +197,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			$indexBrace = strpos($element, ')');
 			if ($indexBrace !== false) {
 				if (preg_match('/(?<!\\\\)[\\(\\)]/', substr($element, 1, $indexBrace - 1)) > 0) {
-													return false;	// Illegal characters in comment
+													return $diagnose ? ISEMAIL_BADCOMMENT_START	: false;	// Illegal characters in comment
 				}
 				$element	= substr($element, $indexBrace + 1, $elementLength - $indexBrace - 1);
 				$elementLength	= strlen($element);
@@ -177,7 +208,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			$indexBrace = strrpos($element, '(');
 			if ($indexBrace !== false) {
 				if (preg_match('/(?<!\\\\)(?:[\\(\\)])/', substr($element, $indexBrace + 1, $elementLength - $indexBrace - 2)) > 0) {
-													return false;	// Illegal characters in comment
+													return $diagnose ? ISEMAIL_BADCOMMENT_END	: false;	// Illegal characters in comment
 				}
 				$element	= substr($element, 0, $indexBrace);
 				$elementLength	= strlen($element);
@@ -201,7 +232,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// My regex skillz aren't up to distinguishing between \" \\" \\\" \\\\" etc.
 			// So remove all \\ from the string first...
 			$element = preg_replace('/\\\\\\\\/', ' ', $element);
-			if (preg_match('/(?<!\\\\|^)["\\r\\n\\x00](?!$)|\\\\"$|""/', $element) > 0)	return false;	// ", CR, LF and NUL must be escaped, "" is too short
+			if (preg_match('/(?<!\\\\|^)["\\r\\n\\x00](?!$)|\\\\"$|""/', $element) > 0)	return $diagnose ? ISEMAIL_UNESCAPEDDELIM	: false;	// ", CR, LF and NUL must be escaped, "" is too short
 		} else {
 			// Unquoted string tests:
 			//
@@ -211,7 +242,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			//
 			// A zero-length element implies a period at the beginning or end of the
 			// local part, or two periods together. Either way it's not allowed.
-			if ($element === '')								return false;	// Dots in wrong place
+			if ($element === '')								return $diagnose ? ISEMAIL_EMPTYELEMENT	: false;	// Dots in wrong place
 
 			// Any ASCII graphic (printing) character other than the
 			// at-sign ("@"), backslash, double quote, comma, or square brackets may
@@ -220,11 +251,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// 	(http://tools.ietf.org/html/rfc3696#section-3)
 			//
 			// Any excluded characters? i.e. 0x00-0x20, (, ), <, >, [, ], :, ;, @, \, comma, period, "
-			if (preg_match('/[\\x00-\\x20\\(\\)<>\\[\\]:;@\\\\,\\."]/', $element) > 0)	return false;	// These characters must be in a quoted string
+			if (preg_match('/[\\x00-\\x20\\(\\)<>\\[\\]:;@\\\\,\\."]/', $element) > 0)	return $diagnose ? ISEMAIL_UNESCAPEDSPECIAL	: false;	// These characters must be in a quoted string
 		}
 	}
 
-	if ($partLength > 64) return false;	// Local part must be 64 characters or less
+	if ($partLength > 64) return $diagnose ? ISEMAIL_LOCALTOOLONG	: false;	// Local part must be 64 characters or less
 
 	// Now let's check the domain part...
 
@@ -243,18 +274,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			if ($index === 0) {
 				// Nothing there except a valid IPv4 address, so...
-				return true;
+				return $diagnose ? ISEMAIL_VALID : true;
 			} else {
 				// Assume it's an attempt at a mixed address (IPv6 + IPv4)
-				if ($addressLiteral[$index - 1] !== ':')	return false;	// Character preceding IPv4 address must be ':'
-				if (substr($addressLiteral, 0, 5) !== 'IPv6:')	return false;	// RFC5321 section 4.1.3
+				if ($addressLiteral[$index - 1] !== ':')	return $diagnose ? ISEMAIL_IPV4BADPREFIX	: false;	// Character preceding IPv4 address must be ':'
+				if (substr($addressLiteral, 0, 5) !== 'IPv6:')	return $diagnose ? ISEMAIL_IPV6BADPREFIXMIXED	: false;	// RFC5321 section 4.1.3
 
 				$IPv6		= substr($addressLiteral, 5, ($index ===7) ? 2 : $index - 6);
 				$groupMax	= 6;
 			}
 		} else {
 			// It must be an attempt at pure IPv6
-			if (substr($addressLiteral, 0, 5) !== 'IPv6:')		return false;	// RFC5321 section 4.1.3
+			if (substr($addressLiteral, 0, 5) !== 'IPv6:')		return $diagnose ? ISEMAIL_IPV6BADPREFIX	: false;	// RFC5321 section 4.1.3
 			$IPv6 = substr($addressLiteral, 5);
 			$groupMax = 8;
 		}
@@ -264,19 +295,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 		if ($index === false) {
 			// We need exactly the right number of groups
-			if ($groupCount !== $groupMax)				return false;	// RFC5321 section 4.1.3
+			if ($groupCount !== $groupMax)				return $diagnose ? ISEMAIL_IPV6GROUPCOUNT	: false;	// RFC5321 section 4.1.3
 		} else {
-			if ($index !== strrpos($IPv6,'::'))			return false;	// More than one '::'
+			if ($index !== strrpos($IPv6,'::'))			return $diagnose ? ISEMAIL_IPV6DOUBLEDOUBLECOLON : false;	// More than one '::'
 			$groupMax = ($index === 0 || $index === (strlen($IPv6) - 2)) ? $groupMax : $groupMax - 1;
-			if ($groupCount > $groupMax)				return false;	// Too many IPv6 groups in address
+			if ($groupCount > $groupMax)				return $diagnose ? ISEMAIL_IPV6TOOMANYGROUPS	: false;	// Too many IPv6 groups in address
 		}
 
 		// Check for unmatched characters
 		array_multisort($matchesIP[1], SORT_DESC);
-		if ($matchesIP[1][0] !== '')					return false;	// Illegal characters in address
+		if ($matchesIP[1][0] !== '')					return $diagnose ? ISEMAIL_IPV6BADCHAR		: false;	// Illegal characters in address
 
 		// It's a valid IPv6 address, so...
-		return true;
+		return $diagnose ? ISEMAIL_VALID : true;
 	} else {
 		// It's a domain name...
 
@@ -308,7 +339,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		$element	= ''; // Since we use $element after the foreach loop let's make sure it has a value
 // revision 1.13: Line above added because PHPLint now checks for Definitely Assigned Variables
 
-		if (count($dotArray) === 1)					return false;	// Mail host can't be a TLD (cite? What about localhost?)
+		if (count($dotArray) === 1)					return $diagnose ? ISEMAIL_TLD	: false;	// Mail host can't be a TLD (cite? What about localhost?)
 
 		foreach ($dotArray as $element) {
 			// Remove any leading or trailing FWS
@@ -318,7 +349,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// Each dot-delimited component must be of type atext
 			// A zero-length element implies a period at the beginning or end of the
 			// local part, or two periods together. Either way it's not allowed.
-			if ($elementLength === 0)				return false;	// Dots in wrong place
+			if ($elementLength === 0)				return $diagnose ? ISEMAIL_DOMAINEMPTYELEMENT	: false;	// Dots in wrong place
 // revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
 	
 			// Then we need to remove all valid comments (i.e. those at the start or end of the element
@@ -326,7 +357,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				$indexBrace = strpos($element, ')');
 				if ($indexBrace !== false) {
 					if (preg_match('/(?<!\\\\)[\\(\\)]/', substr($element, 1, $indexBrace - 1)) > 0) {
-										return false;	// Illegal characters in comment
+// revision 1.17: Fixed name of constant (also spotted by turboflash - thanks!)
+										return $diagnose ? ISEMAIL_BADCOMMENT_START	: false;	// Illegal characters in comment
 					}
 					$element	= substr($element, $indexBrace + 1, $elementLength - $indexBrace - 1);
 					$elementLength	= strlen($element);
@@ -337,7 +369,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				$indexBrace = strrpos($element, '(');
 				if ($indexBrace !== false) {
 					if (preg_match('/(?<!\\\\)(?:[\\(\\)])/', substr($element, $indexBrace + 1, $elementLength - $indexBrace - 2)) > 0)
-										return false;	// Illegal characters in comment
+// revision 1.17: Fixed name of constant (also spotted by turboflash - thanks!)
+										return $diagnose ? ISEMAIL_BADCOMMENT_END	: false;	// Illegal characters in comment
 
 					$element	= substr($element, 0, $indexBrace);
 					$elementLength	= strlen($element);
@@ -356,7 +389,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// separated by dots, and with a maximum total of 255
 			// octets.
 			// 	(http://tools.ietf.org/html/rfc1123#section-6.1.3.5)
-			if ($elementLength > 63)				return false;	// Label must be 63 characters or less
+			if ($elementLength > 63)				return $diagnose ? ISEMAIL_DOMAINELEMENTTOOLONG	: false;	// Label must be 63 characters or less
 	
 			// Any ASCII graphic (printing) character other than the
 			// at-sign ("@"), backslash, double quote, comma, or square brackets may
@@ -370,24 +403,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			//
 			// Any excluded characters? i.e. 0x00-0x20, (, ), <, >, [, ], :, ;, @, \, comma, period, "
 			if (preg_match('/[\\x00-\\x20\\(\\)<>\\[\\]:;@\\\\,\\."]|^-|-$/', $element) > 0) {
-										return false;
+										return $diagnose ? ISEMAIL_DOMAINBADCHAR	: false;
 			}
 		}
 
-		if ($partLength > 255) 						return false;	// Domain part must be 255 characters or less (http://tools.ietf.org/html/rfc1123#section-6.1.3.5)
+		if ($partLength > 255) 						return $diagnose ? ISEMAIL_DOMAINTOOLONG	: false;	// Domain part must be 255 characters or less (http://tools.ietf.org/html/rfc1123#section-6.1.3.5)
 
-		if (preg_match('/^[0-9]+$/', $element) > 0)			return false;	// TLD can't be all-numeric (http://www.apps.ietf.org/rfc/rfc3696.html#sec-2)
+		if (preg_match('/^[0-9]+$/', $element) > 0)			return $diagnose ? ISEMAIL_TLDNUMERIC		: false;	// TLD can't be all-numeric (http://www.apps.ietf.org/rfc/rfc3696.html#sec-2)
 
 		// Check DNS?
 		if ($checkDNS && function_exists('checkdnsrr')) {
 			if (!(checkdnsrr($domain, 'A') || checkdnsrr($domain, 'MX'))) {
-										return false;	// Domain doesn't actually exist
+										return $diagnose ? ISEMAIL_DOMAINNOTFOUND	: false;	// Domain doesn't actually exist
 			}
 		}
 	}
 
 	// Eliminate all other factors, and the one which remains must be the truth.
 	// 	(Sherlock Holmes, The Sign of Four)
-	return true;
+	return $diagnose ? ISEMAIL_VALID : true;
 }
 ?>

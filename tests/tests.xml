@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tests version="1.8">
+<tests version="1.10">
 	<test>
 		<address>first.last@example.com</address>
 		<valid>true</valid>
@@ -51,24 +51,26 @@
 		<id>7</id>
 	</test>
 	<test>
-		<address>x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x234</address>
+		<address>x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x2</address>
 		<valid>true</valid>
+		<comment>Total length reduced to 254 characters so it's still valid</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>8</id>
 	</test>
 	<test>
-		<address>123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.123456789012345678901234567890123456789012345678901234567890123.example.com</address>
+		<address>1234567890123456789012345678901234567890123456789012345678@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.123456789012345678901234567890123456789012345678901234567890123.example.com</address>
 		<valid>true</valid>
-		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<comment>Total length reduced to 254 characters so it's still valid</comment>
+		<source>RFC 3696 erratum 1690</source>
+		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=1690</sourcelink>
 		<id>9</id>
 	</test>
 	<test>
 		<address>first.last@[12.34.56.78]</address>
 		<valid>true</valid>
-		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<source>RFC 3696 erratum 1690</source>
+		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=1690</sourcelink>
 		<id>10</id>
 	</test>
 	<test>
@@ -142,11 +144,11 @@
 		<id>20</id>
 	</test>
 	<test>
-		<address>123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.1234.example.com</address>
+		<address>123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12.example.com</address>
 		<valid>false</valid>
-		<comment>Entire address is longer than 256 characters</comment>
-		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<comment>Entire address is longer than 254 characters</comment>
+		<source>RFC 3696 erratum 1690</source>
+		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=1690</sourcelink>
 		<id>21</id>
 	</test>
 	<test>
@@ -400,70 +402,70 @@
 	<test>
 		<address>"Abc\@def"@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>53</id>
 	</test>
 	<test>
 		<address>"Fred\ Bloggs"@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (as amended by erratum 2005-07-09)</source>
+		<source>RFC 3696 (as amended by erratum 2005-07-09)</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=246</sourcelink>
 		<id>54</id>
 	</test>
 	<test>
 		<address>"Joe.\\Blow"@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (as amended by erratum 2005-07-09)</source>
+		<source>RFC 3696 (as amended by erratum 2005-07-09)</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=246</sourcelink>
 		<id>55</id>
 	</test>
 	<test>
 		<address>"Abc@def"@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (as amended by erratum 2005-07-09)</source>
+		<source>RFC 3696 (as amended by erratum 2005-07-09)</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=246</sourcelink>
 		<id>56</id>
 	</test>
 	<test>
 		<address>"Fred Bloggs"@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>57</id>
 	</test>
 	<test>
 		<address>user+mailbox@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>58</id>
 	</test>
 	<test>
 		<address>customer/department=shipping@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>59</id>
 	</test>
 	<test>
 		<address>$A12345@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>60</id>
 	</test>
 	<test>
 		<address>!def!xyz%abc@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>61</id>
 	</test>
 	<test>
 		<address>_somename@example.com</address>
 		<valid>true</valid>
-		<source>RFC3696 (February 2004)</source>
+		<source>RFC 3696 (February 2004)</source>
 		<sourcelink>http://tools.ietf.org/html/rfc3696#section-3</sourcelink>
 		<id>62</id>
 	</test>
@@ -477,7 +479,7 @@
 	<test>
 		<address>abc\@def@example.com</address>
 		<valid>false</valid>
-		<comment>This example from RFC3696 was corrected in an erratum</comment>
+		<comment>This example from RFC 3696 was corrected in an erratum</comment>
 		<source>Doug Lovell (LinuxJournal, June 2007)</source>
 		<sourcelink>http://www.linuxjournal.com/article/9585</sourcelink>
 		<id>64</id>
@@ -485,7 +487,7 @@
 	<test>
 		<address>abc\\@example.com</address>
 		<valid>false</valid>
-		<comment>This example from RFC3696 was corrected in an erratum</comment>
+		<comment>This example from RFC 3696 was corrected in an erratum</comment>
 		<source>Doug Lovell (LinuxJournal, June 2007)</source>
 		<sourcelink>http://www.linuxjournal.com/article/9585</sourcelink>
 		<id>65</id>
@@ -704,7 +706,7 @@
 	<test>
 		<valid>true</valid>
 		<address>test."test"@example.com</address>
-		<comment>Obsolete form, but documented in RFC2822</comment>
+		<comment>Obsolete form, but documented in RFC 5322</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>94</id>
@@ -726,7 +728,7 @@
 	<test>
 		<valid>false</valid>
 		<address>test@123.123.123.123</address>
-		<comment>Top Level Domain won't be all-numeric (see RFC3696 Section 2). I disagree with Dave Child on this one.</comment>
+		<comment>Top Level Domain won't be all-numeric (see RFC 3696 Section 2). I disagree with Dave Child on this one.</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>97</id>
@@ -1074,7 +1076,7 @@
 	<test>
 		<address>"first".last@example.com</address>
 		<valid>true</valid>
-		<comment>obs-local-part form as described in RFC 2822</comment>
+		<comment>obs-local-part form as described in RFC 5322</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>143</id>
@@ -1082,7 +1084,7 @@
 	<test>
 		<address>first."last"@example.com</address>
 		<valid>true</valid>
-		<comment>obs-local-part form as described in RFC 2822</comment>
+		<comment>obs-local-part form as described in RFC 5322</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>144</id>
@@ -1090,7 +1092,7 @@
 	<test>
 		<address>"first"."middle"."last"@example.com</address>
 		<valid>true</valid>
-		<comment>obs-local-part form as described in RFC 2822</comment>
+		<comment>obs-local-part form as described in RFC 5322</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>145</id>
@@ -1098,7 +1100,7 @@
 	<test>
 		<address>"first.middle"."last"@example.com</address>
 		<valid>true</valid>
-		<comment>obs-local-part form as described in RFC 2822</comment>
+		<comment>obs-local-part form as described in RFC 5322</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>146</id>
@@ -1106,7 +1108,7 @@
 	<test>
 		<address>"first.middle.last"@example.com</address>
 		<valid>true</valid>
-		<comment>obs-local-part form as described in RFC 2822</comment>
+		<comment>obs-local-part form as described in RFC 5322</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>147</id>
@@ -1114,7 +1116,7 @@
 	<test>
 		<address>"first..last"@example.com</address>
 		<valid>true</valid>
-		<comment>obs-local-part form as described in RFC 2822</comment>
+		<comment>obs-local-part form as described in RFC 5322</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>148</id>
@@ -1168,24 +1170,24 @@
 	<test>
 		<address>Abc\@def@example.com</address>
 		<valid>false</valid>
-		<comment>Was incorrectly given as a valid address in the original RFC3696</comment>
-		<source>RFC3696 erratum 246</source>
+		<comment>Was incorrectly given as a valid address in the original RFC 3696</comment>
+		<source>RFC 3696 erratum 246</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=246</sourcelink>
 		<id>155</id>
 	</test>
 	<test>
 		<address>Fred\ Bloggs@example.com</address>
 		<valid>false</valid>
-		<comment>Was incorrectly given as a valid address in the original RFC3696</comment>
-		<source>RFC3696 erratum 246</source>
+		<comment>Was incorrectly given as a valid address in the original RFC 3696</comment>
+		<source>RFC 3696 erratum 246</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=246</sourcelink>
 		<id>156</id>
 	</test>
 	<test>
 		<address>Joe.\\Blow@example.com</address>
 		<valid>false</valid>
-		<comment>Was incorrectly given as a valid address in the original RFC3696</comment>
-		<source>RFC3696 erratum 246</source>
+		<comment>Was incorrectly given as a valid address in the original RFC 3696</comment>
+		<source>RFC 3696 erratum 246</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=246</sourcelink>
 		<id>157</id>
 	</test>
@@ -1240,7 +1242,7 @@
 	<test>
 		<address>"foo"(yay)@(hoopla)[1.2.3.4]</address>
 		<valid>false</valid>
-		<comment>Address literal can't be commented (RFC5321)</comment>
+		<comment>Address literal can't be commented (RFC 5321)</comment>
 		<source>Cal Henderson</source>
 		<sourcelink>http://code.iamcal.com/php/rfc822/</sourcelink>
 		<id>164</id>
@@ -1328,7 +1330,7 @@
 	<test>
 		<address>pete(his account)@silly.test(his host)</address>
 		<valid>true</valid>
-		<comment>Canonical example from RFC5322</comment>
+		<comment>Canonical example from RFC 5322</comment>
 		<source>RFC 5322</source>
 		<sourcelink>http://tools.ietf.org/html/rfc5322</sourcelink>
 		<id>175</id>
@@ -1336,7 +1338,7 @@
 	<test>
 		<address>c@(Chris's host.)public.example</address>
 		<valid>true</valid>
-		<comment>Canonical example from RFC5322</comment>
+		<comment>Canonical example from RFC 5322</comment>
 		<source>RFC 5322</source>
 		<sourcelink>http://tools.ietf.org/html/rfc5322</sourcelink>
 		<id>176</id>
@@ -1344,7 +1346,7 @@
 	<test>
 		<address>jdoe@machine(comment).  example</address>
 		<valid>true</valid>
-		<comment>Canonical example from RFC5322</comment>
+		<comment>Canonical example from RFC 5322</comment>
 		<source>RFC 5322</source>
 		<sourcelink>http://tools.ietf.org/html/rfc5322</sourcelink>
 		<id>177</id>
@@ -1352,7 +1354,7 @@
 	<test>
 		<address>1234   @   local(blah)  .machine .example</address>
 		<valid>true</valid>
-		<comment>Canonical example from RFC5322</comment>
+		<comment>Canonical example from RFC 5322</comment>
 		<source>RFC 5322</source>
 		<sourcelink>http://tools.ietf.org/html/rfc5322</sourcelink>
 		<id>178</id>
@@ -1727,5 +1729,13 @@
 		<source>George Pollard</source>
 		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
 		<id>228</id>
+	</test>
+	<test>
+		<address>cdburgess+!#$%&amp;'*-/=?+_{}|~test@gmail.com</address>
+		<valid>true</valid>
+		<comment>Example given in comments</comment>
+		<source>http://www.dominicsayers.com/isemail/#comment-30024957</source>
+		<sourcelink>cdburgess</sourcelink>
+		<id>229</id>
 	</test>
 </tests>
