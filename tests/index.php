@@ -3,7 +3,7 @@
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>is_email() - Build unit test script from test data</title>
+<title>devpkg() - Build unit test script from test data</title>
 </head>
 
 <body>
@@ -15,7 +15,7 @@ $php = <<<PHP
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>is_email() - Run unit tests</title>
+<title>devpkg() - Run unit tests</title>
 
 <style type="text/css">
 div {clear:left;}
@@ -30,10 +30,10 @@ hr {clear:left;}
 
 <body>
 <?php
-require_once '../is_email.php';
+require_once '../devpkg.php';
 
 function unitTest (\$email, \$expected, \$comment = '', \$id = '') {
-	\$diagnosis	= is_email(\$email, false, true);
+	\$diagnosis	= devpkg(\$email, false, true);
 	\$valid		= (\$diagnosis === ISEMAIL_VALID);
 	\$not		= (\$valid) ? 'Valid' : "Not valid (\$diagnosis)";
 	\$unexpected	= (\$valid !== \$expected) ? " <b>\$not</b>" : "\$not";

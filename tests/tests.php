@@ -3,7 +3,7 @@
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>is_email() - Run unit tests</title>
+<title>devpkg() - Run unit tests</title>
 
 <style type="text/css">
 div {clear:left;}
@@ -18,10 +18,10 @@ hr {clear:left;}
 
 <body>
 <?php
-require_once '../is_email.php';
+require_once '../devpkg.php';
 
 function unitTest ($email, $expected, $comment = '', $id = '') {
-	$diagnosis	= is_email($email, false, true);
+	$diagnosis	= devpkg($email, false, true);
 	$valid		= ($diagnosis === ISEMAIL_VALID);
 	$not		= ($valid) ? 'Valid' : "Not valid ($diagnosis)";
 	$unexpected	= ($valid !== $expected) ? " <b>$not</b>" : "$not";
@@ -257,9 +257,9 @@ echo unitTest(" \r\n (\r\n x \r\n ) \r\n first\r\n ( \r\n x\r\n ) \r\n .\r\n ( \
 echo unitTest("test. \r\n \r\n obs@syntax.com", true, "obs-fws allows multiple lines", "223");
 echo unitTest("test. \r\n \r\n obs@syntax.com", true, "obs-fws allows multiple lines (test 2: space before break)", "224");
 echo unitTest("test.\r\n\r\n obs@syntax.com", false, "obs-fws must have at least one WSP per line", "225");
-echo unitTest("\"null \\ \"@char.com", true, "can have escaped null character", "226");
-echo unitTest("\"null  \"@char.com", false, "cannot have unescaped null character", "227");
-echo unitTest("null\\ @char.com", false, "escaped null must be in quoted string", "228");
+echo unitTest("\"null \\\"@char.com", true, "can have escaped null character", "226");
+echo unitTest("\"null \"@char.com", false, "cannot have unescaped null character", "227");
+echo unitTest("null\\@char.com", false, "escaped null must be in quoted string", "228");
 echo unitTest("cdburgess+!#\$%&'*-/=?+_{}|~test@gmail.com", true, "Example given in comments", "229");
 ?>
 </body>

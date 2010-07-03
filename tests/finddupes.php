@@ -9,7 +9,7 @@
 <body>
 
 <?php
-require_once '../is_email.php';				//	Dominic Sayers
+require_once '../devpkg.php';				//	Dominic Sayers
 
 $addresses	= array();
 $ids		= array();
