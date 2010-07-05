@@ -33,7 +33,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	0.18.1 - Standardised build and release process for this script
+ * @version	1.18.1 - Releasing I got the version number wrong for the last release. No other change :-|
  */
 
 // The quality of this code has been improved greatly by using PHPLint
