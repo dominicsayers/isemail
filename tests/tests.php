@@ -9,6 +9,8 @@
 div {clear:left;}
 p {font-family:Segoe UI,Arial,Helvetica,sans-serif;font-size:12px;margin:0;padding:0;float:left;}
 p.valid {width:90px;}
+p.warning {width:90px;}
+p.diagnosis {width:90px;}
 p.address {text-align:right;width:400px;overflow:hidden;margin-right:8px;}
 p.id {text-align:right;width:40px;overflow:hidden;margin-right:8px;}
 p.author {font-style:italic;}
@@ -22,17 +24,18 @@ require_once '../devpkg.php';
 
 function unitTest ($email, $expected, $comment = '', $id = '') {
 	$diagnosis	= devpkg($email, false, true);
-	$valid		= ($diagnosis === ISEMAIL_VALID);
-	$not		= ($valid) ? 'Valid' : "Not valid ($diagnosis)";
-	$unexpected	= ($valid !== $expected) ? " <b>$not</b>" : "$not";
+	$warning	= ($diagnosis > ISEMAIL_WARNING) ? $diagnosis : '&nbsp;';
+	$valid		= (($diagnosis === ISEMAIL_VALID) || ($warning !== '&nbsp;'));
+	$not		= ($valid) ? 'Valid' : 'Not valid';
+	$unexpected	= ($valid !== $expected) ? " <strong>$not</strong>" : "$not";
 	$comment	= ($comment === '') ? "&nbsp;" : stripslashes("$comment");
 
-	return "<div><p class=\"address\"<em>$email</em></p><p class=\"id\">$id</p><p class=\"valid\">$unexpected</p><p class=\"comment\">$comment</p></div>\n";
+	return "<div><p class=\"address\"<em>$email</em></p><p class=\"id\">$id</p><p class=\"valid\">$unexpected</p><p class=\"warning\">$warning</p><p class=\"diagnosis\">$diagnosis</p><p class=\"comment\">$comment</p></div>\n";
 }
 
-echo "<h3>Email address validation test suite version 1.10</h3>\n";
+echo "<h3>Email address validation test suite version 2.0</h3>\n";
 echo "<p class=\"author\">Dominic Sayers | <a href=\"mailto:dominic@sayers.cc\">dominic@sayers.cc</a> | <a href=\"http://www.dominicsayers.com/isemail\">RFC-compliant email address validation</a></p>\n<br>\n<hr>\n";
-echo "<div><p class=\"address\"<strong>Address</strong></p><p class=\"id\"><strong>Test #</strong></p><p class=\"valid\"><strong>Result (reason)</strong></p><p class=\"comment\"><strong>Comment</strong></p></div>\n";echo unitTest("first.last@example.com", true, "", "1");
+echo "<div><p class=\"address\"<strong>Address</strong></p><p class=\"id\"><strong>Test #</strong></p><p class=\"valid\"><strong>Result</strong></p><p class=\"warning\"><strong>Warning</strong></p><p class=\"diagnosis\"><strong>Diagnosis</strong></p><p class=\"comment\"><strong>Comment</strong></p></div>\n";echo unitTest("first.last@example.com", true, "", "1");
 echo unitTest("1234567890123456789012345678901234567890123456789012345678901234@example.com", true, "", "2");
 echo unitTest("first.last@sub.do,com", false, "Mistyped comma instead of dot (replaces old #3 which was the same as #57)", "3");
 echo unitTest("\"first\\\"last\"@example.com", true, "", "4");
@@ -79,8 +82,8 @@ echo unitTest("first.last@[IPv6:1111:2222::3333::4444:5555:6666]", false, "Too m
 echo unitTest("first.last@[IPv6:1111:2222:3333::4444:5555:6666:7777]", false, "Too many IPv6 groups (6 max)", "45");
 echo unitTest("first.last@[IPv6:1111:2222:333x::4444:5555]", false, "x is not valid in an IPv6 address", "46");
 echo unitTest("first.last@[IPv6:1111:2222:33333::4444:5555]", false, "33333 is not a valid group in an IPv6 address", "47");
-echo unitTest("first.last@example.123", false, "TLD can't be all digits", "48");
-echo unitTest("first.last@com", false, "Mail host must be second- or lower level", "49");
+echo unitTest("first.last@example.123", true, "TLD can't be all digits", "48");
+echo unitTest("first.last@com", true, "Mail host must be second- or lower level", "49");
 echo unitTest("first.last@-xample.com", false, "Label can't begin with a hyphen", "50");
 echo unitTest("first.last@exampl-.com", false, "Label can't end with a hyphen", "51");
 echo unitTest("first.last@x234567890123456789012345678901234567890123456789012345678901234.example.com", false, "Label can't be longer than 63 octets", "52");
@@ -128,7 +131,7 @@ echo unitTest("\"test.test\"@example.com", true, "", "93");
 echo unitTest("test.\"test\"@example.com", true, "Obsolete form, but documented in RFC 5322", "94");
 echo unitTest("\"test@test\"@example.com", true, "", "95");
 echo unitTest("test@123.123.123.x123", true, "", "96");
-echo unitTest("test@123.123.123.123", false, "Top Level Domain won't be all-numeric (see RFC 3696 Section 2). I disagree with Dave Child on this one.", "97");
+echo unitTest("test@123.123.123.123", true, "Top Level Domain won't be all-numeric (see RFC 3696 Section 2). I disagree with Dave Child on this one.", "97");
 echo unitTest("test@[123.123.123.123]", true, "", "98");
 echo unitTest("test@example.example.com", true, "", "99");
 echo unitTest("test@example.example.example.com", true, "", "100");
@@ -147,7 +150,7 @@ echo unitTest("test@.", false, "Dave Child says so", "112");
 echo unitTest("test@example.", false, "Dave Child says so", "113");
 echo unitTest("test@.org", false, "Dave Child says so", "114");
 echo unitTest("test@123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012.com", false, "255 characters is maximum length for domain. This is 256.", "115");
-echo unitTest("test@example", false, "Dave Child says so", "116");
+echo unitTest("test@example", true, "Dave Child says so", "116");
 echo unitTest("test@[123.123.123.123", false, "Dave Child says so", "117");
 echo unitTest("test@123.123.123.123]", false, "Dave Child says so", "118");
 echo unitTest("NotAnEmail", false, "Phil Haack says so", "119");
@@ -221,7 +224,7 @@ echo unitTest("a(a(b(c)d(e(f))g)h(i)j)@example.com", true, "", "186");
 echo unitTest("a(a(b(c)d(e(f))g)(h(i)j)@example.com", false, "Braces are not properly matched", "187");
 echo unitTest("name.lastname@domain.com", true, "", "188");
 echo unitTest(".@", false, "", "189");
-echo unitTest("a@b", false, "", "190");
+echo unitTest("a@b", true, "", "190");
 echo unitTest("@bar.com", false, "", "191");
 echo unitTest("@@bar.com", false, "", "192");
 echo unitTest("a@bar.com", true, "", "193");
@@ -232,7 +235,7 @@ echo unitTest("aaa@[123.123.123.123]", true, "", "197");
 echo unitTest("aaa@[123.123.123.123]a", false, "extra data outside ip", "198");
 echo unitTest("aaa@[123.123.123.333]", false, "not a valid IP", "199");
 echo unitTest("a@bar.com.", false, "", "200");
-echo unitTest("a@bar", false, "", "201");
+echo unitTest("a@bar", true, "", "201");
 echo unitTest("a-b@bar.com", true, "", "202");
 echo unitTest("+@b.c", true, "TLDs can be any length", "203");
 echo unitTest("+@b.com", true, "", "204");
@@ -247,7 +250,7 @@ echo unitTest("valid@special.museum", true, "", "212");
 echo unitTest("invalid@special.museum-", false, "", "213");
 echo unitTest("shaitan@my-domain.thisisminekthx", true, "Disagree with Paul Gregg here", "214");
 echo unitTest("test@...........com", false, "......", "215");
-echo unitTest("foobar@192.168.0.1", false, "ip need to be []", "216");
+echo unitTest("foobar@192.168.0.1", true, "ip need to be []", "216");
 echo unitTest("\"Joe\\\\Blow\"@example.com", true, "", "217");
 echo unitTest("Invalid \\\n Folding \\\n Whitespace@example.com", false, "This isn't FWS so Dominic Sayers says it's invalid", "218");
 echo unitTest("HM2Kinsists@(that comments are allowed)this.is.ok", true, "", "219");
@@ -257,9 +260,9 @@ echo unitTest(" \r\n (\r\n x \r\n ) \r\n first\r\n ( \r\n x\r\n ) \r\n .\r\n ( \
 echo unitTest("test. \r\n \r\n obs@syntax.com", true, "obs-fws allows multiple lines", "223");
 echo unitTest("test. \r\n \r\n obs@syntax.com", true, "obs-fws allows multiple lines (test 2: space before break)", "224");
 echo unitTest("test.\r\n\r\n obs@syntax.com", false, "obs-fws must have at least one WSP per line", "225");
-echo unitTest("\"null \\\"@char.com", true, "can have escaped null character", "226");
-echo unitTest("\"null \"@char.com", false, "cannot have unescaped null character", "227");
-echo unitTest("null\\@char.com", false, "escaped null must be in quoted string", "228");
+echo unitTest("\"null \\ \"@char.com", true, "can have escaped null character", "226");
+echo unitTest("\"null  \"@char.com", false, "cannot have unescaped null character", "227");
+echo unitTest("null\\ @char.com", false, "escaped null must be in quoted string", "228");
 echo unitTest("cdburgess+!#\$%&'*-/=?+_{}|~test@gmail.com", true, "Example given in comments", "229");
 ?>
 </body>

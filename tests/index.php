@@ -21,6 +21,8 @@ $php = <<<PHP
 div {clear:left;}
 p {font-family:Segoe UI,Arial,Helvetica,sans-serif;font-size:12px;margin:0;padding:0;float:left;}
 p.valid {width:90px;}
+p.warning {width:90px;}
+p.diagnosis {width:90px;}
 p.address {text-align:right;width:400px;overflow:hidden;margin-right:8px;}
 p.id {text-align:right;width:40px;overflow:hidden;margin-right:8px;}
 p.author {font-style:italic;}
@@ -34,12 +36,13 @@ require_once '../devpkg.php';
 
 function unitTest (\$email, \$expected, \$comment = '', \$id = '') {
 	\$diagnosis	= devpkg(\$email, false, true);
-	\$valid		= (\$diagnosis === ISEMAIL_VALID);
-	\$not		= (\$valid) ? 'Valid' : "Not valid (\$diagnosis)";
-	\$unexpected	= (\$valid !== \$expected) ? " <b>\$not</b>" : "\$not";
+	\$warning	= (\$diagnosis > ISEMAIL_WARNING) ? \$diagnosis : '&nbsp;';
+	\$valid		= ((\$diagnosis === ISEMAIL_VALID) || (\$warning !== '&nbsp;'));
+	\$not		= (\$valid) ? 'Valid' : 'Not valid';
+	\$unexpected	= (\$valid !== \$expected) ? " <strong>\$not</strong>" : "\$not";
 	\$comment	= (\$comment === '') ? "&nbsp;" : stripslashes("\$comment");
 
-	return "<div><p class=\\"address\\"<em>\$email</em></p><p class=\\"id\\">\$id</p><p class=\\"valid\\">\$unexpected</p><p class=\\"comment\\">\$comment</p></div>\\n";
+	return "<div><p class=\\"address\\"<em>\$email</em></p><p class=\\"id\\">\$id</p><p class=\\"valid\\">\$unexpected</p><p class=\\"warning\\">\$warning</p><p class=\\"diagnosis\\">\$diagnosis</p><p class=\\"comment\\">\$comment</p></div>\\n";
 }
 
 
@@ -58,7 +61,7 @@ if ($suite->hasAttribute('version')) {
 
 $php .= <<<PHP
 echo "<p class=\\"author\\">Dominic Sayers | <a href=\\"mailto:dominic@sayers.cc\\">dominic@sayers.cc</a> | <a href=\\"http://www.dominicsayers.com/isemail\\">RFC-compliant email address validation</a></p>\\n<br>\\n<hr>\\n";
-echo "<div><p class=\\"address\\"<strong>Address</strong></p><p class=\\"id\\"><strong>Test #</strong></p><p class=\\"valid\\"><strong>Result (reason)</strong></p><p class=\\"comment\\"><strong>Comment</strong></p></div>\\n";
+echo "<div><p class=\\"address\\"<strong>Address</strong></p><p class=\\"id\\"><strong>Test #</strong></p><p class=\\"valid\\"><strong>Result</strong></p><p class=\\"warning\\"><strong>Warning</strong></p><p class=\\"diagnosis\\"><strong>Diagnosis</strong></p><p class=\\"comment\\"><strong>Comment</strong></p></div>\\n";
 PHP;
 
 $testList = $document->getElementsByTagName('test');
