@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tests version="2.0">
+<tests version="2.1">
 	<test>
 		<address>first.last@example.com</address>
 		<valid>true</valid>
@@ -86,7 +86,7 @@
 	<test>
 		<address>first.last@[IPv6:::12.34.56.78]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>11</id>
@@ -94,7 +94,7 @@
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333::4444:12.34.56.78]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>12</id>
@@ -102,7 +102,7 @@
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:12.34.56.78]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>13</id>
@@ -110,7 +110,7 @@
 	<test>
 		<address>first.last@[IPv6:::1111:2222:3333:4444:5555:6666]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>14</id>
@@ -118,7 +118,7 @@
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333::4444:5555:6666]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>15</id>
@@ -126,7 +126,7 @@
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666::]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>16</id>
@@ -134,7 +134,7 @@
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:7777:8888]</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>17</id>
@@ -327,9 +327,9 @@
 	</test>
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333::4444:5555:12.34.56.78]</address>
-		<valid>false</valid>
-		<warning>false</warning>
-		<comment>Too many IPv6 groups (4 max)</comment>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>RFC 4291 disagrees with RFC 5321 but is cited by it</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>39</id>
@@ -381,9 +381,9 @@
 	</test>
 	<test>
 		<address>first.last@[IPv6:1111:2222:3333::4444:5555:6666:7777]</address>
-		<valid>false</valid>
-		<warning>false</warning>
-		<comment>Too many IPv6 groups (6 max)</comment>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>RFC 4291 disagrees with RFC 5321 but is cited by it</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>45</id>
@@ -1963,8 +1963,422 @@
 		<valid>true</valid>
 		<warning>false</warning>
 		<comment>Example given in comments</comment>
-		<source>http://www.dominicsayers.com/isemail/#comment-30024957</source>
-		<sourcelink>cdburgess</sourcelink>
+		<source>cdburgess</source>
+		<sourcelink>http://www.dominicsayers.com/isemail/#comment-30024957</sourcelink>
 		<id>229</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:::a2:a3:a4:b1:b2:b3:b4]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>:: only elides one zero group (IPv6 authority is RFC 4291)</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>230</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:a3:a4:b1:b2:b3::]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>:: only elides one zero group (IPv6 authority is RFC 4291)</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>231</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::]</address>
+		<valid>false</valid>
+		<warning>false</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>232</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:::]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>233</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::::]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>234</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>235</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:::b4]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>236</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::::b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>237</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::b3:b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>238</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:::b3:b4]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>239</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::::b3:b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>240</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::b4]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>241</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:::b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>242</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>243</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>244</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:::]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>245</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>246</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2::]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>247</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:::]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>248</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:0123:4567:89ab:cdef::]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>249</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:0123:4567:89ab:CDEF::]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>250</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:::a3:a4:b1:ffff:11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>251</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:::a2:a3:a4:b1:ffff:11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>:: only elides one zero group (IPv6 authority is RFC 4291)</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>252</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:a3:a4::11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>253</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:a3:a4:b1::11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>:: only elides one zero group (IPv6 authority is RFC 4291)</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>254</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>255</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::::11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>256</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>257</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>258</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:::11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>259</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2::11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>260</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:::11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>261</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:0123:4567:89ab:cdef::11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>262</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:0123:4567:89ab:cdef::11.22.33.xx]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>263</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:0123:4567:89ab:CDEF::11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>264</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:0123:4567:89ab:CDEFF::11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>265</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::a4:b1::b4:11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>266</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::11.22.33]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>267</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::11.22.33.44.55]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>268</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::b211.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>269</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::b2:11.22.33.44]</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>270</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::b2::11.22.33.44]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>271</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1::b3:]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>272</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::a2::b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>273</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:a3:a4:b1:b2:b3:]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>274</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6::a2:a3:a4:b1:b2:b3:b4]</address>
+		<valid>false</valid>
+		<warning>true</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>275</id>
 	</test>
 </tests>

@@ -33,7 +33,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.0.4 - Strict tests for validity   optional warnings for unlikely real-world addresses
+ * @version	2.1.5 - Now uses RFC 4291 as the authority for IPv6 format. This means :: can represent *one* omitted zero group
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -62,7 +62,7 @@
 	//			numeric characters.
 	//	false		Return true for valid addresses, false for invalid ones. No warnings.
 	//
-	//	Warnings can be distinguished from errors if ($return_value > ISEMAIL_ERROR)
+	//	Errors can be distinguished from warnings if ($return_value > ISEMAIL_ERROR)
 // version 2.0: Enhance $diagnose parameter to $errorlevel
 					
 	if (!defined('ISEMAIL_VALID')) {
@@ -77,6 +77,9 @@
 		define('ISEMAIL_FWS'			, 69);
 		define('ISEMAIL_ADDRESSLITERAL'		, 70);
 		define('ISEMAIL_UNLIKELYINITIAL'	, 71);
+		define('ISEMAIL_SINGLEGROUPELISION'	, 72);
+		define('ISEMAIL_DOMAINNOTFOUND'		, 73);
+		define('ISEMAIL_MXNOTFOUND'		, 74);
 		// Errors (invalid address)
 		define('ISEMAIL_ERROR'			, 128);
 		define('ISEMAIL_TOOLONG'		, 129);
@@ -101,10 +104,12 @@
 		define('ISEMAIL_DOMAINELEMENTTOOLONG'	, 148);
 		define('ISEMAIL_DOMAINBADCHAR'		, 149);
 		define('ISEMAIL_DOMAINTOOLONG'		, 150);
-		define('ISEMAIL_DOMAINNOTFOUND'		, 151);
+		define('ISEMAIL_IPV6SINGLECOLONSTART'	, 151);
+		define('ISEMAIL_IPV6SINGLECOLONEND'	, 152);
 		// Unexpected errors
-		define('ISEMAIL_BADPARAMETER'		, 254);
-		define('ISEMAIL_NOTDEFINED'		, 255);
+		define('ISEMAIL_BADPARAMETER'		, 190);
+		define('ISEMAIL_NOTDEFINED'		, 191);
+// revision 2.1: Redefined unexpected error constants so they don't clash with the ISEMAIL_WARNING bit
 	}
 
 	switch ($errorlevel) {
@@ -295,6 +300,8 @@
 		if ($warn) $return_status = ISEMAIL_ADDRESSLITERAL;	// Quoted string is unlikely in the real world
 // version 2.0: Warning condition added
 		$addressLiteral = substr($domain, 1, strlen($domain) - 2);
+		$groupMax	= 8;
+// revision 2.1: new IPv6 testing strategy
 		$matchesIP	= array();
 		
 		// Extract IPv4 part from the end of the address-literal (if there is one)
@@ -306,38 +313,52 @@
 				return ($diagnose) ? $return_status : true;
 // version 2.0: return warning if one is set
 			} else {
-				// Assume it's an attempt at a mixed address (IPv6 + IPv4)
-				if ($addressLiteral[$index - 1] !== ':')				return $diagnose ? ISEMAIL_IPV4BADPREFIX	: false;	// Character preceding IPv4 address must be ':'
+//-				// Assume it's an attempt at a mixed address (IPv6 + IPv4)
+//-				if ($addressLiteral[$index - 1] !== ':')				return $diagnose ? ISEMAIL_IPV4BADPREFIX	: false;	// Character preceding IPv4 address must be ':'
+// revision 2.1: new IPv6 testing strategy
 				if (substr($addressLiteral, 0, 5) !== 'IPv6:')				return $diagnose ? ISEMAIL_IPV6BADPREFIXMIXED	: false;	// RFC5321 section 4.1.3
-
-				$IPv6		= substr($addressLiteral, 5, ($index ===7) ? 2 : $index - 6);
-				$groupMax	= 6;
+//-
+//-				$IPv6		= substr($addressLiteral, 5, ($index === 7) ? 2 : $index - 6);
+//-				$groupMax	= 6;
+// revision 2.1: new IPv6 testing strategy
+				$IPv6		= substr($addressLiteral, 5, $index - 5) . '0000:0000'; // Convert IPv4 part to IPv6 format
 			}
 		} else {
 			// It must be an attempt at pure IPv6
 			if (substr($addressLiteral, 0, 5) !== 'IPv6:')					return $diagnose ? ISEMAIL_IPV6BADPREFIX	: false;	// RFC5321 section 4.1.3
 			$IPv6 = substr($addressLiteral, 5);
-			$groupMax = 8;
+//-			$groupMax = 8;
+// revision 2.1: new IPv6 testing strategy
 		}
-
+//echo "\n<br /><pre>\$IPv6 = $IPv6</pre>\n"; // debug
 		$groupCount	= preg_match_all('/^[0-9a-fA-F]{0,4}|\\:[0-9a-fA-F]{0,4}|(.)/', $IPv6, $matchesIP);
 		$index		= strpos($IPv6,'::');
 
+//echo "\n<br /><pre>\$matchesIP[0] = " . var_export($matchesIP[0], true) . "</pre>\n"; // debug
 		if ($index === false) {
 			// We need exactly the right number of groups
 			if ($groupCount !== $groupMax)							return $diagnose ? ISEMAIL_IPV6GROUPCOUNT	: false;	// RFC5321 section 4.1.3
 		} else {
 			if ($index !== strrpos($IPv6,'::'))						return $diagnose ? ISEMAIL_IPV6DOUBLEDOUBLECOLON : false;	// More than one '::'
-			$groupMax = ($index === 0 || $index === (strlen($IPv6) - 2)) ? $groupMax : $groupMax - 1;
+			if ($index === 0 || $index === (strlen($IPv6) - 2)) $groupMax++;	// RFC 4291 allows :: at the start or end of an address with 7 other groups in addition
+//echo "\n<br /><pre>\$groupMax = $groupMax</pre>\n"; // debug
 			if ($groupCount > $groupMax)							return $diagnose ? ISEMAIL_IPV6TOOMANYGROUPS	: false;	// Too many IPv6 groups in address
+			if ($groupCount === $groupMax) $return_status = ISEMAIL_SINGLEGROUPELISION;	// Eliding a single group with :: is deprecated by RFCs 5321 & 5952
 		}
+
+		// Check for single : at start and end of address
+		if (($matchesIP[0][0] === '') && ($matchesIP[0][1] !== ':'))				return $diagnose ? ISEMAIL_IPV6SINGLECOLONSTART	: false;	// Address starts with a single colon
+		if (($matchesIP[0][$groupCount - 1] === ':') && ($matchesIP[0][$groupCount - 2] !== ':')) return $diagnose ? ISEMAIL_IPV6SINGLECOLONEND	: false;	// Address ends with a single colon
 
 		// Check for unmatched characters
 		array_multisort($matchesIP[1], SORT_DESC);
-		if ($matchesIP[1][0] !== '')								return $diagnose ? ISEMAIL_IPV6BADCHAR		: false;	// Illegal characters in address
-
+		if ($matchesIP[1][0] !== '') {
+//echo "\n<br /><pre>\$matchesIP[1] = " . var_export($matchesIP[1], true) . "</pre>\n"; // debug
+		return $diagnose ? ISEMAIL_IPV6BADCHAR		: false;	// Illegal characters in address
+} // debug
 		// It's a valid IPv6 address, so...
-		return $diagnose ? ISEMAIL_VALID : true;
+		return ($diagnose) ? $return_status : true;
+// revision 2.1: bug fix: now correctly return warning status
 	} else {
 		// It's a domain name...
 
@@ -450,8 +471,9 @@
 // version 2.0: Downgraded to a warning
 
 		// Check DNS?
-		if ($checkDNS && function_exists('checkdnsrr')) {
-			if (!(checkdnsrr($domain, 'A') || checkdnsrr($domain, 'MX')))			return $diagnose ? ISEMAIL_DOMAINNOTFOUND	: false;	// Domain doesn't actually exist
+		if ($diagnose && ($return_status === ISEMAIL_VALID) && $checkDNS && function_exists('checkdnsrr')) {
+			if (!(checkdnsrr($domain, 'A')))	$return_status = ISEMAIL_DOMAINNOTFOUND;	// 'A' record for domain can't be found
+			if (!(checkdnsrr($domain, 'MX')))	$return_status = ISEMAIL_MXNOTFOUND;		// 'MX' record for domain can't be found
 		}
 	}
 

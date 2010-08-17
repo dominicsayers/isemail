@@ -3,6 +3,7 @@ Copyright 2008-2010 Dominic Sayers <dominic@sayers.cc>
 http://www.dominicsayers.com/isemail
 BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
+// revision 2.1: Revisited IPv6 address validation in the light of RFC 4291
 // version 2.0: Strict tests for validity, optional warnings for unlikely real-world addresses
 // revision 1.18: Standardised build and release process for this script
 // revision 1.17: Upper length limit corrected to 254 characters

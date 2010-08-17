@@ -11,16 +11,16 @@
 <?php
 require_once '../devpkg.php';				//	Dominic Sayers
 
-$addresses	= array();
-$ids		= array();
+$addresses		= array();
+$ids			= array();
 
-$duplicates				= array();
+$duplicates		= array();
 $duplicates['address']	= array();
-$duplicates['id']		= array();
+$duplicates['id']	= array();
 
-$dirty = false;
+$dirty 			= false;
 
-$document	= new DOMDocument();
+$document		= new DOMDocument();
 
 $document->load('tests.xml');
 

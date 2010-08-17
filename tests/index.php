@@ -33,16 +33,27 @@ hr {clear:left;}
 <body>
 <?php
 require_once '../devpkg.php';
+require_once '../extras/is_email_statustext.php';
 
-function unitTest (\$email, \$expected, \$comment = '', \$id = '') {
+function unitTest (\$email, \$expected, \$warn_expected, \$comment = '', \$id = '') {
 	\$diagnosis	= devpkg(\$email, false, true);
-	\$warning	= (\$diagnosis > ISEMAIL_WARNING) ? \$diagnosis : '&nbsp;';
-	\$valid		= ((\$diagnosis === ISEMAIL_VALID) || (\$warning !== '&nbsp;'));
-	\$not		= (\$valid) ? 'Valid' : 'Not valid';
-	\$unexpected	= (\$valid !== \$expected) ? " <strong>\$not</strong>" : "\$not";
-	\$comment	= (\$comment === '') ? "&nbsp;" : stripslashes("\$comment");
+	\$text		= is_email_statustext(\$diagnosis);
 
-	return "<div><p class=\\"address\\"<em>\$email</em></p><p class=\\"id\\">\$id</p><p class=\\"valid\\">\$unexpected</p><p class=\\"warning\\">\$warning</p><p class=\\"diagnosis\\">\$diagnosis</p><p class=\\"comment\\">\$comment</p></div>\\n";
+	\$warn		= ((\$diagnosis & ISEMAIL_WARNING) !== 0);
+	\$valid		= (\$diagnosis < ISEMAIL_ERROR);
+
+	\$warning	= (\$warn) ? \$diagnosis : '&nbsp;';
+	\$result		= (\$valid) ? 'Valid' : 'Not valid';
+
+	if (\$valid	!== \$expected)		\$result		= "<strong>\$result</strong>";
+	if (\$warn	!== \$warn_expected)	\$warning	= "<strong>\$warning</strong>";
+
+	\$comment	= stripslashes(\$comment);
+
+	if (\$text !== '')	\$comment .= (\$comment === '') ? stripslashes(\$text) : ' (' . stripslashes(\$text) . ')';
+	if (\$comment === '')	\$comment = "&nbsp;";
+
+	return "<div><p class=\\"address\\"<em>\$email</em></p><p class=\\"id\\">\$id</p><p class=\\"valid\\">\$result</p><p class=\\"warning\\">\$warning</p><p class=\\"diagnosis\\">\$diagnosis</p><p class=\\"comment\\">\$comment</p></div>\\n";
 }
 
 
@@ -70,7 +81,8 @@ for ($i = 0; $i < $testList->length; $i++) {
 	$tagList = $testList->item($i)->childNodes;
 
 	$address	= '';
-	$valid		= '';
+	$valid		= 'false';
+	$warning	= 'false';
 	$comment	= '';
 
 	for ($j = 0; $j < $tagList->length; $j++) {
@@ -81,13 +93,13 @@ for ($i = 0; $i < $testList->length; $i++) {
 		}
 	}
 
-	$expected	= ($valid === 'true') ? true : false;
+//-	$expected	= ($valid === 'true') ? true : false;
 	$needles	= array('\\0'	, '\\'		, '"'	, '$'	, chr(9)	,chr(10)	,chr(13));
 	$substitutes	= array(chr(0)	, '\\\\'	, '\\"'	, '\\$'	, '\t'		,'\n'		,'\r');
 	$address	= str_replace($needles, $substitutes, $address);
 	$comment	= str_replace($needles, $substitutes, $comment);
 
-	$php .= "echo unitTest(\"$address\", $valid, \"$comment\", \"$id\");\n";
+	$php .= "echo unitTest(\"$address\", $valid, $warning, \"$comment\", \"$id\");\n";
 }
 
 // Bottom of PHP script
