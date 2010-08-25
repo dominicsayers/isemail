@@ -33,7 +33,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.1.5 - Now uses RFC 4291 as the authority for IPv6 format. This means :: can represent *one* omitted zero group
+ * @version	2.1.6 - Now uses RFC 4291 as the authority for IPv6 format. This means :: can represent *one* omitted zero group
  */
 
 // The quality of this code has been improved greatly by using PHPLint
