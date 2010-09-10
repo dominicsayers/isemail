@@ -1,15 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html><head>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-<link href="../../../CSS/style.php" rel="stylesheet" type="text/css" />
-<link href="../../../CSS/layout.php" rel="stylesheet" type="text/css" />
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<title>Finding any duplicate tests or IDs</title>
+	</head>
 
-</head>
-
-<body>
-
+	<body>
 <?php
-require_once '../devpkg.php';				//	Dominic Sayers
+require_once '../is_email.php';
 
 $addresses		= array();
 $ids			= array();
@@ -22,15 +20,15 @@ $dirty 			= false;
 
 $document		= new DOMDocument();
 
-$document->load('tests.xml');
+$document->load('../test/tests.xml');
 
 $tests		= $document->getElementsByTagName('tests')->item(0);
 $version	= $tests->getAttribute("version");
 $testList	= $document->getElementsByTagName('test');
 
 for ($i = 0; $i < $testList->length; ++$i) {
-	$test = $testList->item($i);
-	$tagList = $test->childNodes;
+	$test		= $testList->item($i);
+	$tagList	= $test->childNodes;
 
 	unset($id);
 
@@ -46,8 +44,8 @@ for ($i = 0; $i < $testList->length; ++$i) {
 		$duplicates['address'][]	= $address;
 		$duplicates['addressIDs'][]	= $id;
 	} else {
-		$addresses[]				= $address;
-		
+		$addresses[]			= $address;
+
 		//	Add ID if it hasn't got one
 		if (!isset($id)) {
 			$dirty = true;
@@ -59,13 +57,13 @@ for ($i = 0; $i < $testList->length; ++$i) {
 	if (in_array($id, $ids)) {
 		$duplicates['id'][]	= $id;
 	} else {
-		$ids[]				= $id;
+		$ids[]			= $id;
 	}
 }
 
 if ($dirty) $document->save('new_tests.xml');
 
-$count = $results['count'];
+//-$count = $results['count'];
 
 echo "<p><strong>Duplicate addresses</strong></p>\n";
 

@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tests version="2.1">
+<!--
+Version	Date		Notes
+2.2	2010-09-10	26 tests were marked as being invalid addresses but were
+			still marked as expecting a warning. Cannot be both
+			invalid and a warning. Thanks to Daniel Marschall for
+			finding this.
+
+			I've changed all the example.com tests to iana.org so
+			that we are testing for a domain that does have an MX
+			record. I've also change the .museum and .edu tests
+			in a similar way. Where the test is still for a non-
+			existent domain I've changed the expectation to Warning
+-->
+<tests version="2.2" xmlns="http://www.w3.org/2001/XMLSchema-instance"
+		SchemaLocation="tests.xsd">
 	<test>
-		<address>first.last@example.com</address>
+		<address>first.last@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Dominic Sayers</source>
@@ -9,7 +23,7 @@
 		<id>1</id>
 	</test>
 	<test>
-		<address>1234567890123456789012345678901234567890123456789012345678901234@example.com</address>
+		<address>1234567890123456789012345678901234567890123456789012345678901234@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Dominic Sayers</source>
@@ -25,7 +39,7 @@
 		<id>3</id>
 	</test>
 	<test>
-		<address>"first\"last"@example.com</address>
+		<address>"first\"last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -33,7 +47,7 @@
 		<id>4</id>
 	</test>
 	<test>
-		<address>first\@last@example.com</address>
+		<address>first\@last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Escaping can only happen within a quoted string</comment>
@@ -42,7 +56,7 @@
 		<id>5</id>
 	</test>
 	<test>
-		<address>"first@last"@example.com</address>
+		<address>"first@last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -50,7 +64,7 @@
 		<id>6</id>
 	</test>
 	<test>
-		<address>"first\\last"@example.com</address>
+		<address>"first\\last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -60,16 +74,16 @@
 	<test>
 		<address>x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x2</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<comment>Total length reduced to 254 characters so it's still valid</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>8</id>
 	</test>
 	<test>
-		<address>1234567890123456789012345678901234567890123456789012345678@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.123456789012345678901234567890123456789012345678901234567890123.example.com</address>
+		<address>1234567890123456789012345678901234567890123456789012345678@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.123456789012345678901234567890123456789012345678901234567890123.iana.org</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<comment>Total length reduced to 254 characters so it's still valid</comment>
 		<source>RFC 3696 erratum 1690</source>
 		<sourcelink>http://www.rfc-editor.org/errata_search.php?rfc=3696&amp;eid=1690</sourcelink>
@@ -140,15 +154,15 @@
 		<id>17</id>
 	</test>
 	<test>
-		<address>first.last@x23456789012345678901234567890123456789012345678901234567890123.example.com</address>
+		<address>first.last@x23456789012345678901234567890123456789012345678901234567890123.iana.org</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>18</id>
 	</test>
 	<test>
-		<address>first.last@1xample.com</address>
+		<address>first.last@3com.com</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Dominic Sayers</source>
@@ -156,15 +170,15 @@
 		<id>19</id>
 	</test>
 	<test>
-		<address>first.last@123.example.com</address>
+		<address>first.last@123.iana.org</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>20</id>
 	</test>
 	<test>
-		<address>123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12.example.com</address>
+		<address>123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345.iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Entire address is longer than 254 characters</comment>
@@ -182,7 +196,7 @@
 		<id>22</id>
 	</test>
 	<test>
-		<address>12345678901234567890123456789012345678901234567890123456789012345@example.com</address>
+		<address>12345678901234567890123456789012345678901234567890123456789012345@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part more than 64 characters</comment>
@@ -191,7 +205,7 @@
 		<id>23</id>
 	</test>
 	<test>
-		<address>.first.last@example.com</address>
+		<address>.first.last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part starts with a dot</comment>
@@ -200,7 +214,7 @@
 		<id>24</id>
 	</test>
 	<test>
-		<address>first.last.@example.com</address>
+		<address>first.last.@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part ends with a dot</comment>
@@ -209,7 +223,7 @@
 		<id>25</id>
 	</test>
 	<test>
-		<address>first..last@example.com</address>
+		<address>first..last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part has consecutive dots</comment>
@@ -218,7 +232,7 @@
 		<id>26</id>
 	</test>
 	<test>
-		<address>"first"last"@example.com</address>
+		<address>"first"last"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part contains unescaped excluded characters</comment>
@@ -227,7 +241,7 @@
 		<id>27</id>
 	</test>
 	<test>
-		<address>"first\last"@example.com</address>
+		<address>"first\last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Any character can be escaped in a quoted string</comment>
@@ -236,7 +250,7 @@
 		<id>28</id>
 	</test>
 	<test>
-		<address>"""@example.com</address>
+		<address>"""@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part contains unescaped excluded characters</comment>
@@ -245,7 +259,7 @@
 		<id>29</id>
 	</test>
 	<test>
-		<address>"\"@example.com</address>
+		<address>"\"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part cannot end with a backslash</comment>
@@ -254,7 +268,7 @@
 		<id>30</id>
 	</test>
 	<test>
-		<address>""@example.com</address>
+		<address>""@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part is effectively empty</comment>
@@ -263,7 +277,7 @@
 		<id>31</id>
 	</test>
 	<test>
-		<address>first\\@last@example.com</address>
+		<address>first\\@last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Local part contains unescaped excluded characters</comment>
@@ -443,7 +457,7 @@
 		<id>51</id>
 	</test>
 	<test>
-		<address>first.last@x234567890123456789012345678901234567890123456789012345678901234.example.com</address>
+		<address>first.last@x234567890123456789012345678901234567890123456789012345678901234.iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Label can't be longer than 63 octets</comment>
@@ -452,7 +466,7 @@
 		<id>52</id>
 	</test>
 	<test>
-		<address>"Abc\@def"@example.com</address>
+		<address>"Abc\@def"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -460,7 +474,7 @@
 		<id>53</id>
 	</test>
 	<test>
-		<address>"Fred\ Bloggs"@example.com</address>
+		<address>"Fred\ Bloggs"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (as amended by erratum 2005-07-09)</source>
@@ -468,7 +482,7 @@
 		<id>54</id>
 	</test>
 	<test>
-		<address>"Joe.\\Blow"@example.com</address>
+		<address>"Joe.\\Blow"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (as amended by erratum 2005-07-09)</source>
@@ -476,7 +490,7 @@
 		<id>55</id>
 	</test>
 	<test>
-		<address>"Abc@def"@example.com</address>
+		<address>"Abc@def"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (as amended by erratum 2005-07-09)</source>
@@ -484,7 +498,7 @@
 		<id>56</id>
 	</test>
 	<test>
-		<address>"Fred Bloggs"@example.com</address>
+		<address>"Fred Bloggs"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -492,7 +506,7 @@
 		<id>57</id>
 	</test>
 	<test>
-		<address>user+mailbox@example.com</address>
+		<address>user+mailbox@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -500,7 +514,7 @@
 		<id>58</id>
 	</test>
 	<test>
-		<address>customer/department=shipping@example.com</address>
+		<address>customer/department=shipping@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -508,7 +522,7 @@
 		<id>59</id>
 	</test>
 	<test>
-		<address>$A12345@example.com</address>
+		<address>$A12345@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -516,7 +530,7 @@
 		<id>60</id>
 	</test>
 	<test>
-		<address>!def!xyz%abc@example.com</address>
+		<address>!def!xyz%abc@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -524,7 +538,7 @@
 		<id>61</id>
 	</test>
 	<test>
-		<address>_somename@example.com</address>
+		<address>_somename@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>RFC 3696 (February 2004)</source>
@@ -540,7 +554,7 @@
 		<id>63</id>
 	</test>
 	<test>
-		<address>abc\@def@example.com</address>
+		<address>abc\@def@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>This example from RFC 3696 was corrected in an erratum</comment>
@@ -549,7 +563,7 @@
 		<id>64</id>
 	</test>
 	<test>
-		<address>abc\\@example.com</address>
+		<address>abc\\@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>This example from RFC 3696 was corrected in an erratum</comment>
@@ -558,7 +572,7 @@
 		<id>65</id>
 	</test>
 	<test>
-		<address>peter.piper@example.com</address>
+		<address>peter.piper@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Doug Lovell (LinuxJournal, June 2007)</source>
@@ -566,7 +580,7 @@
 		<id>66</id>
 	</test>
 	<test>
-		<address>Doug\ \"Ace\"\ Lovell@example.com</address>
+		<address>Doug\ \"Ace\"\ Lovell@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Escaping can only happen in a quoted string</comment>
@@ -575,7 +589,7 @@
 		<id>67</id>
 	</test>
 	<test>
-		<address>"Doug \"Ace\" L."@example.com</address>
+		<address>"Doug \"Ace\" L."@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Doug Lovell (LinuxJournal, June 2007)</source>
@@ -583,7 +597,7 @@
 		<id>68</id>
 	</test>
 	<test>
-		<address>abc@def@example.com</address>
+		<address>abc@def@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -592,7 +606,7 @@
 		<id>69</id>
 	</test>
 	<test>
-		<address>abc\\@def@example.com</address>
+		<address>abc\\@def@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -601,7 +615,7 @@
 		<id>70</id>
 	</test>
 	<test>
-		<address>abc\@example.com</address>
+		<address>abc\@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -610,7 +624,7 @@
 		<id>71</id>
 	</test>
 	<test>
-		<address>@example.com</address>
+		<address>@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>No local part</comment>
@@ -628,7 +642,7 @@
 		<id>73</id>
 	</test>
 	<test>
-		<address>"qu@example.com</address>
+		<address>"qu@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -637,7 +651,7 @@
 		<id>74</id>
 	</test>
 	<test>
-		<address>ote"@example.com</address>
+		<address>ote"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -646,7 +660,7 @@
 		<id>75</id>
 	</test>
 	<test>
-		<address>.dot@example.com</address>
+		<address>.dot@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -655,7 +669,7 @@
 		<id>76</id>
 	</test>
 	<test>
-		<address>dot.@example.com</address>
+		<address>dot.@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -664,7 +678,7 @@
 		<id>77</id>
 	</test>
 	<test>
-		<address>two..dot@example.com</address>
+		<address>two..dot@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -673,7 +687,7 @@
 		<id>78</id>
 	</test>
 	<test>
-		<address>"Doug "Ace" L."@example.com</address>
+		<address>"Doug "Ace" L."@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -682,7 +696,7 @@
 		<id>79</id>
 	</test>
 	<test>
-		<address>Doug\ \"Ace\"\ L\.@example.com</address>
+		<address>Doug\ \"Ace\"\ L\.@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -691,7 +705,7 @@
 		<id>80</id>
 	</test>
 	<test>
-		<address>hello world@example.com</address>
+		<address>hello world@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Doug Lovell says this should fail</comment>
@@ -711,7 +725,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>test@example.com</address>
+		<address>test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>83</id>
@@ -719,7 +733,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>TEST@example.com</address>
+		<address>TEST@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>84</id>
@@ -727,7 +741,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>1234567890@example.com</address>
+		<address>1234567890@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>85</id>
@@ -735,7 +749,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>test+test@example.com</address>
+		<address>test+test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>86</id>
@@ -743,7 +757,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>test-test@example.com</address>
+		<address>test-test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>87</id>
@@ -751,7 +765,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>t*est@example.com</address>
+		<address>t*est@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>88</id>
@@ -759,7 +773,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>+1~1+@example.com</address>
+		<address>+1~1+@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>89</id>
@@ -767,7 +781,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>{_test_}@example.com</address>
+		<address>{_test_}@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>90</id>
@@ -775,7 +789,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>"[[ test ]]"@example.com</address>
+		<address>"[[ test ]]"@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>91</id>
@@ -783,7 +797,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>false</warning>
-		<address>test.test@example.com</address>
+		<address>test.test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>92</id>
@@ -791,7 +805,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>"test.test"@example.com</address>
+		<address>"test.test"@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>93</id>
@@ -799,7 +813,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>test."test"@example.com</address>
+		<address>test."test"@iana.org</address>
 		<comment>Obsolete form, but documented in RFC 5322</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -808,14 +822,14 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>"test@test"@example.com</address>
+		<address>"test@test"@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>95</id>
 	</test>
 	<test>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<address>test@123.123.123.x123</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -840,16 +854,16 @@
 	</test>
 	<test>
 		<valid>true</valid>
-		<warning>false</warning>
-		<address>test@example.example.com</address>
+		<warning>true</warning>
+		<address>test@example.iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>99</id>
 	</test>
 	<test>
 		<valid>true</valid>
-		<warning>false</warning>
-		<address>test@example.example.example.com</address>
+		<warning>true</warning>
+		<address>test@example.example.iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>100</id>
@@ -857,7 +871,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>test.example.com</address>
+		<address>test.iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>101</id>
@@ -865,7 +879,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>test.@example.com</address>
+		<address>test.@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>102</id>
@@ -873,7 +887,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>test..test@example.com</address>
+		<address>test..test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>103</id>
@@ -881,7 +895,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>.test@example.com</address>
+		<address>.test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>104</id>
@@ -889,7 +903,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>test@test@example.com</address>
+		<address>test@test@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>105</id>
@@ -897,7 +911,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>test@@example.com</address>
+		<address>test@@iana.org</address>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
 		<id>106</id>
@@ -905,7 +919,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>-- test --@example.com</address>
+		<address>-- test --@iana.org</address>
 		<comment>No spaces allowed in local part</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -914,7 +928,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>[test]@example.com</address>
+		<address>[test]@iana.org</address>
 		<comment>Square brackets only allowed within quotes</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -923,7 +937,7 @@
 	<test>
 		<valid>true</valid>
 		<warning>true</warning>
-		<address>"test\test"@example.com</address>
+		<address>"test\test"@iana.org</address>
 		<comment>Any character can be escaped in a quoted string</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -932,7 +946,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>"test"test"@example.com</address>
+		<address>"test"test"@iana.org</address>
 		<comment>Quotes cannot be nested</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -941,7 +955,7 @@
 	<test>
 		<valid>false</valid>
 		<warning>false</warning>
-		<address>()[]\;:,&gt;&lt;@example.com</address>
+		<address>()[]\;:,&gt;&lt;@iana.org</address>
 		<comment>Disallowed Characters</comment>
 		<source>Dave Child</source>
 		<sourcelink>http://code.google.com/p/php-email-address-validation/</sourcelink>
@@ -1029,7 +1043,7 @@
 		<id>120</id>
 	</test>
 	<test>
-		<address>"test\\blah"@example.com</address>
+		<address>"test\\blah"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Phil Haack</source>
@@ -1037,7 +1051,7 @@
 		<id>121</id>
 	</test>
 	<test>
-		<address>"test\blah"@example.com</address>
+		<address>"test\blah"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Any character can be escaped in a quoted string</comment>
@@ -1046,7 +1060,7 @@
 		<id>122</id>
 	</test>
 	<test>
-		<address>"test\&#13;blah"@example.com</address>
+		<address>"test\&#13;blah"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Quoted string specifically excludes carriage returns unless escaped</comment>
@@ -1055,7 +1069,7 @@
 		<id>123</id>
 	</test>
 	<test>
-		<address>"test&#13;blah"@example.com</address>
+		<address>"test&#13;blah"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Quoted string specifically excludes carriage returns</comment>
@@ -1064,7 +1078,7 @@
 		<id>124</id>
 	</test>
 	<test>
-		<address>"test\"blah"@example.com</address>
+		<address>"test\"blah"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Phil Haack</source>
@@ -1072,7 +1086,7 @@
 		<id>125</id>
 	</test>
 	<test>
-		<address>"test"blah"@example.com</address>
+		<address>"test"blah"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Phil Haack says so</comment>
@@ -1081,7 +1095,7 @@
 		<id>126</id>
 	</test>
 	<test>
-		<address>customer/department@example.com</address>
+		<address>customer/department@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Phil Haack</source>
@@ -1089,7 +1103,7 @@
 		<id>127</id>
 	</test>
 	<test>
-		<address>_Yosemite.Sam@example.com</address>
+		<address>_Yosemite.Sam@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Phil Haack</source>
@@ -1097,7 +1111,7 @@
 		<id>128</id>
 	</test>
 	<test>
-		<address>~@example.com</address>
+		<address>~@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Phil Haack</source>
@@ -1105,7 +1119,7 @@
 		<id>129</id>
 	</test>
 	<test>
-		<address>.wooly@example.com</address>
+		<address>.wooly@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Phil Haack says so</comment>
@@ -1114,7 +1128,7 @@
 		<id>130</id>
 	</test>
 	<test>
-		<address>wo..oly@example.com</address>
+		<address>wo..oly@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Phil Haack says so</comment>
@@ -1123,7 +1137,7 @@
 		<id>131</id>
 	</test>
 	<test>
-		<address>pootietang.@example.com</address>
+		<address>pootietang.@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Phil Haack says so</comment>
@@ -1132,7 +1146,7 @@
 		<id>132</id>
 	</test>
 	<test>
-		<address>.@example.com</address>
+		<address>.@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Phil Haack says so</comment>
@@ -1141,7 +1155,7 @@
 		<id>133</id>
 	</test>
 	<test>
-		<address>"Austin@Powers"@example.com</address>
+		<address>"Austin@Powers"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Phil Haack</source>
@@ -1149,7 +1163,7 @@
 		<id>134</id>
 	</test>
 	<test>
-		<address>Ima.Fool@example.com</address>
+		<address>Ima.Fool@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Phil Haack</source>
@@ -1157,7 +1171,7 @@
 		<id>135</id>
 	</test>
 	<test>
-		<address>"Ima.Fool"@example.com</address>
+		<address>"Ima.Fool"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Phil Haack</source>
@@ -1165,7 +1179,7 @@
 		<id>136</id>
 	</test>
 	<test>
-		<address>"Ima Fool"@example.com</address>
+		<address>"Ima Fool"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Phil Haack</source>
@@ -1173,7 +1187,7 @@
 		<id>137</id>
 	</test>
 	<test>
-		<address>Ima Fool@example.com</address>
+		<address>Ima Fool@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Phil Haack says so</comment>
@@ -1191,7 +1205,7 @@
 		<id>139</id>
 	</test>
 	<test>
-		<address>"first"."last"@example.com</address>
+		<address>"first"."last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -1199,7 +1213,7 @@
 		<id>140</id>
 	</test>
 	<test>
-		<address>"first".middle."last"@example.com</address>
+		<address>"first".middle."last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -1207,7 +1221,7 @@
 		<id>141</id>
 	</test>
 	<test>
-		<address>"first\\"last"@example.com</address>
+		<address>"first\\"last"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Contains an unescaped quote</comment>
@@ -1216,7 +1230,7 @@
 		<id>142</id>
 	</test>
 	<test>
-		<address>"first".last@example.com</address>
+		<address>"first".last@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>obs-local-part form as described in RFC 5322</comment>
@@ -1225,7 +1239,7 @@
 		<id>143</id>
 	</test>
 	<test>
-		<address>first."last"@example.com</address>
+		<address>first."last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>obs-local-part form as described in RFC 5322</comment>
@@ -1234,7 +1248,7 @@
 		<id>144</id>
 	</test>
 	<test>
-		<address>"first"."middle"."last"@example.com</address>
+		<address>"first"."middle"."last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>obs-local-part form as described in RFC 5322</comment>
@@ -1243,7 +1257,7 @@
 		<id>145</id>
 	</test>
 	<test>
-		<address>"first.middle"."last"@example.com</address>
+		<address>"first.middle"."last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>obs-local-part form as described in RFC 5322</comment>
@@ -1252,7 +1266,7 @@
 		<id>146</id>
 	</test>
 	<test>
-		<address>"first.middle.last"@example.com</address>
+		<address>"first.middle.last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>obs-local-part form as described in RFC 5322</comment>
@@ -1261,7 +1275,7 @@
 		<id>147</id>
 	</test>
 	<test>
-		<address>"first..last"@example.com</address>
+		<address>"first..last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>obs-local-part form as described in RFC 5322</comment>
@@ -1279,7 +1293,7 @@
 		<id>149</id>
 	</test>
 	<test>
-		<address>"first\\\"last"@example.com</address>
+		<address>"first\\\"last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -1287,7 +1301,7 @@
 		<id>150</id>
 	</test>
 	<test>
-		<address>first."mid\dle"."last"@example.com</address>
+		<address>first."mid\dle"."last"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Backslash can escape anything but must escape something</comment>
@@ -1296,7 +1310,7 @@
 		<id>151</id>
 	</test>
 	<test>
-		<address>Test.&#13;&#10; Folding.&#13;&#10; Whitespace@example.com</address>
+		<address>Test.&#13;&#10; Folding.&#13;&#10; Whitespace@iana.org</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Dominic Sayers</source>
@@ -1304,7 +1318,7 @@
 		<id>152</id>
 	</test>
 	<test>
-		<address>first."".last@example.com</address>
+		<address>first."".last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Contains a zero-length element</comment>
@@ -1313,7 +1327,7 @@
 		<id>153</id>
 	</test>
 	<test>
-		<address>first\last@example.com</address>
+		<address>first\last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Unquoted string must be an atom</comment>
@@ -1322,7 +1336,7 @@
 		<id>154</id>
 	</test>
 	<test>
-		<address>Abc\@def@example.com</address>
+		<address>Abc\@def@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Was incorrectly given as a valid address in the original RFC 3696</comment>
@@ -1331,7 +1345,7 @@
 		<id>155</id>
 	</test>
 	<test>
-		<address>Fred\ Bloggs@example.com</address>
+		<address>Fred\ Bloggs@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Was incorrectly given as a valid address in the original RFC 3696</comment>
@@ -1340,7 +1354,7 @@
 		<id>156</id>
 	</test>
 	<test>
-		<address>Joe.\\Blow@example.com</address>
+		<address>Joe.\\Blow@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Was incorrectly given as a valid address in the original RFC 3696</comment>
@@ -1358,7 +1372,7 @@
 		<id>158</id>
 	</test>
 	<test>
-		<address>"test\&#13;&#10; blah"@example.com</address>
+		<address>"test\&#13;&#10; blah"@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Folding white space can't appear within a quoted pair</comment>
@@ -1367,7 +1381,7 @@
 		<id>159</id>
 	</test>
 	<test>
-		<address>"test&#13;&#10; blah"@example.com</address>
+		<address>"test&#13;&#10; blah"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>This is a valid quoted string with folding white space</comment>
@@ -1466,7 +1480,7 @@
 		<id>170</id>
 	</test>
 	<test>
-		<address>first().last@example.com</address>
+		<address>first().last@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>A valid address containing an empty comment</comment>
@@ -1475,7 +1489,7 @@
 		<id>171</id>
 	</test>
 	<test>
-		<address>first.(&#13;&#10; middle&#13;&#10; )last@example.com</address>
+		<address>first.(&#13;&#10; middle&#13;&#10; )last@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Comment with folding white space</comment>
@@ -1484,7 +1498,7 @@
 		<id>172</id>
 	</test>
 	<test>
-		<address>first(12345678901234567890123456789012345678901234567890)last@(1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890)example.com</address>
+		<address>first(12345678901234567890123456789012345678901234567890)last@(1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890)iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Too long with comments, not too long without</comment>
@@ -1493,7 +1507,7 @@
 		<id>173</id>
 	</test>
 	<test>
-		<address>first(Welcome to&#13;&#10; the ("wonderful" (!)) world&#13;&#10; of email)@example.com</address>
+		<address>first(Welcome to&#13;&#10; the ("wonderful" (!)) world&#13;&#10; of email)@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Silly example from my blog post</comment>
@@ -1538,7 +1552,7 @@
 		<id>178</id>
 	</test>
 	<test>
-		<address>first(middle)last@example.com</address>
+		<address>first(middle)last@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Can't have a comment or white space except at an element boundary</comment>
@@ -1547,7 +1561,7 @@
 		<id>179</id>
 	</test>
 	<test>
-		<address>first(abc.def).last@example.com</address>
+		<address>first(abc.def).last@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Comment can contain a dot</comment>
@@ -1556,7 +1570,7 @@
 		<id>180</id>
 	</test>
 	<test>
-		<address>first(a"bc.def).last@example.com</address>
+		<address>first(a"bc.def).last@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Comment can contain double quote</comment>
@@ -1565,7 +1579,7 @@
 		<id>181</id>
 	</test>
 	<test>
-		<address>first.(")middle.last(")@example.com</address>
+		<address>first.(")middle.last(")@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Comment can contain a quote</comment>
@@ -1583,7 +1597,7 @@
 		<id>183</id>
 	</test>
 	<test>
-		<address>first(abc\(def)@example.com</address>
+		<address>first(abc\(def)@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<comment>Comment can contain quoted-pair</comment>
@@ -1601,7 +1615,7 @@
 		<id>185</id>
 	</test>
 	<test>
-		<address>a(a(b(c)d(e(f))g)h(i)j)@example.com</address>
+		<address>a(a(b(c)d(e(f))g)h(i)j)@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Cal Henderson</source>
@@ -1609,7 +1623,7 @@
 		<id>186</id>
 	</test>
 	<test>
-		<address>a(a(b(c)d(e(f))g)(h(i)j)@example.com</address>
+		<address>a(a(b(c)d(e(f))g)(h(i)j)@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<comment>Braces are not properly matched</comment>
@@ -1660,7 +1674,7 @@
 	<test>
 		<address>a@bar.com</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Paul Gregg</source>
 		<sourcelink>http://pgregg.com/projects/php/code/showvalidemail.php</sourcelink>
 		<id>193</id>
@@ -1734,7 +1748,7 @@
 	<test>
 		<address>a-b@bar.com</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Paul Gregg</source>
 		<sourcelink>http://pgregg.com/projects/php/code/showvalidemail.php</sourcelink>
 		<id>202</id>
@@ -1791,7 +1805,7 @@
 	<test>
 		<address>a@b.co-foo.uk</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Paul Gregg</source>
 		<sourcelink>http://pgregg.com/projects/php/code/showvalidemail.php</sourcelink>
 		<id>209</id>
@@ -1805,7 +1819,7 @@
 		<id>210</id>
 	</test>
 	<test>
-		<address>"Test \"Fail\" Ing"@example.com</address>
+		<address>"Test \"Fail\" Ing"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Paul Gregg</source>
@@ -1813,7 +1827,7 @@
 		<id>211</id>
 	</test>
 	<test>
-		<address>valid@special.museum</address>
+		<address>valid@about.museum</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Paul Gregg</source>
@@ -1821,7 +1835,7 @@
 		<id>212</id>
 	</test>
 	<test>
-		<address>invalid@special.museum-</address>
+		<address>invalid@about.museum-</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<source>Paul Gregg</source>
@@ -1831,7 +1845,7 @@
 	<test>
 		<address>shaitan@my-domain.thisisminekthx</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<comment>Disagree with Paul Gregg here</comment>
 		<source>Paul Gregg</source>
 		<sourcelink>http://pgregg.com/projects/php/code/showvalidemail.php</sourcelink>
@@ -1856,7 +1870,7 @@
 		<id>216</id>
 	</test>
 	<test>
-		<address>"Joe\\Blow"@example.com</address>
+		<address>"Joe\\Blow"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Paul Gregg</source>
@@ -1864,7 +1878,7 @@
 		<id>217</id>
 	</test>
 	<test>
-		<address>Invalid \&#10; Folding \&#10; Whitespace@example.com</address>
+		<address>Invalid \&#10; Folding \&#10; Whitespace@iana.org</address>
 		<valid>false</valid>
 		<warning>false</warning>
 		<source>Paul Gregg</source>
@@ -1881,7 +1895,7 @@
 		<id>219</id>
 	</test>
 	<test>
-		<address>user%uucp!path@somehost.edu</address>
+		<address>user%uucp!path@berkeley.edu</address>
 		<valid>true</valid>
 		<warning>false</warning>
 		<source>Paul Gregg</source>
@@ -1889,7 +1903,7 @@
 		<id>220</id>
 	</test>
 	<test>
-		<address>"first(last)"@example.com</address>
+		<address>"first(last)"@iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -1897,7 +1911,7 @@
 		<id>221</id>
 	</test>
 	<test>
-		<address> &#13;&#10; (&#13;&#10; x &#13;&#10; ) &#13;&#10; first&#13;&#10; ( &#13;&#10; x&#13;&#10; ) &#13;&#10; .&#13;&#10; ( &#13;&#10; x) &#13;&#10; last &#13;&#10; (  x &#13;&#10; ) &#13;&#10; @example.com</address>
+		<address> &#13;&#10; (&#13;&#10; x &#13;&#10; ) &#13;&#10; first&#13;&#10; ( &#13;&#10; x&#13;&#10; ) &#13;&#10; .&#13;&#10; ( &#13;&#10; x) &#13;&#10; last &#13;&#10; (  x &#13;&#10; ) &#13;&#10; @iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
 		<source>Dominic Sayers</source>
@@ -1908,7 +1922,7 @@
 		<address>test. &#13;&#10; &#13;&#10; obs@syntax.com</address>
 		<valid>true</valid>
 		<warning>true</warning>
-		<comment>obs-fws allows multiple lines</comment>
+		<comment>obs-fws allows multiple lines (seems to be a dupe of 224)</comment>
 		<source>George Pollard</source>
 		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
 		<id>223</id>
@@ -1932,28 +1946,28 @@
 		<id>225</id>
 	</test>
 	<test>
-		<address>"null \\0"@char.com</address>
+		<address>"Unicode NULL \&#x2400;"@char.com</address><!-- We can't store a Unicode Character 'NULL' (U+0000) in an XML document - please translate the &#x2400; (Unicode Character 'SYMBOL FOR NULL' (U+2400)) to a Unicode Character 'NULL' (U+0000) at run time -->
 		<valid>true</valid>
 		<warning>true</warning>
-		<comment>can have escaped null character</comment>
+		<comment>Can have escaped Unicode Character 'NULL' (U+0000)</comment>
 		<source>George Pollard</source>
 		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
 		<id>226</id>
 	</test>
 	<test>
-		<address>"null \0"@char.com</address>
+		<address>"Unicode NULL &#x2400;"@char.com</address><!-- We can't store a Unicode Character 'NULL' (U+0000) in an XML document - please translate the &#x2400; (Unicode Character 'SYMBOL FOR NULL' (U+2400)) to a Unicode Character 'NULL' (U+0000) at run time -->
 		<valid>false</valid>
 		<warning>false</warning>
-		<comment>cannot have unescaped null character</comment>
+		<comment>Cannot have unescaped Unicode Character 'NULL' (U+0000)</comment>
 		<source>George Pollard</source>
 		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
 		<id>227</id>
 	</test>
 	<test>
-		<address>null\\0@char.com</address>
+		<address>Unicode NULL \&#x2400;@char.com</address><!-- We can't store a Unicode Character 'NULL' (U+0000) in an XML document - please translate the &#x2400; (Unicode Character 'SYMBOL FOR NULL' (U+2400)) to a Unicode Character 'NULL' (U+0000) at run time -->
 		<valid>false</valid>
 		<warning>false</warning>
-		<comment>escaped null must be in quoted string</comment>
+		<comment>Escaped Unicode Character 'NULL' (U+0000) must be in quoted string</comment>
 		<source>George Pollard</source>
 		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
 		<id>228</id>
@@ -2006,7 +2020,7 @@
 	<test>
 		<address>first.last@[IPv6::::]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2015,7 +2029,7 @@
 	<test>
 		<address>first.last@[IPv6::b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2033,7 +2047,7 @@
 	<test>
 		<address>first.last@[IPv6::::b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2042,7 +2056,7 @@
 	<test>
 		<address>first.last@[IPv6::b3:b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2060,7 +2074,7 @@
 	<test>
 		<address>first.last@[IPv6::::b3:b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2078,7 +2092,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:::b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2087,7 +2101,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2105,7 +2119,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:::]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2114,7 +2128,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:a2:]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2132,7 +2146,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:a2:::]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2195,7 +2209,7 @@
 	<test>
 		<address>first.last@[IPv6::11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2204,7 +2218,7 @@
 	<test>
 		<address>first.last@[IPv6::::11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2213,7 +2227,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2231,7 +2245,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:::11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2249,7 +2263,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:a2:::11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2267,7 +2281,7 @@
 	<test>
 		<address>first.last@[IPv6:0123:4567:89ab:cdef::11.22.33.xx]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2285,7 +2299,7 @@
 	<test>
 		<address>first.last@[IPv6:0123:4567:89ab:CDEFF::11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2294,7 +2308,7 @@
 	<test>
 		<address>first.last@[IPv6:a1::a4:b1::b4:11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2303,7 +2317,7 @@
 	<test>
 		<address>first.last@[IPv6:a1::11.22.33]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2312,7 +2326,7 @@
 	<test>
 		<address>first.last@[IPv6:a1::11.22.33.44.55]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2321,7 +2335,7 @@
 	<test>
 		<address>first.last@[IPv6:a1::b211.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2339,7 +2353,7 @@
 	<test>
 		<address>first.last@[IPv6:a1::b2::11.22.33.44]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2348,7 +2362,7 @@
 	<test>
 		<address>first.last@[IPv6:a1::b3:]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2357,7 +2371,7 @@
 	<test>
 		<address>first.last@[IPv6::a2::b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2366,7 +2380,7 @@
 	<test>
 		<address>first.last@[IPv6:a1:a2:a3:a4:b1:b2:b3:]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
@@ -2375,7 +2389,7 @@
 	<test>
 		<address>first.last@[IPv6::a2:a3:a4:b1:b2:b3:b4]</address>
 		<valid>false</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<comment>IPv6 authority is RFC 4291</comment>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>

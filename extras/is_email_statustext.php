@@ -2,8 +2,8 @@
 /*
  * Return a text status message depending on the is_email() return status
  */
-/*.string.*/ function is_email_statustext(/*.integer.*/ $status) {
-	switch ($status) {
+/*.string.*/ function is_email_statustext(/*.integer.*/ $status, $explanatory = true) {
+	if ($explanatory) switch ($status) {
 		case ISEMAIL_VALID:			return 'Address is valid';											break;	// 0
 		// Warnings (valid address but unlikely in the real world)
 		case ISEMAIL_WARNING:			return 'Address is valid but unlikely in the real world';							break;	// 64
@@ -46,6 +46,50 @@
 		// Unexpected errors
 		case ISEMAIL_BADPARAMETER:		return 'Unrecognised parameter';										break;	// 190
 		default:				return 'Undefined error';												// 191 and others
+	}
+	else switch ($status) {
+		case ISEMAIL_VALID:			return 'ISEMAIL_VALID';			break;	// 0
+		// Warnings (valid address but unlikely in the real world)
+		case ISEMAIL_WARNING:			return 'ISEMAIL_WARNING';		break;	// 64
+		case ISEMAIL_TLD:			return 'ISEMAIL_TLD';			break;	// 65
+		case ISEMAIL_TLDNUMERIC:		return 'ISEMAIL_TLDNUMERIC';		break;	// 66
+		case ISEMAIL_QUOTEDSTRING:		return 'ISEMAIL_QUOTEDSTRING';		break;	// 67
+		case ISEMAIL_COMMENTS:			return 'ISEMAIL_COMMENTS';		break;	// 68
+		case ISEMAIL_FWS:			return 'ISEMAIL_FWS';			break;	// 69
+		case ISEMAIL_ADDRESSLITERAL:		return 'ISEMAIL_ADDRESSLITERAL';	break;	// 70
+		case ISEMAIL_UNLIKELYINITIAL:		return 'ISEMAIL_UNLIKELYINITIAL';	break;	// 71
+		case ISEMAIL_SINGLEGROUPELISION:	return 'ISEMAIL_SINGLEGROUPELISION';	break;	// 72
+		case ISEMAIL_DOMAINNOTFOUND:		return 'ISEMAIL_DOMAINNOTFOUND';	break;	// 73
+		case ISEMAIL_MXNOTFOUND:		return 'ISEMAIL_MXNOTFOUND';		break;	// 74
+		// Errors (invalid address)
+		case ISEMAIL_ERROR:			return 'ISEMAIL_ERROR';			break;	// 128
+		case ISEMAIL_TOOLONG:			return 'ISEMAIL_TOOLONG';		break;	// 129
+		case ISEMAIL_NOAT:			return 'ISEMAIL_NOAT';			break;	// 130
+		case ISEMAIL_NOLOCALPART:		return 'ISEMAIL_NOLOCALPART';		break;	// 131
+		case ISEMAIL_NODOMAIN:			return 'ISEMAIL_NODOMAIN';		break;	// 132
+		case ISEMAIL_ZEROLENGTHELEMENT:		return 'ISEMAIL_ZEROLENGTHELEMENT';	break;	// 133
+		case ISEMAIL_BADCOMMENT_START:		return 'ISEMAIL_BADCOMMENT_START';	break;	// 134
+		case ISEMAIL_BADCOMMENT_END:		return 'ISEMAIL_BADCOMMENT_END';	break;	// 135
+		case ISEMAIL_UNESCAPEDDELIM:		return 'ISEMAIL_EMPTYELEMENT';		break;	// 136
+		case ISEMAIL_EMPTYELEMENT:		return 'ISEMAIL_UNESCAPEDSPECIAL';	break;	// 137
+		case ISEMAIL_UNESCAPEDSPECIAL:		return 'ISEMAIL_LOCALTOOLONG';		break;	// 138
+		case ISEMAIL_LOCALTOOLONG:		return 'ISEMAIL_LOCALTOOLONG';		break;	// 139
+		case ISEMAIL_IPV4BADPREFIX:		return 'ISEMAIL_IPV4BADPREFIX';		break;	// 140
+		case ISEMAIL_IPV6BADPREFIXMIXED:	return 'ISEMAIL_IPV6BADPREFIXMIXED';	break;	// 141
+		case ISEMAIL_IPV6BADPREFIX:		return 'ISEMAIL_IPV6BADPREFIX';		break;	// 142
+		case ISEMAIL_IPV6GROUPCOUNT:		return 'ISEMAIL_IPV6GROUPCOUNT';	break;	// 143
+		case ISEMAIL_IPV6DOUBLEDOUBLECOLON:	return 'ISEMAIL_IPV6DOUBLEDOUBLECOLON';	break;	// 144
+		case ISEMAIL_IPV6BADCHAR:		return 'ISEMAIL_IPV6BADCHAR';		break;	// 145
+		case ISEMAIL_IPV6TOOMANYGROUPS:		return 'ISEMAIL_IPV6TOOMANYGROUPS';	break;	// 146
+		case ISEMAIL_DOMAINEMPTYELEMENT:	return 'ISEMAIL_DOMAINEMPTYELEMENT';	break;	// 147
+		case ISEMAIL_DOMAINELEMENTTOOLONG:	return 'ISEMAIL_DOMAINELEMENTTOOLONG';	break;	// 148
+		case ISEMAIL_DOMAINBADCHAR:		return 'ISEMAIL_DOMAINBADCHAR';		break;	// 149
+		case ISEMAIL_DOMAINTOOLONG:		return 'ISEMAIL_DOMAINTOOLONG';		break;	// 150
+		case ISEMAIL_IPV6SINGLECOLONSTART:	return 'ISEMAIL_IPV6SINGLECOLONSTART';	break;	// 151
+		case ISEMAIL_IPV6SINGLECOLONEND:	return 'ISEMAIL_IPV6SINGLECOLONEND';	break;	// 152
+		// Unexpected errors
+		case ISEMAIL_BADPARAMETER:		return 'ISEMAIL_BADPARAMETER';		break;	// 190
+		default:				return 'Unknown constant';			// 191 and others
 	}
 }
 ?>

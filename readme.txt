@@ -3,6 +3,19 @@ Copyright 2008-2010 Dominic Sayers <dominic@sayers.cc>
 http://www.dominicsayers.com/isemail
 BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
+// revision 2.2: Much tidying and debugging of tests led by Daniel Marschall
+
+2.2	2010-09-10	26 tests were marked as being invalid addresses but were
+			still marked as expecting a warning. Cannot be both
+			invalid and a warning. Thanks to Daniel Marschall for
+			finding this.
+
+			I've changed all the example.com tests to iana.org so
+			that we are testing for a domain that does have an MX
+			record. I've also change the .museum and .edu tests
+			in a similar way. Where the test is still for a non-
+			existent domain I've changed the expectation to Warning
+
 // revision 2.1: Revisited IPv6 address validation in the light of RFC 4291
 // version 2.0: Strict tests for validity, optional warnings for unlikely real-world addresses
 // revision 1.18: Standardised build and release process for this script
