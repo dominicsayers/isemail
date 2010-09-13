@@ -34,7 +34,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.2.9 - Much tidying and debugging of tests led by Daniel Marschall
+ * @version	2.3.1 - Fixed FWS bug suggested by John Kloor. Test #152 result corrected
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -65,7 +65,7 @@
 	//
 	//	Errors can be distinguished from warnings if ($return_value > ISEMAIL_ERROR)
 // version 2.0: Enhance $diagnose parameter to $errorlevel
-					
+
 	if (!defined('ISEMAIL_VALID')) {
 		// No errors
 		define('ISEMAIL_VALID'			, 0);
@@ -144,7 +144,7 @@
 	if ($atIndex === 0)			return $diagnose ? ISEMAIL_NOLOCALPART	: false;	// No local part
 	if ($atIndex === $emailLength - 1)	return $diagnose ? ISEMAIL_NODOMAIN	: false;	// No domain part
 // revision 1.14: Length test bug suggested by Andrew Campbell of Gloucester, MA
-	
+
 	// Sanitize comments
 	// - remove nested comments, quotes and dots in comments
 	// - remove parentheses and dots from quoted strings
@@ -211,7 +211,10 @@
 
 	foreach ($dotArray as $element) {
 		// Remove any leading or trailing FWS
-		$element	= preg_replace("/^$FWS|$FWS\$/", '', $element);
+		$new_element = preg_replace("/^$FWS|$FWS\$/", '', $element);
+		if ($warn && ($element !== $new_element)) $return_status = ISEMAIL_FWS;	// FWS is unlikely in the real world
+		$element = $new_element;
+// version 2.3: Warning condition added
 		$elementLength	= strlen($element);
 
 		if ($elementLength === 0)								return $diagnose ? ISEMAIL_ZEROLENGTHELEMENT	: false;	// Can't have empty element (consecutive dots or dots at the start or end)
@@ -229,7 +232,7 @@
 				$elementLength	= strlen($element);
 			}
 		}
-		
+
 		if ($element[$elementLength - 1] === ')') {
 			if ($warn) $return_status = ISEMAIL_COMMENTS;	// Comments are unlikely in the real world
 // version 2.0: Warning condition added
@@ -242,7 +245,7 @@
 			}
 		}
 
-		// Remove any leading or trailing FWS around the element (inside any comments)
+		// Remove any remaining leading or trailing FWS around the element (having removed any comments)
 		$new_element = preg_replace("/^$FWS|$FWS\$/", '', $element);
 		if ($warn && ($element !== $new_element)) $return_status = ISEMAIL_FWS;	// FWS is unlikely in the real world
 		$element = $new_element;
@@ -259,7 +262,7 @@
 			if ($warn) $return_status = ISEMAIL_QUOTEDSTRING;	// Quoted string is unlikely in the real world
 // version 2.0: Warning condition added
 			// Remove any FWS
-			$element = preg_replace("/(?<!\\\\)$FWS/", '', $element);
+			$element = preg_replace("/(?<!\\\\)$FWS/", '', $element);	// A warning condition, but we've already raised ISEMAIL_QUOTEDSTRING
 			// My regex skillz aren't up to distinguishing between \" \\" \\\" \\\\" etc.
 			// So remove all \\ from the string first...
 			$element = preg_replace('/\\\\\\\\/', ' ', $element);
@@ -304,11 +307,11 @@
 		$groupMax	= 8;
 // revision 2.1: new IPv6 testing strategy
 		$matchesIP	= array();
-		
+
 		// Extract IPv4 part from the end of the address-literal (if there is one)
 		if (preg_match('/\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/', $addressLiteral, $matchesIP) > 0) {
 			$index = strrpos($addressLiteral, $matchesIP[0]);
-			
+
 			if ($index === 0) {
 				// Nothing there except a valid IPv4 address, so...
 				return ($diagnose) ? $return_status : true;
@@ -401,13 +404,13 @@
 			$element = $new_element;
 // version 2.0: Warning condition added
 			$elementLength	= strlen($element);
-	
+
 			// Each dot-delimited component must be of type atext
 			// A zero-length element implies a period at the beginning or end of the
 			// local part, or two periods together. Either way it's not allowed.
 			if ($elementLength === 0)							return $diagnose ? ISEMAIL_DOMAINEMPTYELEMENT	: false;	// Dots in wrong place
 // revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
-	
+
 			// Then we need to remove all valid comments (i.e. those at the start or end of the element
 			if ($element[0] === '(') {
 				if ($warn) $return_status = ISEMAIL_COMMENTS;	// Comments are unlikely in the real world
@@ -421,7 +424,7 @@
 					$elementLength	= strlen($element);
 				}
 			}
-			
+
 			if ($element[$elementLength - 1] === ')') {
 				if ($warn) $return_status = ISEMAIL_COMMENTS;	// Comments are unlikely in the real world
 // version 2.0: Warning condition added
@@ -433,25 +436,25 @@
 					$element	= substr($element, 0, $indexBrace);
 					$elementLength	= strlen($element);
 				}
-			}			
-	
+			}
+
 			// Remove any leading or trailing FWS around the element (inside any comments)
 			$new_element	= preg_replace("/^$FWS|$FWS\$/", '', $element);
 			if ($warn && ($element !== $new_element)) $return_status = ISEMAIL_FWS;	// FWS is unlikely in the real world
 			$element = $new_element;
 // version 2.0: Warning condition added
-	
+
 			// What's left counts towards the maximum length for this part
 			if ($partLength > 0) $partLength++;	// for the dot
 			$partLength += strlen($element);
-	
+
 			// The DNS defines domain name syntax very generally -- a
 			// string of labels each containing up to 63 8-bit octets,
 			// separated by dots, and with a maximum total of 255
 			// octets.
 			// 	(http://tools.ietf.org/html/rfc1123#section-6.1.3.5)
 			if ($elementLength > 63)							return $diagnose ? ISEMAIL_DOMAINELEMENTTOOLONG	: false;	// Label must be 63 characters or less
-	
+
 			// Any ASCII graphic (printing) character other than the
 			// at-sign ("@"), backslash, double quote, comma, or square brackets may
 			// appear without quoting.  If any of that list of excluded characters

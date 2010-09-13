@@ -3,6 +3,17 @@ Copyright 2008-2010 Dominic Sayers <dominic@sayers.cc>
 http://www.dominicsayers.com/isemail
 BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
+// revision 2.3: Fixed FWS bug suggested by John Kloor. Test #152 result corrected
+
+2.3	2010-09-13	John Kloor kindly pointed out that folding white space
+			in the local part was sometimes not raising a warning.
+			This should have been picked up by test #152 but the
+			test was incorrectly marked as not expecting a
+			warning. This is now fixed. I have also amended test
+			#223 (which was a duplicate) so that it reflects
+			John's suggested test. My thanks to him for his
+			contribution.
+
 // revision 2.2: Much tidying and debugging of tests led by Daniel Marschall
 
 2.2	2010-09-10	26 tests were marked as being invalid addresses but were

@@ -17,11 +17,15 @@
 		div.address	{text-align:right;width:400px;overflow:hidden;margin-right:8px;}
 		div.id		{text-align:right;width:20px;overflow:hidden;margin-right:8px;}
 		div.author	{font-style:italic;}
+		p.navigation	{font-size:11px;}
 		hr		{clear:left;}
 	</style>
 </head>
 
 <body>
+	<h2 id="top">RFC-compliant email address validation</h2>
+	<a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a> | <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a></p>
+	<hr />
 <?php
 // Incorporates formatting suggestions from Daniel Marschall (uni@danielmarschall.de)
 require_once '../is_email.php';
@@ -53,12 +57,12 @@ require_once '../extras/is_email_statustext.php';
 
 	if ($suite->hasAttribute('version')) {
 		$version = $suite->getAttribute('version');
-		echo "\t<h3>Email address validation test suite version $version</h3>\r\n";
+		echo "\t<h3>Test package version $version</h3>\r\n";
 	}
 
 	echo <<<PHP
-	<p class="author">Dominic Sayers | <a href="mailto:dominic@sayers.cc">dominic@sayers.cc</a> | <a href="http://www.dominicsayers.com/isemail">RFC-compliant email address validation</a></p>
-	<hr />
+	<p class="navigation">This output is very wide - you should probably maximize your browser window. <a href="#bottom">Go to bottom of page &raquo;</a></p>
+	<br />
 	<div class="heading address">Address</div>
 	<div class="heading id">#</div>
 	<div class="heading valid">Result</div>
@@ -89,8 +93,10 @@ PHP;
 			}
 		}
 
-		// Can't store Unicode Character 'NULL' (U+0000) in XML file so replace our token(s) with genuine NULs
-		$needles	= array('␀');
+		// Can't store ASCII NUL or Unicode Character 'NULL' (U+0000) in XML file so we put a token in the XML
+		// The token we have chosen is the Unicode Character 'SYMBOL FOR NULL' (U+2400)
+		// Here we convert the token to an ASCII NUL.
+		$needles	= array(mb_convert_encoding('&#x2400;', 'UTF-8', 'HTML-ENTITIES'));
 		$substitutes	= array(chr(0));
 		$address	= str_replace($needles, $substitutes, $address);
 		$comment	= str_replace($needles, $substitutes, $comment);
@@ -124,7 +130,10 @@ PHP;
 HTML;
 	}
 
-	echo "\t<hr />\r\n";
+	echo <<<PHP
+	<hr />
+	<p class="navigation"><a id="bottom" href="#top">&laquo; back to top</a></p>
+PHP;
 }
 
 /*.string.*/ function test_single_address(/*.string.*/ $address) {
@@ -145,12 +154,10 @@ HTML;
 HTML;
 }
 
-if (isset($_GET) && is_array($_GET)) {
-	if	(array_key_exists('address', $_GET))		test_single_address($_GET['address']);
-	else if	(array_key_exists('all', $_GET))	all_tests();
-}
-?>
+/*.string.*/ function forms_html(/*.string.*/ $address = '') {
+	$value = ($address === '') ? '' : ' value="' . htmlspecialchars($address) . '"';
 
+	return <<<PHP
 	<form>
 		<input type="hidden" name="all" />
 		<input type="submit" value="Run all tests" />
@@ -158,8 +165,27 @@ if (isset($_GET) && is_array($_GET)) {
 	<br />
 	<form>
 		<label for="address">Test this email address:</label>
-		<input type="text" name="address" />
+		<input type="text"$value name="address" />
 		<input type="submit" value="Test" />
 	</form>
+	<hr />
+
+PHP;
+}
+
+if (isset($_GET) && is_array($_GET)) {
+	if (array_key_exists('address', $_GET)) {
+		$address = $_GET['address'];
+		echo forms_html($address);
+		test_single_address($address);
+	} else if (array_key_exists('all', $_GET)) {
+		echo forms_html();
+		all_tests();
+	} else {
+		echo forms_html();
+	}
+}
+?>
+
 </body>
 </html>

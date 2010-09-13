@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Version	Date		Notes
+2.3	2010-09-13	John Kloor kindly pointed out that folding white space
+			in the local part was sometimes not raising a warning.
+			This should have been picked up by test #152 but the
+			test was incorrectly marked as not expecting a
+			warning. This is now fixed. I have also amended test
+			#223 (which was a duplicate) so that it reflects
+			John's suggested test. My thanks to him for his
+			contribution.
+
 2.2	2010-09-10	26 tests were marked as being invalid addresses but were
 			still marked as expecting a warning. Cannot be both
 			invalid and a warning. Thanks to Daniel Marschall for
@@ -12,7 +21,7 @@ Version	Date		Notes
 			in a similar way. Where the test is still for a non-
 			existent domain I've changed the expectation to Warning
 -->
-<tests version="2.2" xmlns="http://www.w3.org/2001/XMLSchema-instance"
+<tests version="2.3" xmlns="http://www.w3.org/2001/XMLSchema-instance"
 		SchemaLocation="tests.xsd">
 	<test>
 		<address>first.last@iana.org</address>
@@ -1312,7 +1321,7 @@ Version	Date		Notes
 	<test>
 		<address>Test.&#13;&#10; Folding.&#13;&#10; Whitespace@iana.org</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>152</id>
@@ -1919,12 +1928,12 @@ Version	Date		Notes
 		<id>222</id>
 	</test>
 	<test>
-		<address>test. &#13;&#10; &#13;&#10; obs@syntax.com</address>
+		<address>first.last @iana.org</address>
 		<valid>true</valid>
 		<warning>true</warning>
-		<comment>obs-fws allows multiple lines (seems to be a dupe of 224)</comment>
-		<source>George Pollard</source>
-		<sourcelink>http://porg.es/blog/properly-validating-e-mail-addresses</sourcelink>
+		<comment>FWS is allowed after local part (this is similar to #152 but is the test proposed by John Kloor)</comment>
+		<source>John Kloor</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>223</id>
 	</test>
 	<test>
