@@ -3,6 +3,8 @@ Copyright 2008-2010 Dominic Sayers <dominic@sayers.cc>
 http://www.dominicsayers.com/isemail
 BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
+// Revision 2.4: Workaround for PHP bug (http://bugs.php.net/48645) in test script
+
 // revision 2.3: Fixed FWS bug suggested by John Kloor. Test #152 result corrected
 
 2.3	2010-09-13	John Kloor kindly pointed out that folding white space

@@ -96,7 +96,7 @@ PHP;
 		// Can't store ASCII NUL or Unicode Character 'NULL' (U+0000) in XML file so we put a token in the XML
 		// The token we have chosen is the Unicode Character 'SYMBOL FOR NULL' (U+2400)
 		// Here we convert the token to an ASCII NUL.
-		$needles	= array(mb_convert_encoding('&#x2400;', 'UTF-8', 'HTML-ENTITIES'));
+		$needles	= array(mb_convert_encoding('&#9216;', 'UTF-8', 'HTML-ENTITIES'));	// PHP bug doesn't allow us to use hex notation (http://bugs.php.net/48645)
 		$substitutes	= array(chr(0));
 		$address	= str_replace($needles, $substitutes, $address);
 		$comment	= str_replace($needles, $substitutes, $comment);

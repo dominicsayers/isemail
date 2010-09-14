@@ -34,7 +34,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.3.1 - Fixed FWS bug suggested by John Kloor. Test #152 result corrected
+ * @version	2.4.2 - Workaround PHP bug (http://bugs.php.net/48645) in test script
 -->
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
