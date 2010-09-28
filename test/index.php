@@ -33,7 +33,7 @@ require_once '../extras/is_email_statustext.php';
 
 /*.array[string]mixed.*/ function unitTest ($address, $valid_expected = true, $warn_expected = false) {
 	$result			= /*.(array[string]mixed).*/ array();
-	$diagnosis		= is_email($address, true, true);
+	$diagnosis		= is_email($address, true, E_WARNING);	// revision 2.5: Pass E_WARNING (as intended)
 
 	$result['diagnosis']	= $diagnosis;
 	$result['text']		= is_email_statustext($diagnosis);

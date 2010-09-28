@@ -30,7 +30,7 @@
 		case ISEMAIL_EMPTYELEMENT:		return 'Address has an illegal zero-length element (starts or ends with a dot or has two dots together)';	break;	// 137
 		case ISEMAIL_UNESCAPEDSPECIAL:		return 'Address contains an character that must be escaped but isn\'t';						break;	// 138
 		case ISEMAIL_LOCALTOOLONG:		return 'The local part of the address is too long';								break;	// 139
-		case ISEMAIL_IPV4BADPREFIX:		return 'The literal address contains an IPv4 address that is prefixed wrongly';					break;	// 140
+//		case ISEMAIL_IPV4BADPREFIX:		return 'The literal address contains an IPv4 address that is prefixed wrongly';					break;	// 140
 		case ISEMAIL_IPV6BADPREFIXMIXED:	return 'The literal address is wrongly prefixed';								break;	// 141
 		case ISEMAIL_IPV6BADPREFIX:		return 'The literal address is wrongly prefixed';								break;	// 142
 		case ISEMAIL_IPV6GROUPCOUNT:		return 'The IPv6 literal address contains the wrong number of groups';						break;	// 143
@@ -44,7 +44,7 @@
 		case ISEMAIL_IPV6SINGLECOLONSTART:	return 'IPv6 address starts with a single colon';								break;	// 151
 		case ISEMAIL_IPV6SINGLECOLONEND:	return 'IPv6 address ends with a single colon';									break;	// 152
 		// Unexpected errors
-		case ISEMAIL_BADPARAMETER:		return 'Unrecognised parameter';										break;	// 190
+//		case ISEMAIL_BADPARAMETER:		return 'Unrecognised parameter';										break;	// 190
 		default:				return 'Undefined error';												// 191 and others
 	}
 	else switch ($status) {
@@ -74,7 +74,7 @@
 		case ISEMAIL_EMPTYELEMENT:		return 'ISEMAIL_UNESCAPEDSPECIAL';	break;	// 137
 		case ISEMAIL_UNESCAPEDSPECIAL:		return 'ISEMAIL_LOCALTOOLONG';		break;	// 138
 		case ISEMAIL_LOCALTOOLONG:		return 'ISEMAIL_LOCALTOOLONG';		break;	// 139
-		case ISEMAIL_IPV4BADPREFIX:		return 'ISEMAIL_IPV4BADPREFIX';		break;	// 140
+//		case ISEMAIL_IPV4BADPREFIX:		return 'ISEMAIL_IPV4BADPREFIX';		break;	// 140
 		case ISEMAIL_IPV6BADPREFIXMIXED:	return 'ISEMAIL_IPV6BADPREFIXMIXED';	break;	// 141
 		case ISEMAIL_IPV6BADPREFIX:		return 'ISEMAIL_IPV6BADPREFIX';		break;	// 142
 		case ISEMAIL_IPV6GROUPCOUNT:		return 'ISEMAIL_IPV6GROUPCOUNT';	break;	// 143
@@ -88,7 +88,7 @@
 		case ISEMAIL_IPV6SINGLECOLONSTART:	return 'ISEMAIL_IPV6SINGLECOLONSTART';	break;	// 151
 		case ISEMAIL_IPV6SINGLECOLONEND:	return 'ISEMAIL_IPV6SINGLECOLONEND';	break;	// 152
 		// Unexpected errors
-		case ISEMAIL_BADPARAMETER:		return 'ISEMAIL_BADPARAMETER';		break;	// 190
+//		case ISEMAIL_BADPARAMETER:		return 'ISEMAIL_BADPARAMETER';		break;	// 190
 		default:				return 'Unknown constant';			// 191 and others
 	}
 }
