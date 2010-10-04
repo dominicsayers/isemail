@@ -35,7 +35,7 @@
 		case ISEMAIL_IPV6BADPREFIX:		return 'The literal address is wrongly prefixed';								break;	// 142
 		case ISEMAIL_IPV6GROUPCOUNT:		return 'The IPv6 literal address contains the wrong number of groups';						break;	// 143
 		case ISEMAIL_IPV6DOUBLEDOUBLECOLON:	return 'The IPv6 literal address contains too many :: sequences';						break;	// 144
-		case ISEMAIL_IPV6BADCHAR:		return 'The IPv6 address contains an illegal character';							break;	// 145
+		case ISEMAIL_IPV6BADCHAR:		return 'The IPv6 address contains an illegal group of characters';						break;	// 145 Revision 2.8: text amended to more accurately reflect the error condition
 		case ISEMAIL_IPV6TOOMANYGROUPS:		return 'The IPv6 address has too many groups';									break;	// 146
 		case ISEMAIL_DOMAINEMPTYELEMENT:	return 'The domain part contains an empty element';								break;	// 147
 		case ISEMAIL_DOMAINELEMENTTOOLONG:	return 'The domain part contains an element that is too long';							break;	// 148
@@ -70,9 +70,9 @@
 		case ISEMAIL_ZEROLENGTHELEMENT:		return 'ISEMAIL_ZEROLENGTHELEMENT';	break;	// 133
 		case ISEMAIL_BADCOMMENT_START:		return 'ISEMAIL_BADCOMMENT_START';	break;	// 134
 		case ISEMAIL_BADCOMMENT_END:		return 'ISEMAIL_BADCOMMENT_END';	break;	// 135
-		case ISEMAIL_UNESCAPEDDELIM:		return 'ISEMAIL_EMPTYELEMENT';		break;	// 136
-		case ISEMAIL_EMPTYELEMENT:		return 'ISEMAIL_UNESCAPEDSPECIAL';	break;	// 137
-		case ISEMAIL_UNESCAPEDSPECIAL:		return 'ISEMAIL_LOCALTOOLONG';		break;	// 138
+		case ISEMAIL_UNESCAPEDDELIM:		return 'ISEMAIL_UNESCAPEDDELIM';	break;	// 136 fixed in version 2.6
+		case ISEMAIL_EMPTYELEMENT:		return 'ISEMAIL_EMPTYELEMENT';		break;	// 137 fixed in version 2.6
+		case ISEMAIL_UNESCAPEDSPECIAL:		return 'ISEMAIL_UNESCAPEDSPECIAL';	break;	// 138 fixed in version 2.6
 		case ISEMAIL_LOCALTOOLONG:		return 'ISEMAIL_LOCALTOOLONG';		break;	// 139
 //		case ISEMAIL_IPV4BADPREFIX:		return 'ISEMAIL_IPV4BADPREFIX';		break;	// 140
 		case ISEMAIL_IPV6BADPREFIXMIXED:	return 'ISEMAIL_IPV6BADPREFIXMIXED';	break;	// 141

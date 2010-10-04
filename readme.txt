@@ -3,13 +3,67 @@ Copyright 2008-2010 Dominic Sayers <dominic@sayers.cc>
 http://www.dominicsayers.com/isemail
 BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
+--------------------------------------------------------------------------------
+How to use is_email()
+--------------------------------------------------------------------------------
+1. Add the downloaded file is_email.php to your project
+2. In your scripts use it like this:
+
+	require_once 'is_email.php';
+	if (is_email($address)) echo "$address is a valid email address";
+
+3. If you want to return detailed diagnostic error codes then you can ask
+is_email to do this. Something like this should work:
+
+	require_once 'is_email.php';
+
+	$address = 'dominic@sayers.cc';
+
+	$result = is_email($address, true, E_WARNING);
+
+	if ($result === ISEMAIL_VALID) {
+		echo "$address is a valid email address";
+	} else if ($result < ISEMAIL_ERROR) {
+		echo "Warning! $address may not be a real email address (result code $result)";
+	} else {
+		echo "$address is not a valid email address (result code $result)";
+	}
+
+4. Example scripts are in the extras folder
+
+--------------------------------------------------------------------------------
+Version history
+--------------------------------------------------------------------------------
+
+// Revision 2.8: is_email_statustext.php text amended to more accurately reflect the error condition of ISEMAIL_IPV6BADCHAR
+
+Test suite version 2.5
+	2010-10-04	My mum's birthday. Happy birthday, mum. Added test #276
+			to test missing outcome of ISEMAIL_IPV6TOOMANYGROUPS. Thanks
+			to Daniel Marschall for suggesting this.
+
+
+// Revision 2.7: Daniel Marschall's new IPv6 testing strategy
+
+Test suite version 2.4
+	2010-10-01	In test #63 the status of the domain us.ibm.com is
+			somewhat unclear. It doesn't appear to have an A
+			record of its own so we are expecting a warning.
+			In my own testing, an A record was found but this
+			turned out to be an artifact of using the OpenDNS
+			free service: OpenDNS was kindly giving me a page of
+			ads as an erroneous positive result.
+
+// Revision 2.6: BUG: The online test page didn't take account of the magic_quotes_gpc setting that some hosting providers insist on setting. Including mine.
+
 // Revision 2.5: Some syntax changes to make it more PHPLint-friendly. Should be functionally identical.
 
 // Revision 2.4: Workaround for PHP bug (http://bugs.php.net/48645) in test script
 
 // revision 2.3: Fixed FWS bug suggested by John Kloor. Test #152 result corrected
 
-2.3	2010-09-13	John Kloor kindly pointed out that folding white space
+Test suite version 2.3
+	2010-09-13	John Kloor kindly pointed out that folding white space
 			in the local part was sometimes not raising a warning.
 			This should have been picked up by test #152 but the
 			test was incorrectly marked as not expecting a
@@ -20,7 +74,8 @@ BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
 // revision 2.2: Much tidying and debugging of tests led by Daniel Marschall
 
-2.2	2010-09-10	26 tests were marked as being invalid addresses but were
+Test suite version 2.2
+	2010-09-10	26 tests were marked as being invalid addresses but were
 			still marked as expecting a warning. Cannot be both
 			invalid and a warning. Thanks to Daniel Marschall for
 			finding this.

@@ -34,7 +34,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.5.1 - Some syntax changes to make it more PHPLint-friendly. Should be functionally identical.
+ * @version	2.8.1 - Clarified text for ISEMAIL_IPV6BADCHAR and new test #276 added (too many IPv6 groups with an elision)
 -->
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">

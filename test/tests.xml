@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Version	Date		Notes
+2.5	2010-10-04	My mum's birthday. Happy birthday, mum. Added test #276
+			to test missing outcome of ISEMAIL_IPV6TOOMANYGROUPS. Thanks
+			to Daniel Marschall for suggesting this.
+
+2.4	2010-10-01	In test #63 the status of the domain us.ibm.com is
+			somewhat unclear. It doesn't appear to have an A
+			record of its own so we are expecting a warning.
+			In my own testing, an A record was found but this
+			turned out to be an artifact of using the OpenDNS
+			free service: OpenDNS was kindly giving me a page of
+			ads as an erroneous positive result.
+
 2.3	2010-09-13	John Kloor kindly pointed out that folding white space
 			in the local part was sometimes not raising a warning.
 			This should have been picked up by test #152 but the
@@ -21,7 +33,7 @@ Version	Date		Notes
 			in a similar way. Where the test is still for a non-
 			existent domain I've changed the expectation to Warning
 -->
-<tests version="2.3" xmlns="http://www.w3.org/2001/XMLSchema-instance"
+<tests version="2.4" xmlns="http://www.w3.org/2001/XMLSchema-instance"
 		SchemaLocation="tests.xsd">
 	<test>
 		<address>first.last@iana.org</address>
@@ -557,7 +569,7 @@ Version	Date		Notes
 	<test>
 		<address>dclo@us.ibm.com</address>
 		<valid>true</valid>
-		<warning>false</warning>
+		<warning>true</warning>
 		<source>Doug Lovell (LinuxJournal, June 2007)</source>
 		<sourcelink>http://www.linuxjournal.com/article/9585</sourcelink>
 		<id>63</id>
@@ -2403,5 +2415,14 @@ Version	Date		Notes
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>275</id>
+	</test>
+	<test>
+		<address>first.last@[IPv6:a1:a2:a3:a4::b1:b2:b3:b4]</address>
+		<valid>false</valid>
+		<warning>false</warning>
+		<comment>IPv6 authority is RFC 4291</comment>
+		<source>Daniel Marschall</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>276</id>
 	</test>
 </tests>

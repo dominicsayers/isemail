@@ -34,11 +34,11 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.5.1 - Some syntax changes to make it more PHPLint-friendly. Should be functionally identical.
+ * @version	2.8.3 - Clarified text for ISEMAIL_IPV6BADCHAR and new test #276 added (too many IPv6 groups with an elision)
  */
 
 // The quality of this code has been improved greatly by using PHPLint
-// Copyright (c) 2009 Umberto Salsi
+// Copyright (c) 2010 Umberto Salsi
 // This is free software; see the license for copying conditions.
 // More info: http://www.icosaedro.it/phplint/
 /*.
@@ -337,6 +337,8 @@
 		$groupMax	= 8;
 // revision 2.1: new IPv6 testing strategy
 		$matchesIP	= array();
+		$colon		= ':';	// Revision 2.7: Daniel Marschall's new IPv6 testing strategy
+		$double_colon	= '::';
 
 		// Extract IPv4 part from the end of the address-literal (if there is one)
 		if (preg_match('/\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/', $addressLiteral, $matchesIP) > 0) {
@@ -348,7 +350,7 @@
 // version 2.0: return warning if one is set
 			} else {
 //-				// Assume it's an attempt at a mixed address (IPv6 + IPv4)
-//-				if ($addressLiteral[$index - 1] !== ':')				if ($diagnose) return ISEMAIL_IPV4BADPREFIX;		else return false;	// Character preceding IPv4 address must be ':'
+//-				if ($addressLiteral[$index - 1] !== $colon)				if ($diagnose) return ISEMAIL_IPV4BADPREFIX;		else return false;	// Character preceding IPv4 address must be ':'
 // revision 2.1: new IPv6 testing strategy
 				if (substr($addressLiteral, 0, 5) !== 'IPv6:')				if ($diagnose) return ISEMAIL_IPV6BADPREFIXMIXED;	else return false;	// RFC5321 section 4.1.3
 //-
@@ -364,32 +366,28 @@
 //-			$groupMax = 8;
 // revision 2.1: new IPv6 testing strategy
 		}
-//echo "\n<br /><pre>\$IPv6 = $IPv6</pre>\n"; // debug
-		$groupCount	= preg_match_all('/^[0-9a-fA-F]{0,4}|\\:[0-9a-fA-F]{0,4}|(.)/', $IPv6, $matchesIP);
-		$index		= strpos($IPv6,'::');
 
-//echo "\n<br /><pre>\$matchesIP[0] = " . var_export($matchesIP[0], true) . "</pre>\n"; // debug
+		$matchesIP	= explode($colon, $IPv6);	// Revision 2.7: Daniel Marschall's new IPv6 testing strategy
+		$groupCount	= count($matchesIP);
+		$index		= strpos($IPv6,$double_colon);
+
 		if ($index === false) {
 			// We need exactly the right number of groups
 			if ($groupCount !== $groupMax)							if ($diagnose) return ISEMAIL_IPV6GROUPCOUNT;		else return false;	// RFC5321 section 4.1.3
 		} else {
-			if ($index !== strrpos($IPv6,'::'))						if ($diagnose) return ISEMAIL_IPV6DOUBLEDOUBLECOLON;	else return false;	// More than one '::'
+			if ($index !== strrpos($IPv6,$double_colon))					if ($diagnose) return ISEMAIL_IPV6DOUBLEDOUBLECOLON;	else return false;	// More than one '::'
 			if ($index === 0 || $index === (strlen($IPv6) - 2)) $groupMax++;	// RFC 4291 allows :: at the start or end of an address with 7 other groups in addition
-//echo "\n<br /><pre>\$groupMax = $groupMax</pre>\n"; // debug
 			if ($groupCount > $groupMax)							if ($diagnose) return ISEMAIL_IPV6TOOMANYGROUPS;	else return false;	// Too many IPv6 groups in address
 			if ($groupCount === $groupMax) $return_status = ISEMAIL_SINGLEGROUPELISION;	// Eliding a single group with :: is deprecated by RFCs 5321 & 5952
 		}
 
 		// Check for single : at start and end of address
-		if (($matchesIP[0][0] === '') && ($matchesIP[0][1] !== ':'))				if ($diagnose) return ISEMAIL_IPV6SINGLECOLONSTART;	else return false;	// Address starts with a single colon
-		if (($matchesIP[0][$groupCount - 1] === ':') && ($matchesIP[0][$groupCount - 2] !== ':')) if ($diagnose) return ISEMAIL_IPV6SINGLECOLONEND;	else return false;	// Address ends with a single colon
+		// Revision 2.7: Daniel Marschall's new IPv6 testing strategy
+		if ((substr($IPv6, 0,  1)	=== $colon) && (substr($IPv6, 1,  1) !== $colon))	if ($diagnose) return ISEMAIL_IPV6SINGLECOLONSTART;	else return false;	// Address starts with a single colon
+		if ((substr($IPv6, -1)		=== $colon) && (substr($IPv6, -2, 1) !== $colon))	if ($diagnose) return ISEMAIL_IPV6SINGLECOLONEND;	else return false;	// Address ends with a single colon
 
 		// Check for unmatched characters
-		array_multisort($matchesIP[1], SORT_DESC);
-		if ($matchesIP[1][0] !== '') {
-//echo "\n<br /><pre>\$matchesIP[1] = " . var_export($matchesIP[1], true) . "</pre>\n"; // debug
-		if ($diagnose) return ISEMAIL_IPV6BADCHAR	;	else return false;	// Illegal characters in address
-} // debug
+		if (count(preg_grep('/^[0-9A-Fa-f]{0,4}$/', $matchesIP, PREG_GREP_INVERT)) !== 0)	if ($diagnose) return ISEMAIL_IPV6BADCHAR	;	else return false;	// Illegal characters in address
 		// It's a valid IPv6 address, so...
 		if ($diagnose) return $return_status; else return true;
 // revision 2.1: bug fix: now correctly return warning status

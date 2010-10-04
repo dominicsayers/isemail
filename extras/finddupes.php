@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-		<title>Finding any duplicate tests or IDs</title>
-	</head>
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<title>Finding any duplicate tests or IDs</title>
+</head>
 
-	<body>
+<body>
 <?php
 require_once '../is_email.php';
 

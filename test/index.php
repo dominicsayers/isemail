@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<title>Testing is_email()</title>
-
 
 	<style type="text/css">
 		body		{font-family:Segoe UI,Arial,Helvetica,sans-serif;}
@@ -18,6 +18,10 @@
 		div.id		{text-align:right;width:20px;overflow:hidden;margin-right:8px;}
 		div.author	{font-style:italic;}
 		p.navigation	{font-size:11px;}
+		p.statistics	{width:100%;color:white;font-weight:bold;text-align:center;padding:0.25em;}
+		p.green		{background-color:green;}
+		p.amber		{background-color:#FF9900;color:black;}
+		p.red		{background-color:red;color:#FFFF66;}
 		hr		{clear:left;}
 	</style>
 </head>
@@ -25,7 +29,7 @@
 <body>
 	<h2 id="top">RFC-compliant email address validation</h2>
 	<a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a> | <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a></p>
-	<hr />
+	<hr/>
 <?php
 // Incorporates formatting suggestions from Daniel Marschall (uni@danielmarschall.de)
 require_once '../is_email.php';
@@ -62,21 +66,25 @@ require_once '../extras/is_email_statustext.php';
 
 	echo <<<PHP
 	<p class="navigation">This output is very wide - you should probably maximize your browser window. <a href="#bottom">Go to bottom of page &raquo;</a></p>
-	<br />
+	<br/>
 	<div class="heading address">Address</div>
 	<div class="heading id">#</div>
 	<div class="heading valid">Result</div>
 	<div class="heading warning">Warning</div>
 	<div class="heading diagnosis">Diagnosis</div>
 	<div class="heading comment">Comment</div>
-	<br />
+	<br/>
 
 PHP;
 
-	$testList	= $document->getElementsByTagName('test');
-	$html		= '';
+	$testList		= $document->getElementsByTagName('test');
+	$testCount		= $testList->length;
+	$statistics_count	= 0;
+	$statistics_alert_warn	= 0;
+	$statistics_alert_valid	= 0;
+	$html			= '';
 
-	for ($i = 0; $i < $testList->length; $i++) {
+	for ($i = 0; $i < $testCount; $i++) {
 		$tagList = $testList->item($i)->childNodes;
 
 		$address	= '';
@@ -125,13 +133,28 @@ PHP;
 	<div class="warning$class_warn">$warning</div>
 	<div class="diagnosis">$constant</div>
 	<div class="comment">$comment</div>
-	<br />
+	<br/>
 
 HTML;
+
+		// Update statistics for this test
+		$statistics_count++;
+		$statistics_alert_warn	+= ($result['alert_warn'])	? 1 : 0;
+		$statistics_alert_valid	+= ($result['alert_valid'])	? 1 : 0;
 	}
 
+	// Revision 2.7: Added test run statistics
+	if	($statistics_alert_valid	!== 0)	$statistics_class = 'red';
+	else if	($statistics_alert_warn		!== 0)	$statistics_class = 'amber';
+	else						$statistics_class = 'green';
+
+	$statistics_plural_count	= ($statistics_count		=== 1)	? '' : 's';
+	$statistics_plural_valid	= ($statistics_alert_valid	=== 1)	? '' : 's';
+	$statistics_plural_warn		= ($statistics_alert_warn	=== 1)	? '' : 's';
+
 	echo <<<PHP
-	<hr />
+	<p class="statistics $statistics_class">$statistics_count test$statistics_plural_count: $statistics_alert_valid unexpected result$statistics_plural_valid, $statistics_alert_warn unexpected warning$statistics_plural_warn</p> 
+	<hr/>
 	<p class="navigation"><a id="bottom" href="#top">&laquo; back to top</a></p>
 PHP;
 }
@@ -145,12 +168,12 @@ PHP;
 	$diagnosis_text	= $result['text'];
 
 	$result_text	= ($valid) ? (($warn) ? 'valid but a warning was raised' : 'valid and no warnings were raised') : '<strong>invalid</strong>';
-	$commentary	= (!$valid || $warn) ? "<br />The diagnostic code was $constant ($diagnosis_text)" : '';
+	$commentary	= (!$valid || $warn) ? "<br/>The diagnostic code was $constant ($diagnosis_text)" : '';
 
 	echo <<<HTML
 	<p>Email address tested was <em>$address</em></p>
 	<p>The address is $result_text$commentary</p>
-	<hr />
+	<hr/>
 HTML;
 }
 
@@ -159,16 +182,16 @@ HTML;
 
 	return <<<PHP
 	<form>
-		<input type="hidden" name="all" />
-		<input type="submit" value="Run all tests" />
+		<input type="hidden" name="all"/>
+		<input type="submit" value="Run all tests"/>
 	</form>
-	<br />
+	<br/>
 	<form>
 		<label for="address">Test this email address:</label>
-		<input type="text"$value name="address" />
-		<input type="submit" value="Test" />
+		<input type="text"$value name="address"/>
+		<input type="submit" value="Test"/>
 	</form>
-	<hr />
+	<hr/>
 
 PHP;
 }
@@ -176,6 +199,7 @@ PHP;
 if (isset($_GET) && is_array($_GET)) {
 	if (array_key_exists('address', $_GET)) {
 		$address = $_GET['address'];
+		if (get_magic_quotes_gpc() !== 0) $address = stripslashes($address); // Version 2.6: BUG: The online test page didn't take account of the magic_quotes_gpc setting that some hosting providers insist on setting. Including mine.
 		echo forms_html($address);
 		test_single_address($address);
 	} else if (array_key_exists('all', $_GET)) {
