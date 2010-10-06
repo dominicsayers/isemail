@@ -2,8 +2,8 @@
 /**
  * To validate an email address according to RFCs 5321, 5322 and others
  * 
- * Copyright (c) 2008-2010, Dominic Sayers							<br>
- * Test schema documentation Copyright (c) 2010, Daniel Marschall				<br>
+ * Copyright © 2008-2010, Dominic Sayers							<br>
+ * Test schema documentation Copyright © 2010, Daniel Marschall				<br>
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -34,7 +34,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.8.3 - Clarified text for ISEMAIL_IPV6BADCHAR and new test #276 added (too many IPv6 groups with an elision)
+ * @version	2.9.1 - Revision 2.9: No functional change to is_email.php, but language correctly declared in tests.xsd, DOCTYPE declared in tests.xml, BOM removed from readme.txt
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -234,7 +234,7 @@
 	// 	(http://tools.ietf.org/html/rfc5322#section-3.4.1)
 	//
 	// Problem: need to distinguish between "first.last" and "first"."last"
-	// (i.e. one element or two). And I suck at regexes.
+	// (i.e. one element or two). And I suck at regular expressions.
 	$dotArray	= preg_split('/\\.(?=(?:[^\\"]*\\"[^\\"]*\\")*(?![^\\"]*\\"))/m', $localPart);
 	$partLength	= 0;
 
@@ -248,7 +248,7 @@
 		$elementLength	= strlen($element);
 
 		if ($elementLength === 0)								if ($diagnose) return ISEMAIL_ZEROLENGTHELEMENT;	else return false;	// Can't have empty element (consecutive dots or dots at the start or end)
-// revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
+// revision 1.15: Speed up the test and get rid of "uninitialized string offset" notices from PHP
 
 		// We need to remove any valid comments (i.e. those at the start or end of the element)
 		if ($element[0] === '(') {
@@ -293,7 +293,7 @@
 // version 2.0: Warning condition added
 			// Remove any FWS
 			$element = preg_replace("/(?<!\\\\)$FWS/", '', $element);	// A warning condition, but we've already raised ISEMAIL_QUOTEDSTRING
-			// My regex skillz aren't up to distinguishing between \" \\" \\\" \\\\" etc.
+			// My regular expression skills aren't up to distinguishing between \" \\" \\\" \\\\" etc.
 			// So remove all \\ from the string first...
 			$element = preg_replace('/\\\\\\\\/', ' ', $element);
 			if (preg_match('/(?<!\\\\|^)["\\r\\n\\x00](?!$)|\\\\"$|""/', $element) > 0)	if ($diagnose) return ISEMAIL_UNESCAPEDDELIM;		else return false;	// ", CR, LF and NUL must be escaped
@@ -438,7 +438,7 @@
 			// A zero-length element implies a period at the beginning or end of the
 			// local part, or two periods together. Either way it's not allowed.
 			if ($elementLength === 0)							if ($diagnose) return ISEMAIL_DOMAINEMPTYELEMENT;	else return false;	// Dots in wrong place
-// revision 1.15: Speed up the test and get rid of "unitialized string offset" notices from PHP
+// revision 1.15: Speed up the test and get rid of "uninitialized string offset" notices from PHP
 
 			// Then we need to remove all valid comments (i.e. those at the start or end of the element
 			if ($element[0] === '(') {

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8"/>
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 	<title>Finding any duplicate tests or IDs</title>
 </head>
 
@@ -10,7 +10,7 @@
 <?php
 require_once '../is_email.php';
 
-$addresses		= array();
+$emailes		= array();
 $ids			= array();
 
 $duplicates		= array();
@@ -41,11 +41,11 @@ for ($i = 0; $i < $testList->length; ++$i) {
 		}
 	}
 
-	if (in_array($address, $addresses)) {
-		$duplicates['address'][]	= $address;
+	if (in_array($email, $emailes)) {
+		$duplicates['address'][]	= $email;
 		$duplicates['addressIDs'][]	= $id;
 	} else {
-		$addresses[]			= $address;
+		$emailes[]			= $email;
 
 		//	Add ID if it hasn't got one
 		if (!isset($id)) {
@@ -68,8 +68,8 @@ if ($dirty) $document->save('new_tests.xml');
 
 echo "<p><strong>Duplicate addresses</strong></p>\n";
 
-foreach ($duplicates['address'] as $address) {
-	echo "<p>$address</p>\n";
+foreach ($duplicates['address'] as $email) {
+	echo "<p>$email</p>\n";
 }
 
 echo "<br /><p><strong>Duplicate IDs</strong></p>\n";

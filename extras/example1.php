@@ -1,5 +1,5 @@
 <?php
 require_once 'is_email.php';
-$address = 'dominic@sayers.cc';
-if (is_email($address)) echo "$address is a valid email address";
+$email = 'dominic@sayers.cc';
+if (is_email($email)) echo "$email is a valid email address";
 ?>

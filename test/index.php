@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 	<title>Testing is_email()</title>
 
 	<style type="text/css">
@@ -35,9 +35,9 @@
 require_once '../is_email.php';
 require_once '../extras/is_email_statustext.php';
 
-/*.array[string]mixed.*/ function unitTest ($address, $valid_expected = true, $warn_expected = false) {
+/*.array[string]mixed.*/ function unitTest ($email, $valid_expected = true, $warn_expected = false) {
 	$result			= /*.(array[string]mixed).*/ array();
-	$diagnosis		= is_email($address, true, E_WARNING);	// revision 2.5: Pass E_WARNING (as intended)
+	$diagnosis		= is_email($email, true, E_WARNING);	// revision 2.5: Pass E_WARNING (as intended)
 
 	$result['diagnosis']	= $diagnosis;
 	$result['text']		= is_email_statustext($diagnosis);
@@ -106,10 +106,10 @@ PHP;
 		// Here we convert the token to an ASCII NUL.
 		$needles	= array(mb_convert_encoding('&#9216;', 'UTF-8', 'HTML-ENTITIES'));	// PHP bug doesn't allow us to use hex notation (http://bugs.php.net/48645)
 		$substitutes	= array(chr(0));
-		$address	= str_replace($needles, $substitutes, $address);
+		$email		= str_replace($needles, $substitutes, $address);
 		$comment	= str_replace($needles, $substitutes, $comment);
 
-		$result		= unitTest($address, ($valid === 'true'), ($warning === 'true'));
+		$result		= unitTest($email, ($valid === 'true'), ($warning === 'true'));
 
 		$valid		= $result['valid'];
 		$warn		= $result['warn'];
@@ -127,7 +127,7 @@ PHP;
 		if ($comment === '')	$comment = "&nbsp;";
 
 		echo <<<HTML
-	<div class="address"><em>$address</em></div>
+	<div class="address"><em>$email</em></div>
 	<div class="id">$id</div>
 	<div class="valid$class_valid">$status</div>
 	<div class="warning$class_warn">$warning</div>
@@ -153,14 +153,14 @@ HTML;
 	$statistics_plural_warn		= ($statistics_alert_warn	=== 1)	? '' : 's';
 
 	echo <<<PHP
-	<p class="statistics $statistics_class">$statistics_count test$statistics_plural_count: $statistics_alert_valid unexpected result$statistics_plural_valid, $statistics_alert_warn unexpected warning$statistics_plural_warn</p> 
+	<p class="statistics $statistics_class">$statistics_count test$statistics_plural_count: $statistics_alert_valid unexpected result$statistics_plural_valid, $statistics_alert_warn unexpected warning$statistics_plural_warn</p>
 	<hr/>
 	<p class="navigation"><a id="bottom" href="#top">&laquo; back to top</a></p>
 PHP;
 }
 
-/*.string.*/ function test_single_address(/*.string.*/ $address) {
-	$result		= unitTest($address);
+/*.string.*/ function test_single_address(/*.string.*/ $email) {
+	$result		= unitTest($email);
 
 	$valid		= $result['valid'];
 	$warn		= $result['warn'];
@@ -171,14 +171,14 @@ PHP;
 	$commentary	= (!$valid || $warn) ? "<br/>The diagnostic code was $constant ($diagnosis_text)" : '';
 
 	echo <<<HTML
-	<p>Email address tested was <em>$address</em></p>
+	<p>Email address tested was <em>$email</em></p>
 	<p>The address is $result_text$commentary</p>
 	<hr/>
 HTML;
 }
 
-/*.string.*/ function forms_html(/*.string.*/ $address = '') {
-	$value = ($address === '') ? '' : ' value="' . htmlspecialchars($address) . '"';
+/*.string.*/ function forms_html(/*.string.*/ $email = '') {
+	$value = ($email === '') ? '' : ' value="' . htmlspecialchars($email) . '"';
 
 	return <<<PHP
 	<form>
@@ -198,10 +198,10 @@ PHP;
 
 if (isset($_GET) && is_array($_GET)) {
 	if (array_key_exists('address', $_GET)) {
-		$address = $_GET['address'];
-		if (get_magic_quotes_gpc() !== 0) $address = stripslashes($address); // Version 2.6: BUG: The online test page didn't take account of the magic_quotes_gpc setting that some hosting providers insist on setting. Including mine.
-		echo forms_html($address);
-		test_single_address($address);
+		$email = $_GET['address'];
+		if (get_magic_quotes_gpc() !== 0) $email = stripslashes($email); // Version 2.6: BUG: The online test page didn't take account of the magic_quotes_gpc setting that some hosting providers insist on setting. Including mine.
+		echo forms_html($email);
+		test_single_address($email);
 	} else if (array_key_exists('all', $_GET)) {
 		echo forms_html();
 		all_tests();
