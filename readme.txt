@@ -13,7 +13,7 @@ How to use is_email()
 	if (is_email($email)) echo "$email is a valid email address";
 
 3. If you want to return detailed diagnostic error codes then you can ask
-is_email to do this. Something like this should work:
+is_email to do so. Something like this should work:
 
 	require_once 'is_email.php';
 
@@ -34,6 +34,20 @@ is_email to do this. Something like this should work:
 --------------------------------------------------------------------------------
 Version history
 --------------------------------------------------------------------------------
+
+// Revision 2.10: Amended DNS lookup logic. Also, in is_email_statustext.php, changed $type to integer to allow for additional types (starting with SMTP codes)
+
+Test suite version 2.6
+	2010-10-08	After researching the logic of SMTP routing, I now
+			believe the lack of an A-record for us.ibm.com is
+			absolutely fine and should not raise a warning. If
+			there is an MX-record for a domain then that's all we
+			need. If there is no MX-record then an A-record can
+			be used as a fallback for historical reasons.
+
+			I've changed test #63 so that it doesn't expect a
+			warning and added #277 to test the existence of
+			an A-record without an associated MX-record.
 
 // Revision 2.9: No functional change to is_email.php, but language correctly declared in tests.xsd, DOCTYPE declared in tests.xml, BOM removed from readme.txt
 

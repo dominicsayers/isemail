@@ -5,6 +5,17 @@ If you update these tests, don't forget to change the actual version number
 attribute in the <tests> element below!
 
 Version	Date		Notes
+2.6	2010-10-08	After researching the logic of SMTP routing, I now
+			believe the lack of an A-record for us.ibm.com is
+			absolutely fine and should not raise a warning. If
+			there is an MX-record for a domain then that's all we
+			need. If there is no MX-record then an A-record can
+			be used as a fallback for historical reasons.
+
+			I've changed test #63 so that it doesn't expect a
+			warning and added #277 to test the existence of
+			an A-record without an associated MX-record.
+
 2.5	2010-10-04	My mum's birthday. Happy birthday, mum. Added test #276
 			to test missing outcome of ISEMAIL_IPV6TOOMANYGROUPS. Thanks
 			to Daniel Marschall for suggesting this.
@@ -37,7 +48,7 @@ Version	Date		Notes
 			in a similar way. Where the test is still for a non-
 			existent domain I've changed the expectation to Warning
 -->
-<tests version="2.5" xmlns="http://www.w3.org/2001/XMLSchema-instance"
+<tests version="2.6" xmlns="http://www.w3.org/2001/XMLSchema-instance"
 		SchemaLocation="tests.xsd">
 	<test>
 		<address>first.last@iana.org</address>
@@ -573,7 +584,7 @@ Version	Date		Notes
 	<test>
 		<address>dclo@us.ibm.com</address>
 		<valid>true</valid>
-		<warning>true</warning>
+		<warning>false</warning>
 		<source>Doug Lovell (LinuxJournal, June 2007)</source>
 		<sourcelink>http://www.linuxjournal.com/article/9585</sourcelink>
 		<id>63</id>
@@ -2428,5 +2439,14 @@ Version	Date		Notes
 		<source>Daniel Marschall</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>276</id>
+	</test>
+	<test>
+		<address>test@test.com</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>test.com has an A-record but not an MX-record</comment>
+		<source>Dominic Sayers</source>
+		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<id>277</id>
 	</test>
 </tests>

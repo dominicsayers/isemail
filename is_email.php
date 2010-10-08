@@ -34,7 +34,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.9.1 - Revision 2.9: No functional change to is_email.php, but language correctly declared in tests.xsd, DOCTYPE declared in tests.xml, BOM removed from readme.txt
+ * @version	2.10.1 - Amended DNS lookup logic. Also, in is_email_statustext.php, changed $type to integer to allow for additional types (starting with SMTP codes)
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -387,7 +387,7 @@
 		if ((substr($IPv6, -1)		=== $colon) && (substr($IPv6, -2, 1) !== $colon))	if ($diagnose) return ISEMAIL_IPV6SINGLECOLONEND;	else return false;	// Address ends with a single colon
 
 		// Check for unmatched characters
-		if (count(preg_grep('/^[0-9A-Fa-f]{0,4}$/', $matchesIP, PREG_GREP_INVERT)) !== 0)	if ($diagnose) return ISEMAIL_IPV6BADCHAR	;	else return false;	// Illegal characters in address
+		if (count(preg_grep('/^[0-9A-Fa-f]{0,4}$/', $matchesIP, PREG_GREP_INVERT)) !== 0)	if ($diagnose) return ISEMAIL_IPV6BADCHAR;		else return false;	// Illegal characters in address
 		// It's a valid IPv6 address, so...
 		if ($diagnose) return $return_status; else return true;
 // revision 2.1: bug fix: now correctly return warning status
@@ -505,8 +505,19 @@
 
 		// Check DNS?
 		if ($diagnose && ($return_status === ISEMAIL_VALID) && $checkDNS && function_exists('checkdnsrr')) {
-			if (!(checkdnsrr($domain, 'A')))	$return_status = ISEMAIL_DOMAINNOTFOUND;	// 'A' record for domain can't be found
-			if (!(checkdnsrr($domain, 'MX')))	$return_status = ISEMAIL_MXNOTFOUND;		// 'MX' record for domain can't be found
+			// Revision 2.10: Amended DNS logic
+			// An A-record is not required unless there are no MX-records
+			// for a domain. Obvious when you think about it.
+			// 	(http://tools.ietf.org/html/rfc5321#section-5)
+			// 	(http://tools.ietf.org/html/rfc2181#section-10.3)
+			// 	(http://tools.ietf.org/html/rfc1035)
+			if (!(checkdnsrr($domain, 'MX'))) {
+				$result = @dns_get_record($domain, DNS_A);
+
+				if ((is_bool($result) && !(bool) $result))
+					$return_status = ISEMAIL_DOMAINNOTFOUND;	// Neither MX- nor A-record for domain can be found
+				else	$return_status = ISEMAIL_MXNOTFOUND;		// MX-record for domain can't be found
+			}
 		}
 	}
 

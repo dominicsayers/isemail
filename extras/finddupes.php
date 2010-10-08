@@ -10,7 +10,7 @@
 <?php
 require_once '../is_email.php';
 
-$emailes		= array();
+$emails			= array();
 $ids			= array();
 
 $duplicates		= array();
@@ -41,11 +41,11 @@ for ($i = 0; $i < $testList->length; ++$i) {
 		}
 	}
 
-	if (in_array($email, $emailes)) {
+	if (in_array($email, $emails)) {
 		$duplicates['address'][]	= $email;
 		$duplicates['addressIDs'][]	= $id;
 	} else {
-		$emailes[]			= $email;
+		$emails[]			= $email;
 
 		//	Add ID if it hasn't got one
 		if (!isset($id)) {

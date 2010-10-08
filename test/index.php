@@ -28,7 +28,7 @@
 
 <body>
 	<h2 id="top">RFC-compliant email address validation</h2>
-	<a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a> | <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a></p>
+	<p><a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a> | <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a></p>
 	<hr/>
 <?php
 // Incorporates formatting suggestions from Daniel Marschall (uni@danielmarschall.de)
@@ -40,8 +40,9 @@ require_once '../extras/is_email_statustext.php';
 	$diagnosis		= is_email($email, true, E_WARNING);	// revision 2.5: Pass E_WARNING (as intended)
 
 	$result['diagnosis']	= $diagnosis;
-	$result['text']		= is_email_statustext($diagnosis);
-	$result['constant']	= is_email_statustext($diagnosis, false);
+	$result['text']		= is_email_statustext($diagnosis, ISEMAIL_STATUSTEXT_EXPLANATORY);
+	$result['constant']	= is_email_statustext($diagnosis, ISEMAIL_STATUSTEXT_CONSTANT);
+	$result['smtpcode']	= is_email_statustext($diagnosis, ISEMAIL_STATUSTEXT_SMTPCODE);
 
 	$result['warn']		= (($diagnosis & ISEMAIL_WARNING) !== 0);
 	$result['valid']	= ($diagnosis < ISEMAIL_ERROR);
@@ -166,6 +167,7 @@ PHP;
 	$warn		= $result['warn'];
 	$constant	= $result['constant'];
 	$diagnosis_text	= $result['text'];
+	$smtpcode	= $result['smtpcode'];
 
 	$result_text	= ($valid) ? (($warn) ? 'valid but a warning was raised' : 'valid and no warnings were raised') : '<strong>invalid</strong>';
 	$commentary	= (!$valid || $warn) ? "<br/>The diagnostic code was $constant ($diagnosis_text)" : '';
@@ -173,6 +175,7 @@ PHP;
 	echo <<<HTML
 	<p>Email address tested was <em>$email</em></p>
 	<p>The address is $result_text$commentary</p>
+	<p>The SMTP enhanced status code is <em>$smtpcode</em></p>
 	<hr/>
 HTML;
 }

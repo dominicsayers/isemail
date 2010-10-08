@@ -1,9 +1,27 @@
 <?php
+// Revision 2.10: Changed $type to integer to allow for additional types, starting with SMTP codes
+
+// What type of status text to return
+if (!defined('ISEMAIL_STATUSTEXT_EXPLANATORY')) {
+	define('ISEMAIL_STATUSTEXT_EXPLANATORY'	, 1);	// Explanatory text for this $status
+	define('ISEMAIL_STATUSTEXT_CONSTANT'	, 2);	// The name of the constant for this $status
+	define('ISEMAIL_STATUSTEXT_SMTPCODE'	, 3);	// The SMTP enhanced status code for this $status (the bounce message)
+	define('ISEMAIL_STATUSTEXT_INVALIDTYPE'	, -1);	// Unrecognised $type
+}
+
 /*
  * Return a text status message depending on the is_email() return status
  */
-/*.string.*/ function is_email_statustext(/*.integer.*/ $status, $explanatory = true) {
-	if ($explanatory) switch ($status) {
+/*.string.*/ function is_email_statustext(/*.integer.*/ $status, /*.mixed.*/ $type = true) {
+	// For backward compatibility we recognise a boolean $type
+	if	(is_int($type))		$effective_type	= $type;
+	else if	(is_bool($type))	$effective_type	= ((bool) $type) ? ISEMAIL_STATUSTEXT_EXPLANATORY : ISEMAIL_STATUSTEXT_CONSTANT;
+	else				$effective_type	= ISEMAIL_STATUSTEXT_INVALIDTYPE;
+
+	// Return status text depending on $effective_type and $status
+	switch ($effective_type) {
+	case ISEMAIL_STATUSTEXT_EXPLANATORY:
+		switch ($status) {
 		case ISEMAIL_VALID:			return 'Address is valid';											break;	// 0
 		// Warnings (valid address but unlikely in the real world)
 		case ISEMAIL_WARNING:			return 'Address is valid but unlikely in the real world';							break;	// 64
@@ -15,8 +33,8 @@
 		case ISEMAIL_ADDRESSLITERAL:		return 'Address is valid but at a literal address not a domain';						break;	// 70
 		case ISEMAIL_UNLIKELYINITIAL:		return 'Address is valid but has an unusual initial letter';							break;	// 71
 		case ISEMAIL_SINGLEGROUPELISION:	return 'Address is valid but contains a :: that only elides one zero group';					break;	// 72
-		case ISEMAIL_DOMAINNOTFOUND:		return 'Couldn\'t find an A record for this domain';								break;	// 73
-		case ISEMAIL_MXNOTFOUND:		return 'Couldn\'t find an MX record for this domain';								break;	// 74
+		case ISEMAIL_DOMAINNOTFOUND:		return 'Couldn\'t find an MX-record or an A-record for this domain';						break;	// 73 Revision 2.10: text amended to reflect new DNS logic
+		case ISEMAIL_MXNOTFOUND:		return 'Couldn\'t find an MX record for this domain but an A-record does exist';				break;	// 74 Revision 2.10: text amended to reflect new DNS logic
 		// Errors (invalid address)
 		case ISEMAIL_ERROR:			return 'Address is invalid';											break;	// 128
 		case ISEMAIL_TOOLONG:			return 'Address is too long';											break;	// 129
@@ -46,8 +64,9 @@
 		// Unexpected errors
 //		case ISEMAIL_BADPARAMETER:		return 'Unrecognised parameter';										break;	// 190
 		default:				return 'Undefined error';												// 191 and others
-	}
-	else switch ($status) {
+		}
+	case ISEMAIL_STATUSTEXT_CONSTANT:
+		switch ($status) {
 		case ISEMAIL_VALID:			return 'ISEMAIL_VALID';			break;	// 0
 		// Warnings (valid address but unlikely in the real world)
 		case ISEMAIL_WARNING:			return 'ISEMAIL_WARNING';		break;	// 64
@@ -90,6 +109,47 @@
 		// Unexpected errors
 //		case ISEMAIL_BADPARAMETER:		return 'ISEMAIL_BADPARAMETER';		break;	// 190
 		default:				return 'Unknown constant';			// 191 and others
+		}
+	case ISEMAIL_STATUSTEXT_SMTPCODE:
+		// These codes assume we are validating a recipient address
+		// The correct use of reply code 553 is documented in RFCs 821, 2821 & 5321.
+		// The SMTP enhanced status codes (5.1.x) are defined in the IANA registry
+		// 	http://www.iana.org/assignments/smtp-enhanced-status-codes
+		if ($status < ISEMAIL_ERROR) {
+			return '250 2.1.5 ok';
+		} else {
+			switch ($status) {
+			// Errors (invalid address)
+			case ISEMAIL_TOOLONG:			return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 129
+			case ISEMAIL_NOAT:			return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 130
+			case ISEMAIL_NOLOCALPART:		return '553 5.1.1 Bad destination mailbox address';		break;	// 131
+			case ISEMAIL_NODOMAIN:			return '553 5.1.2 Bad destination system address';		break;	// 132
+			case ISEMAIL_ZEROLENGTHELEMENT:		return '553 5.1.1 Bad destination mailbox address';		break;	// 133
+			case ISEMAIL_BADCOMMENT_START:		return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 134
+			case ISEMAIL_BADCOMMENT_END:		return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 135
+			case ISEMAIL_UNESCAPEDDELIM:		return '553 5.1.1 Bad destination mailbox address';		break;	// 136 fixed in version 2.6
+			case ISEMAIL_EMPTYELEMENT:		return '553 5.1.1 Bad destination mailbox address';		break;	// 137 fixed in version 2.6
+			case ISEMAIL_UNESCAPEDSPECIAL:		return '553 5.1.1 Bad destination mailbox address';		break;	// 138 fixed in version 2.6
+			case ISEMAIL_LOCALTOOLONG:		return '553 5.1.1 Bad destination mailbox address';		break;	// 139
+//			case ISEMAIL_IPV4BADPREFIX:		return '553 5.1.2 Bad destination system address';		break;	// 140
+			case ISEMAIL_IPV6BADPREFIXMIXED:	return '553 5.1.2 Bad destination system address';		break;	// 141
+			case ISEMAIL_IPV6BADPREFIX:		return '553 5.1.2 Bad destination system address';		break;	// 142
+			case ISEMAIL_IPV6GROUPCOUNT:		return '553 5.1.2 Bad destination system address';		break;	// 143
+			case ISEMAIL_IPV6DOUBLEDOUBLECOLON:	return '553 5.1.2 Bad destination system address';		break;	// 144
+			case ISEMAIL_IPV6BADCHAR:		return '553 5.1.2 Bad destination system address';		break;	// 145
+			case ISEMAIL_IPV6TOOMANYGROUPS:		return '553 5.1.2 Bad destination system address';		break;	// 146
+			case ISEMAIL_DOMAINEMPTYELEMENT:	return '553 5.1.2 Bad destination system address';		break;	// 147
+			case ISEMAIL_DOMAINELEMENTTOOLONG:	return '553 5.1.2 Bad destination system address';		break;	// 148
+			case ISEMAIL_DOMAINBADCHAR:		return '553 5.1.2 Bad destination system address';		break;	// 149
+			case ISEMAIL_DOMAINTOOLONG:		return '553 5.1.2 Bad destination system address';		break;	// 150
+			case ISEMAIL_IPV6SINGLECOLONSTART:	return '553 5.1.2 Bad destination system address';		break;	// 151
+			case ISEMAIL_IPV6SINGLECOLONEND:	return '553 5.1.2 Bad destination system address';		break;	// 152
+			// Unexpected errors
+			default:				return '553 5.1.0 Other address status';			// 191 and others
+			}
+		}
+	default:
+		return "Status is $status. Unknown status text type: passed as " . gettype($type) . ' with value "' . strval($type) . '"';
 	}
 }
 ?>
