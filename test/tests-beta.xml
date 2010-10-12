@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tests>
+<!--
+If you update these tests, don't forget to change the actual version number
+attribute in the <tests> element below!
+
+Version	Date		Notes
+3.0b1	2010-10-12	From Michael's email yesterday
+-->
+
+<tests version="3.0b1" xmlns="http://www.w3.org/2001/XMLSchema-instance" SchemaLocation="tests.xsd">
+	<description><strong>New test set created by Michael Rushton (michael@squiloople.com)</strong><br/><br/>This test set is designed to replace all the logic of the previous one but with fewer tests.</description>
+	<test>
+		<address></address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>1</id>
+	</test>
+	<test>
+		<address>test</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>2</id>
+	</test>
+	<test>
+		<address>@</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>3</id>
+	</test>
+	<test>
+		<address>test@</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>4</id>
+	</test>
+	<test>
+		<address>test@iana</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>5</id>
+	</test>
+	<test>
+		<address>@iana</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>6</id>
+	</test>
+	<test>
+		<address>@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>7</id>
+	</test>
+	<test>
+		<address>test@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>8</id>
+	</test>
+	<test>
+		<address>test@iana.co.uk</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>9</id>
+	</test>
+	<test>
+		<address>test@iana.museum</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>10</id>
+	</test>
+	<test>
+		<address>a@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>11</id>
+	</test>
+	<test>
+		<address>test@e.com</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>12</id>
+	</test>
+	<test>
+		<address>test@iana.a</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>13</id>
+	</test>
+	<test>
+		<address>test.test@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>14</id>
+	</test>
+	<test>
+		<address>.test@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>15</id>
+	</test>
+	<test>
+		<address>test.@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>16</id>
+	</test>
+	<test>
+		<address>test..iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>17</id>
+	</test>
+	<test>
+		<address>test_exa-mple.com</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>18</id>
+	</test>
+	<test>
+		<address>!#$%&amp;`*+/=?^`{|}~@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>19</id>
+	</test>
+	<test>
+		<address>test\@test@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>20</id>
+	</test>
+	<test>
+		<address>123@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>21</id>
+	</test>
+	<test>
+		<address>test@123.com</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>22</id>
+	</test>
+	<test>
+		<address>test@iana.123</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>23</id>
+	</test>
+	<test>
+		<address>test@255.255.255.255</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>24</id>
+	</test>
+	<test>
+		<address>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>25</id>
+	</test>
+	<test>
+		<address>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklmn@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>26</id>
+	</test>
+	<test>
+		<address>test@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.com</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>27</id>
+	</test>
+	<test>
+		<address>test@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm.com</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>28</id>
+	</test>
+	<test>
+		<address>test@exa-mple.com</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>29</id>
+	</test>
+	<test>
+		<address>test@-iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>30</id>
+	</test>
+	<test>
+		<address>test@iana-.com</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>31</id>
+	</test>
+	<test>
+		<address>test@exa--mple.com</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>32</id>
+	</test>
+	<test>
+		<address>test@iana.co-uk</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>33</id>
+	</test>
+	<test>
+		<address>test@.iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>34</id>
+	</test>
+	<test>
+		<address>test@iana.org.</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>35</id>
+	</test>
+	<test>
+		<address>test@iana..com</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>36</id>
+	</test>
+	<test>
+		<address>a@a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>37</id>
+	</test>
+	<test>
+		<address>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefgh</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>38</id>
+	</test>
+	<test>
+		<address>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghi</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>39</id>
+	</test>
+	<test>
+		<address>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghij</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>40</id>
+	</test>
+	<test>
+		<address>""@a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w.x.y.z.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p.q.r.s.t.u.v.w</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>41</id>
+	</test>
+	<test>
+		<address>"test"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>42</id>
+	</test>
+	<test>
+		<address>""@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>43</id>
+	</test>
+	<test>
+		<address>"""@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>44</id>
+	</test>
+	<test>
+		<address>"\a"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>45</id>
+	</test>
+	<test>
+		<address>"\""@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>46</id>
+	</test>
+	<test>
+		<address>"\"@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>47</id>
+	</test>
+	<test>
+		<address>"\\"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>48</id>
+	</test>
+	<test>
+		<address>test"@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>49</id>
+	</test>
+	<test>
+		<address>"test@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>50</id>
+	</test>
+	<test>
+		<address>"test"test@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>51</id>
+	</test>
+	<test>
+		<address>test"text"@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>52</id>
+	</test>
+	<test>
+		<address>"test""test"@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>53</id>
+	</test>
+	<test>
+		<address>"test"."test"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>54</id>
+	</test>
+	<test>
+		<address>"test\ test"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>55</id>
+	</test>
+	<test>
+		<address>"test".test@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>56</id>
+	</test>
+	<test>
+		<address>"test&#x2400;"@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>57</id>
+	</test>
+	<test>
+		<address>"test\&#x2400;"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>58</id>
+	</test>
+	<test>
+		<address>"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghjiklm"@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>59</id>
+	</test>
+	<test>
+		<address>"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghjik\l"@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>60</id>
+	</test>
+	<test>
+		<address>test@[255.255.255.255]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>61</id>
+	</test>
+	<test>
+		<address>test@a[255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>62</id>
+	</test>
+	<test>
+		<address>test@[255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>63</id>
+	</test>
+	<test>
+		<address>test@[255.255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>64</id>
+	</test>
+	<test>
+		<address>test@[255.255.255.256]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>65</id>
+	</test>
+	<test>
+		<address>test@[1111:2222:3333:4444:5555:6666:7777:8888]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>66</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666:7777]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>67</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666:7777:8888]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>68</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666:7777:8888:9999]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>69</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666:7777:888G]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>70</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666::8888]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>71</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555::8888]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>72</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666::7777:8888]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>73</id>
+	</test>
+	<test>
+		<address>test@[IPv6::3333:4444:5555:6666:7777:8888]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>74</id>
+	</test>
+	<test>
+		<address>test@[IPv6:::3333:4444:5555:6666:7777:8888]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>75</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111::4444:5555::8888]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>76</id>
+	</test>
+	<test>
+		<address>test@[IPv6:::]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>77</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>78</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666:255.255.255.255]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>79</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666:7777:255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>80</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444::255.255.255.255]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>81</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:5555:6666::255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>82</id>
+	</test>
+	<test>
+		<address>test@[IPv6:1111:2222:3333:4444:::255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>83</id>
+	</test>
+	<test>
+		<address>test@[IPv6::255.255.255.255]</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>84</id>
+	</test>
+	<test>
+		<address> test @iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>85</id>
+	</test>
+	<test>
+		<address>test@ iana .com</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>86</id>
+	</test>
+	<test>
+		<address>test . test@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>87</id>
+	</test>
+	<test>
+		<address>&#x0D;&#x0A;&#x20;test@iana.org</address>
+		<valid>true</valid>
+		<comment>FWS</comment>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>88</id>
+	</test>
+	<test>
+		<address>&#x0D;&#x0A;&#x20;&#x0D;&#x0A;&#x20;test@iana.org</address>
+		<valid>true</valid>
+		<comment>FWS with one line composed entirely of WSP -- only allowed as obsolete FWS (someone might allow only non-obsolete FWS)</comment>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>89</id>
+	</test>
+	<test>
+		<address>(comment)test@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>90</id>
+	</test>
+	<test>
+		<address>((comment)test@iana.org</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>91</id>
+	</test>
+	<test>
+		<address>(comment(comment))test@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>92</id>
+	</test>
+	<test>
+		<address>test@(comment)iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>93</id>
+	</test>
+	<test>
+		<address>test(comment)test@iana.</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>94</id>
+	</test>
+	<test>
+		<address>test@(comment)[255.255.255.255]</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>95</id>
+	</test>
+	<test>
+		<address>(comment)abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>96</id>
+	</test>
+	<test>
+		<address>test@(iana)abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghikl.com</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>97</id>
+	</test>
+	<test>
+		<address>(iana)test@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghik.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghik.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.abcdefghijklmnopqrstuvwxyzabcdefghijk.abcdefghijklmnopqrstu</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>98</id>
+	</test>
+	<test>
+		<address>test@iana.org&#x0A;</address>
+		<valid>false</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>99</id>
+	</test>
+	<test>
+		<address>test@xn--iana.org</address>
+		<valid>true</valid>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>100</id>
+	</test>
+</tests>

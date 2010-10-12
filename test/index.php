@@ -28,14 +28,19 @@
 
 <body>
 	<h2 id="top">RFC-compliant email address validation</h2>
-	<p><a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a> | <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a></p>
+	<p>
+		<a href="?all" >Run all tests</a>			<!-- Revision 2.11: Now a link instead of a button on a form -->
+		| <a href="?set=tests-beta.xml" >Run beta test set</a>	<!-- Revision 2.11: evaluating Michael Rushton's new test set -->
+		| <a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a>
+		| <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a>
+	</p>
 	<hr/>
 <?php
 // Incorporates formatting suggestions from Daniel Marschall (uni@danielmarschall.de)
 require_once '../is_email.php';
 require_once '../extras/is_email_statustext.php';
 
-/*.array[string]mixed.*/ function unitTest ($email, $valid_expected = true, $warn_expected = false) {
+/*.array[string]mixed.*/ function unitTest ($email, $valid_expected = true, /*.mixed.*/ $warn_type = 0) {
 	$result			= /*.(array[string]mixed).*/ array();
 	$diagnosis		= is_email($email, true, E_WARNING);	// revision 2.5: Pass E_WARNING (as intended)
 
@@ -47,15 +52,17 @@ require_once '../extras/is_email_statustext.php';
 	$result['warn']		= (($diagnosis & ISEMAIL_WARNING) !== 0);
 	$result['valid']	= ($diagnosis < ISEMAIL_ERROR);
 
+	$warn_expected		= (is_bool($warn_type))	? $warn_type : $result['warn'];	// Revision 2.11: We don't care, unless the expectation was explicitly set
+
 	$result['alert_warn']	= ($result['warn']	!== $warn_expected);
 	$result['alert_valid']	= ($result['valid']	!== $valid_expected);
 
 	return $result;
 }
 
-/*.string.*/ function all_tests() {
+/*.string.*/ function all_tests($test_set = 'tests.xml') {
 	$document = new DOMDocument();
-	$document->load('tests.xml');
+	$document->load($test_set);
 
 	// Get version
 	$suite = $document->getElementsByTagName('tests')->item(0);
@@ -65,8 +72,11 @@ require_once '../extras/is_email_statustext.php';
 		echo "\t<h3>Test package version $version</h3>\r\n";
 	}
 
+	$nodeList		= $document->getElementsByTagName('description');
+	$description		= ($nodeList->length === 0) ? '' : "\t" . '<p class="navigation">' . $document->saveXML($nodeList->item(0)) . '</p>' . PHP_EOL;
+
 	echo <<<PHP
-	<p class="navigation">This output is very wide - you should probably maximize your browser window. <a href="#bottom">Go to bottom of page &raquo;</a></p>
+$description	<p class="navigation">This output is very wide - you should probably maximize your browser window. <a href="#bottom">Go to bottom of page &raquo;</a></p>
 	<br/>
 	<div class="heading address">Address</div>
 	<div class="heading id">#</div>
@@ -90,7 +100,7 @@ PHP;
 
 		$address	= '';
 		$valid		= 'false';
-		$warning	= 'false';
+		$warning	= '';
 		$comment	= '';
 		$id		= '';
 
@@ -109,8 +119,9 @@ PHP;
 		$substitutes	= array(chr(0));
 		$email		= str_replace($needles, $substitutes, $address);
 		$comment	= str_replace($needles, $substitutes, $comment);
+		$warn_type	= ($warning === '') ? 0 : ($warning === 'true');	// Revision 2.11: Warning expectation can be true, false or non-existent
 
-		$result		= unitTest($email, ($valid === 'true'), ($warning === 'true'));
+		$result		= unitTest($email, ($valid === 'true'), $warn_type);
 
 		$valid		= $result['valid'];
 		$warn		= $result['warn'];
@@ -124,8 +135,9 @@ PHP;
 
 		$comment	= stripslashes($comment);
 
-		if ($text !== '')	$comment .= ($comment === '') ? stripslashes($text) : ' (' . stripslashes($text) . ')';
-		if ($comment === '')	$comment = "&nbsp;";
+		if ($text !== '')	$comment	.= ($comment === '') ? stripslashes($text) : ' (' . stripslashes($text) . ')';
+		if ($comment === '')	$comment	= "&nbsp;";
+		if ($email === '')	$email		= "&nbsp;";
 
 		echo <<<HTML
 	<div class="address"><em>$email</em></div>
@@ -185,11 +197,6 @@ HTML;
 
 	return <<<PHP
 	<form>
-		<input type="hidden" name="all"/>
-		<input type="submit" value="Run all tests"/>
-	</form>
-	<br/>
-	<form>
 		<label for="address">Test this email address:</label>
 		<input type="text"$value name="address"/>
 		<input type="submit" value="Test"/>
@@ -208,6 +215,9 @@ if (isset($_GET) && is_array($_GET)) {
 	} else if (array_key_exists('all', $_GET)) {
 		echo forms_html();
 		all_tests();
+	} else if (array_key_exists('set', $_GET)) {	// Revision 2.11: Run any arbitrary test set
+		echo forms_html();
+		all_tests($_GET['set']);
 	} else {
 		echo forms_html();
 	}

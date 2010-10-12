@@ -35,6 +35,11 @@ is_email to do so. Something like this should work:
 Version history
 --------------------------------------------------------------------------------
 
+// Revision 2.11: Two new tests from Michael Rushton. <warning> is now optional in tests. New beta test set from Michael R.
+
+Test suite version 2.7
+	2010-10-12	Two additional tests from Michael Rushton (#278-279)
+
 // Revision 2.10: Amended DNS lookup logic. Also, in is_email_statustext.php, changed $type to integer to allow for additional types (starting with SMTP codes)
 
 Test suite version 2.6

@@ -34,7 +34,7 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.10.1 - Amended DNS lookup logic. Also, in is_email_statustext.php, changed $type to integer to allow for additional types (starting with SMTP codes)
+ * @version	2.11.2 - Two new tests from Michael Rushton. <warning> is now optional in tests. New beta test set from Michael R.
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -329,6 +329,12 @@
 	// 	(http://tools.ietf.org/html/rfc3696#section-3)
 	// 	(http://tools.ietf.org/html/rfc5321#section-4.1.3)
 	// 	(http://tools.ietf.org/html/rfc4291#section-2.2)
+	//
+	// IPv4 is the default format for address literals. Alternative formats can
+	// be defined. At the time of writing only IPv6 has been defined as an
+	// alternative format. Non-IPv4 formats must be tagged to show what type
+	// of address literal they are. The registry of current tags is here:
+	// http://www.iana.org/assignments/address-literal-tags
 	if (preg_match('/^\\[(.)+]$/', $domain) === 1) {
 		// It's an address-literal
 		if ($warn) $return_status = ISEMAIL_ADDRESSLITERAL;	// Quoted string is unlikely in the real world
@@ -339,6 +345,7 @@
 		$matchesIP	= array();
 		$colon		= ':';	// Revision 2.7: Daniel Marschall's new IPv6 testing strategy
 		$double_colon	= '::';
+		$IPv6tag	= 'IPv6:';	// Revision 2.12: Changed literal string values to this variable
 
 		// Extract IPv4 part from the end of the address-literal (if there is one)
 		if (preg_match('/\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/', $addressLiteral, $matchesIP) > 0) {
@@ -352,7 +359,7 @@
 //-				// Assume it's an attempt at a mixed address (IPv6 + IPv4)
 //-				if ($addressLiteral[$index - 1] !== $colon)				if ($diagnose) return ISEMAIL_IPV4BADPREFIX;		else return false;	// Character preceding IPv4 address must be ':'
 // revision 2.1: new IPv6 testing strategy
-				if (substr($addressLiteral, 0, 5) !== 'IPv6:')				if ($diagnose) return ISEMAIL_IPV6BADPREFIXMIXED;	else return false;	// RFC5321 section 4.1.3
+				if (substr($addressLiteral, 0, 5) !== $IPv6tag)				if ($diagnose) return ISEMAIL_IPV6BADPREFIXMIXED;	else return false;	// RFC5321 section 4.1.3
 //-
 //-				$IPv6		= substr($addressLiteral, 5, ($index === 7) ? 2 : $index - 6);
 //-				$groupMax	= 6;
@@ -361,7 +368,7 @@
 			}
 		} else {
 			// It must be an attempt at pure IPv6
-			if (substr($addressLiteral, 0, 5) !== 'IPv6:')					if ($diagnose) return ISEMAIL_IPV6BADPREFIX;		else return false;	// RFC5321 section 4.1.3
+			if (substr($addressLiteral, 0, 5) !== $IPv6tag)					if ($diagnose) return ISEMAIL_IPV6BADPREFIX;		else return false;	// RFC5321 section 4.1.3
 			$IPv6 = substr($addressLiteral, 5);
 //-			$groupMax = 8;
 // revision 2.1: new IPv6 testing strategy
@@ -512,7 +519,7 @@
 			// 	(http://tools.ietf.org/html/rfc2181#section-10.3)
 			// 	(http://tools.ietf.org/html/rfc1035)
 			if (!(checkdnsrr($domain, 'MX'))) {
-				$result = @dns_get_record($domain, DNS_A);
+				$result = @dns_get_record($domain, DNS_A);	// Not using checkdnsrr because of a suspected bug in PHP 5.3 (http://bugs.php.net/bug.php?id=51844)
 
 				if ((is_bool($result) && !(bool) $result))
 					$return_status = ISEMAIL_DOMAINNOTFOUND;	// Neither MX- nor A-record for domain can be found

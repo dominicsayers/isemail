@@ -34,10 +34,10 @@
  * @copyright	2008-2010 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	2.10.1 - Amended DNS lookup logic. Also, in is_email_statustext.php, changed $type to integer to allow for additional types (starting with SMTP codes)
+ * @version	2.11.2 - Two new tests from Michael Rushton. <warning> is now optional in tests. New beta test set from Michael R.
 -->
 
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1">
 	<xsd:annotation>
 		<xsd:documentation xml:lang="EN">
 			Mailing Testcase XML-Schema
@@ -45,7 +45,9 @@
 		</xsd:documentation>
 	</xsd:annotation>
 
-	<xsd:element name="tests" type="TestsTyp" />
+	<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1" /> <!-- added in version 1.1 -->
+	<xsd:element name="tests" type="TestsTyp" minOccurs="1" maxOccurs="1" />
+	<xsd:element name="glossary" type="GlossaryTyp" minOccurs="1" maxOccurs="1" /> <!-- added in version 1.1 -->
 
 	<xsd:complexType name="TestsTyp">
 		<xsd:sequence>
@@ -57,7 +59,7 @@
 						<xsd:element name="valid" type="xsd:boolean"
 							minOccurs="1" maxOccurs="1" />
 						<xsd:element name="warning" type="xsd:boolean"
-							minOccurs="1" maxOccurs="1" />
+							minOccurs="0" maxOccurs="1" /> <!-- Now optional from version 1.1 -->
 						<xsd:element name="source" type="xsd:string"
 							minOccurs="0" maxOccurs="1" />
 						<xsd:element name="comment" type="xsd:string"
@@ -66,6 +68,25 @@
 							minOccurs="0" maxOccurs="1" />
 						<xsd:element name="id" type="xsd:ID" minOccurs="1"
 							maxOccurs="1" />
+						<xsd:element name="category" type="xsd:string"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+	<!-- added in version 1.1 -->
+	<xsd:complexType name="GlossaryTyp">
+		<xsd:sequence>
+			<xsd:element name="category" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="rubric" type="xsd:string"
+							minOccurs="1" maxOccurs="1" />
+						<xsd:element name="BNF" type="xsd:string"
+							minOccurs="0" maxOccurs="1" />
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>

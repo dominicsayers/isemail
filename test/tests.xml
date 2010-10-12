@@ -5,6 +5,8 @@ If you update these tests, don't forget to change the actual version number
 attribute in the <tests> element below!
 
 Version	Date		Notes
+2.7	2010-10-12	Two additional tests from Michael Rushton (#278-279)
+
 2.6	2010-10-08	After researching the logic of SMTP routing, I now
 			believe the lack of an A-record for us.ibm.com is
 			absolutely fine and should not raise a warning. If
@@ -48,8 +50,7 @@ Version	Date		Notes
 			in a similar way. Where the test is still for a non-
 			existent domain I've changed the expectation to Warning
 -->
-<tests version="2.6" xmlns="http://www.w3.org/2001/XMLSchema-instance"
-		SchemaLocation="tests.xsd">
+<tests version="2.7" xmlns="http://www.w3.org/2001/XMLSchema-instance" SchemaLocation="tests.xsd">
 	<test>
 		<address>first.last@iana.org</address>
 		<valid>true</valid>
@@ -2448,5 +2449,32 @@ Version	Date		Notes
 		<source>Dominic Sayers</source>
 		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
 		<id>277</id>
+	</test>
+	<test>
+		<address>test@example.com&#10;</address>
+		<valid>false</valid>
+		<warning>false</warning>
+		<comment>Address has a newline at the end</comment>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>278</id>
+	</test>
+	<test>
+		<address>test@xn--example.com</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>Address is at an Internationalized Domain Name (Punycode)</comment>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>279</id>
+	</test>
+	<test>
+		<address>test@Bücher.ch</address>
+		<valid>true</valid>
+		<warning>true</warning>
+		<comment>Address is at an Internationalized Domain Name (UTF-8)</comment>
+		<source>Michael Rushton</source>
+		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
+		<id>280</id>
 	</test>
 </tests>

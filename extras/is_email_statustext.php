@@ -7,6 +7,13 @@ if (!defined('ISEMAIL_STATUSTEXT_EXPLANATORY')) {
 	define('ISEMAIL_STATUSTEXT_CONSTANT'	, 2);	// The name of the constant for this $status
 	define('ISEMAIL_STATUSTEXT_SMTPCODE'	, 3);	// The SMTP enhanced status code for this $status (the bounce message)
 	define('ISEMAIL_STATUSTEXT_INVALIDTYPE'	, -1);	// Unrecognised $type
+
+	// SMTP enhanced status messages
+	define('ISEMAIL_STATUSTEXT_SMTP_250_215'	, '250 2.1.5 ok');
+	define('ISEMAIL_STATUSTEXT_SMTP_553_510'	, '553 5.1.0 Other address status');
+	define('ISEMAIL_STATUSTEXT_SMTP_553_511'	, '553 5.1.1 Bad destination mailbox address');
+	define('ISEMAIL_STATUSTEXT_SMTP_553_512'	, '553 5.1.2 Bad destination system address');
+	define('ISEMAIL_STATUSTEXT_SMTP_553_513'	, '553 5.1.3 Bad destination mailbox address syntax');
 }
 
 /*
@@ -113,39 +120,42 @@ if (!defined('ISEMAIL_STATUSTEXT_EXPLANATORY')) {
 	case ISEMAIL_STATUSTEXT_SMTPCODE:
 		// These codes assume we are validating a recipient address
 		// The correct use of reply code 553 is documented in RFCs 821, 2821 & 5321.
-		// The SMTP enhanced status codes (5.1.x) are defined in the IANA registry
+		//	http://tools.ietf.org/html/rfc5321#section-4.2
+
+		// The SMTP enhanced status codes (5.1.x) are maintained in the IANA registry
 		// 	http://www.iana.org/assignments/smtp-enhanced-status-codes
+		// as defined in RFC 5428.
 		if ($status < ISEMAIL_ERROR) {
-			return '250 2.1.5 ok';
+			return ISEMAIL_STATUSTEXT_SMTP_250_215;
 		} else {
 			switch ($status) {
 			// Errors (invalid address)
-			case ISEMAIL_TOOLONG:			return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 129
-			case ISEMAIL_NOAT:			return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 130
-			case ISEMAIL_NOLOCALPART:		return '553 5.1.1 Bad destination mailbox address';		break;	// 131
-			case ISEMAIL_NODOMAIN:			return '553 5.1.2 Bad destination system address';		break;	// 132
-			case ISEMAIL_ZEROLENGTHELEMENT:		return '553 5.1.1 Bad destination mailbox address';		break;	// 133
-			case ISEMAIL_BADCOMMENT_START:		return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 134
-			case ISEMAIL_BADCOMMENT_END:		return '553 5.1.3 Bad destination mailbox address syntax';	break;	// 135
-			case ISEMAIL_UNESCAPEDDELIM:		return '553 5.1.1 Bad destination mailbox address';		break;	// 136 fixed in version 2.6
-			case ISEMAIL_EMPTYELEMENT:		return '553 5.1.1 Bad destination mailbox address';		break;	// 137 fixed in version 2.6
-			case ISEMAIL_UNESCAPEDSPECIAL:		return '553 5.1.1 Bad destination mailbox address';		break;	// 138 fixed in version 2.6
-			case ISEMAIL_LOCALTOOLONG:		return '553 5.1.1 Bad destination mailbox address';		break;	// 139
-//			case ISEMAIL_IPV4BADPREFIX:		return '553 5.1.2 Bad destination system address';		break;	// 140
-			case ISEMAIL_IPV6BADPREFIXMIXED:	return '553 5.1.2 Bad destination system address';		break;	// 141
-			case ISEMAIL_IPV6BADPREFIX:		return '553 5.1.2 Bad destination system address';		break;	// 142
-			case ISEMAIL_IPV6GROUPCOUNT:		return '553 5.1.2 Bad destination system address';		break;	// 143
-			case ISEMAIL_IPV6DOUBLEDOUBLECOLON:	return '553 5.1.2 Bad destination system address';		break;	// 144
-			case ISEMAIL_IPV6BADCHAR:		return '553 5.1.2 Bad destination system address';		break;	// 145
-			case ISEMAIL_IPV6TOOMANYGROUPS:		return '553 5.1.2 Bad destination system address';		break;	// 146
-			case ISEMAIL_DOMAINEMPTYELEMENT:	return '553 5.1.2 Bad destination system address';		break;	// 147
-			case ISEMAIL_DOMAINELEMENTTOOLONG:	return '553 5.1.2 Bad destination system address';		break;	// 148
-			case ISEMAIL_DOMAINBADCHAR:		return '553 5.1.2 Bad destination system address';		break;	// 149
-			case ISEMAIL_DOMAINTOOLONG:		return '553 5.1.2 Bad destination system address';		break;	// 150
-			case ISEMAIL_IPV6SINGLECOLONSTART:	return '553 5.1.2 Bad destination system address';		break;	// 151
-			case ISEMAIL_IPV6SINGLECOLONEND:	return '553 5.1.2 Bad destination system address';		break;	// 152
+			case ISEMAIL_TOOLONG:			return ISEMAIL_STATUSTEXT_SMTP_553_513;	break;	// 129
+			case ISEMAIL_NOAT:			return ISEMAIL_STATUSTEXT_SMTP_553_513;	break;	// 130
+			case ISEMAIL_NOLOCALPART:		return ISEMAIL_STATUSTEXT_SMTP_553_511;	break;	// 131
+			case ISEMAIL_NODOMAIN:			return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 132
+			case ISEMAIL_ZEROLENGTHELEMENT:		return ISEMAIL_STATUSTEXT_SMTP_553_511;	break;	// 133
+			case ISEMAIL_BADCOMMENT_START:		return ISEMAIL_STATUSTEXT_SMTP_553_513;	break;	// 134
+			case ISEMAIL_BADCOMMENT_END:		return ISEMAIL_STATUSTEXT_SMTP_553_513;	break;	// 135
+			case ISEMAIL_UNESCAPEDDELIM:		return ISEMAIL_STATUSTEXT_SMTP_553_511;	break;	// 136 fixed in version 2.6
+			case ISEMAIL_EMPTYELEMENT:		return ISEMAIL_STATUSTEXT_SMTP_553_511;	break;	// 137 fixed in version 2.6
+			case ISEMAIL_UNESCAPEDSPECIAL:		return ISEMAIL_STATUSTEXT_SMTP_553_511;	break;	// 138 fixed in version 2.6
+			case ISEMAIL_LOCALTOOLONG:		return ISEMAIL_STATUSTEXT_SMTP_553_511;	break;	// 139
+//			case ISEMAIL_IPV4BADPREFIX:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 140
+			case ISEMAIL_IPV6BADPREFIXMIXED:	return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 141
+			case ISEMAIL_IPV6BADPREFIX:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 142
+			case ISEMAIL_IPV6GROUPCOUNT:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 143
+			case ISEMAIL_IPV6DOUBLEDOUBLECOLON:	return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 144
+			case ISEMAIL_IPV6BADCHAR:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 145
+			case ISEMAIL_IPV6TOOMANYGROUPS:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 146
+			case ISEMAIL_DOMAINEMPTYELEMENT:	return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 147
+			case ISEMAIL_DOMAINELEMENTTOOLONG:	return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 148
+			case ISEMAIL_DOMAINBADCHAR:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 149
+			case ISEMAIL_DOMAINTOOLONG:		return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 150
+			case ISEMAIL_IPV6SINGLECOLONSTART:	return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 151
+			case ISEMAIL_IPV6SINGLECOLONEND:	return ISEMAIL_STATUSTEXT_SMTP_553_512;	break;	// 152
 			// Unexpected errors
-			default:				return '553 5.1.0 Other address status';			// 191 and others
+			default:				return ISEMAIL_STATUSTEXT_SMTP_553_510;		// 128, 191 and others
 			}
 		}
 	default:
