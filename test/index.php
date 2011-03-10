@@ -4,191 +4,203 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 	<title>Testing is_email()</title>
-
-	<style type="text/css">
-		body		{font-family:Segoe UI,Arial,Helvetica,sans-serif;}
-		br		{clear:left;}
-		div		{margin:0;padding:0;float:left;font-size:12px;}
-		div.valid	{width:75px;}
-		div.warning	{width:50px;}
-		div.diagnosis	{width:220px;}
-		div.unexpected, div.heading
-				{font-weight:bold;}
-		div.address	{text-align:right;width:400px;overflow:hidden;margin-right:8px;}
-		div.id		{text-align:right;width:20px;overflow:hidden;margin-right:8px;}
-		div.author	{font-style:italic;}
-		p.navigation	{font-size:11px;}
-		p.statistics	{width:100%;color:white;font-weight:bold;text-align:center;padding:0.25em;}
-		p.green		{background-color:green;}
-		p.amber		{background-color:#FF9900;color:black;}
-		p.red		{background-color:red;color:#FFFF66;}
-		hr		{clear:left;}
-	</style>
+	<link rel="stylesheet" href="tests.css"/>
 </head>
 
 <body>
 	<h2 id="top">RFC-compliant email address validation</h2>
-	<p>
-		<a href="?all" >Run all tests</a>			<!-- Revision 2.11: Now a link instead of a button on a form -->
-		| <a href="?set=tests-beta.xml" >Run beta test set</a>	<!-- Revision 2.11: evaluating Michael Rushton's new test set -->
-		| <a href="mailto:dominic@sayers.cc?subject=is_email()">Dominic Sayers</a>
-		| <a href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a>
-	</p>
-	<hr/>
 <?php
-// Incorporates formatting suggestions from Daniel Marschall (uni@danielmarschall.de)
-require_once '../is_email.php';
-require_once '../extras/is_email_statustext.php';
+// Incorporates formatting suggestions from Daniel Marschall
+require_once './tests.php';
 
-/*.array[string]mixed.*/ function unitTest ($email, $valid_expected = true, /*.mixed.*/ $warn_type = 0) {
-	$result			= /*.(array[string]mixed).*/ array();
-	$diagnosis		= is_email($email, true, E_WARNING);	// revision 2.5: Pass E_WARNING (as intended)
+/*string.*/ function alternate_diagnoses(/*.array[int]int.*/ $diagnoses, /*.int.*/ $diagnosis) {
+		// Other diagnoses
+		$alternates	= '';
+		$separator	= '';
 
-	$result['diagnosis']	= $diagnosis;
-	$result['text']		= is_email_statustext($diagnosis, ISEMAIL_STATUSTEXT_EXPLANATORY);
-	$result['constant']	= is_email_statustext($diagnosis, ISEMAIL_STATUSTEXT_CONSTANT);
-	$result['smtpcode']	= is_email_statustext($diagnosis, ISEMAIL_STATUSTEXT_SMTPCODE);
-
-	$result['warn']		= (($diagnosis & ISEMAIL_WARNING) !== 0);
-	$result['valid']	= ($diagnosis < ISEMAIL_ERROR);
-
-	$warn_expected		= (is_bool($warn_type))	? $warn_type : $result['warn'];	// Revision 2.11: We don't care, unless the expectation was explicitly set
-
-	$result['alert_warn']	= ($result['warn']	!== $warn_expected);
-	$result['alert_valid']	= ($result['valid']	!== $valid_expected);
-
-	return $result;
-}
-
-/*.string.*/ function all_tests($test_set = 'tests.xml') {
-	$document = new DOMDocument();
-	$document->load($test_set);
-
-	// Get version
-	$suite = $document->getElementsByTagName('tests')->item(0);
-
-	if ($suite->hasAttribute('version')) {
-		$version = $suite->getAttribute('version');
-		echo "\t<h3>Test package version $version</h3>\r\n";
-	}
-
-	$nodeList		= $document->getElementsByTagName('description');
-	$description		= ($nodeList->length === 0) ? '' : "\t" . '<p class="navigation">' . $document->saveXML($nodeList->item(0)) . '</p>' . PHP_EOL;
-
-	echo <<<PHP
-$description	<p class="navigation">This output is very wide - you should probably maximize your browser window. <a href="#bottom">Go to bottom of page &raquo;</a></p>
-	<br/>
-	<div class="heading address">Address</div>
-	<div class="heading id">#</div>
-	<div class="heading valid">Result</div>
-	<div class="heading warning">Warning</div>
-	<div class="heading diagnosis">Diagnosis</div>
-	<div class="heading comment">Comment</div>
-	<br/>
-
-PHP;
-
-	$testList		= $document->getElementsByTagName('test');
-	$testCount		= $testList->length;
-	$statistics_count	= 0;
-	$statistics_alert_warn	= 0;
-	$statistics_alert_valid	= 0;
-	$html			= '';
-
-	for ($i = 0; $i < $testCount; $i++) {
-		$tagList = $testList->item($i)->childNodes;
-
-		$address	= '';
-		$valid		= 'false';
-		$warning	= '';
-		$comment	= '';
-		$id		= '';
-
-		for ($j = 0; $j < $tagList->length; $j++) {
-			$node = $tagList->item($j);
-			if ($node->nodeType === XML_ELEMENT_NODE) {
-				$name	= $node->nodeName;
-				$$name	= $node->nodeValue;
+		foreach ($diagnoses as $alternate) {
+			if ($alternate !== $diagnosis) {
+				$alternates	.= $separator . is_email_analysis($alternate, ISEMAIL_META_CONSTANT);
+				$separator	= ', ';
 			}
 		}
 
-		// Can't store ASCII NUL or Unicode Character 'NULL' (U+0000) in XML file so we put a token in the XML
-		// The token we have chosen is the Unicode Character 'SYMBOL FOR NULL' (U+2400)
-		// Here we convert the token to an ASCII NUL.
-		$needles	= array(mb_convert_encoding('&#9216;', 'UTF-8', 'HTML-ENTITIES'));	// PHP bug doesn't allow us to use hex notation (http://bugs.php.net/48645)
-		$substitutes	= array(chr(0));
-		$email		= str_replace($needles, $substitutes, $address);
-		$comment	= str_replace($needles, $substitutes, $comment);
-		$warn_type	= ($warning === '') ? 0 : ($warning === 'true');	// Revision 2.11: Warning expectation can be true, false or non-existent
+		return ($alternates !== '') ? "Other diagnoses: $alternates" : '';
+}
 
-		$result		= unitTest($email, ($valid === 'true'), $warn_type);
+/*.string.*/ function all_tests($testset = 'tests.xml') {
+	$tests		= new is_email_test($testset);
+	$version	= $tests->version();
+	$description	= $tests->description();
+	$test_count	= $tests->count();
 
-		$valid		= $result['valid'];
-		$warn		= $result['warn'];
-		$constant	= $result['constant'];
-		$text		= $result['text'];
+	echo <<<PHP
+	<h3>Test package version $version</h3>
+$description
 
-		$warning	= ($warn)			? 'Yes'		: 'No';
-		$status		= ($valid)			? 'Valid'	: 'Not valid';
-		$class_warn	= ($result['alert_warn'])	? ' unexpected'	: '';
-		$class_valid	= ($result['alert_valid'])	? ' unexpected'	: '';
+PHP;
 
-		$comment	= stripslashes($comment);
+	$coverage_actual		= array();	// List of diagnoses returned by the test set
+	$statistics_count		= 0;
+	$statistics_alert_category	= 0;
+	$statistics_alert_diagnosis	= 0;
+	$html				= '';
 
-		if ($text !== '')	$comment	.= ($comment === '') ? stripslashes($text) : ' (' . stripslashes($text) . ')';
-		if ($comment === '')	$comment	= "&nbsp;";
-		if ($email === '')	$email		= "&nbsp;";
+	for ($i = 0; $i < $test_count; $i++) {
+		$test		= $tests->item($i);
 
-		echo <<<HTML
-	<div class="address"><em>$email</em></div>
-	<div class="id">$id</div>
-	<div class="valid$class_valid">$status</div>
-	<div class="warning$class_warn">$warning</div>
-	<div class="diagnosis">$constant</div>
-	<div class="comment">$comment</div>
-	<br/>
+		$id		= $test->id;
+		$address	= $test->address;
+		$category	= $test->category;
+		$diagnosis	= $test->diagnosis;
+		$email		= $test->email;
+		$address_html	= $test->address_html;
+		$comment	= $test->comment;
+
+		$result		= $tests->test($email, $category, $diagnosis);	// This is why we're here
+
+		$category_result	= $result['actual']['analysis'][ISEMAIL_META_CAT_VALUE];
+		$diagnosis_result	= $result['actual']['diagnosis'];
+		$constant_category	= $result['actual']['analysis'][ISEMAIL_META_CATEGORY];
+		$constant_diagnosis	= $result['actual']['analysis'][ISEMAIL_META_CONSTANT];
+		$text			= $result['actual']['analysis'][ISEMAIL_META_DESC];
+		$references		= (array_key_exists(ISEMAIL_META_REF_ALT, $result['actual']['analysis'])) ? '<span>' . $result['actual']['analysis'][ISEMAIL_META_REF_ALT] . '</span>' : '';
+
+		$comments		= /*.(array[int]string).*/ array();
+
+		if (strlen($comment) !== 0)	$comments[] = '<em>' . stripslashes($comment) . '</em>';
+		if ($text !== '')		$comments[] = stripslashes($text);
+
+		if ($result['actual']['alert_category']) {
+			$class_category	= ' unexpected';
+			$rag_category	= ' red';
+			$comments[]	= 'Expected category was ' . $result['expected']['analysis'][ISEMAIL_META_CATEGORY];
+		} else {
+			$class_category	= '';
+			$rag_category	= '';
+		}
+
+		if ($result['actual']['alert_diagnosis']) {
+			$class_diagnosis= ' unexpected';
+			$rag_diagnosis	= ' amber';
+			$comments[]	= 'Expected diagnosis was ' . $result['expected']['analysis'][ISEMAIL_META_CONSTANT];
+		} else {
+			$class_diagnosis= '';
+			$rag_diagnosis	= '';
+		}
+
+		// Validity
+		$validity	= ($diagnosis_result < ISEMAIL_THRESHOLD);
+		$valid		= ($validity) ? 'valid' : 'invalid';
+		$validity_rag	= '';
+//		if ($validity === $result['actual']['simple']) $validity_rag = ' red';
+
+		// Other diagnoses
+		$alternates = alternate_diagnoses($result['actual']['parsedata']['status'], $diagnosis_result);
+		if ($alternates !== '') $comments[] = $alternates;
+
+		$comments_html	= implode('<br/>', $comments);
+		$address_length = strlen($address);
+		$address_class	= ($address_length > 39) ? 'small' : (($address_length < 29) ? 'large' : 'medium');
+
+		$html .= <<<HTML
+			<tr id="$id">
+				<td><p class="address $address_class">$address_html</p></td>
+				<td>
+					<div class="infoblock">
+						<div class="validity"><p class="$valid $address_class$validity_rag"/></div>
+						<div>
+							<div class="label">Test #</div>		<div class="id">$id</div><br/>
+							<div class="label">Category</div>	<div class="category$class_category$rag_category">$constant_category</div><br/>
+							<div class="label">Diagnosis</div>	<div class="diagnosis$class_diagnosis$rag_diagnosis">$constant_diagnosis</div><br/>
+$references
+						</div>
+					</div>
+				</td>
+				<td><div class="comment">$comments_html</div></td>
+			</tr>
 
 HTML;
 
 		// Update statistics for this test
+		$coverage_actual[]		= $diagnosis_result;
+
 		$statistics_count++;
-		$statistics_alert_warn	+= ($result['alert_warn'])	? 1 : 0;
-		$statistics_alert_valid	+= ($result['alert_valid'])	? 1 : 0;
+		$statistics_alert_category	+= ($result['actual']['alert_category'])	? 1 : 0;
+		$statistics_alert_diagnosis	+= ($result['actual']['alert_diagnosis'])	? 1 : 0;
 	}
 
 	// Revision 2.7: Added test run statistics
-	if	($statistics_alert_valid	!== 0)	$statistics_class = 'red';
-	else if	($statistics_alert_warn		!== 0)	$statistics_class = 'amber';
+	if	($statistics_alert_category	!== 0)	$statistics_class = 'red';
+	else if	($statistics_alert_diagnosis	!== 0)	$statistics_class = 'amber';
 	else						$statistics_class = 'green';
 
 	$statistics_plural_count	= ($statistics_count		=== 1)	? '' : 's';
-	$statistics_plural_valid	= ($statistics_alert_valid	=== 1)	? '' : 's';
-	$statistics_plural_warn		= ($statistics_alert_warn	=== 1)	? '' : 's';
+	$statistics_plural_category	= ($statistics_alert_category	=== 1)	? 'y' : 'ies';
+	$statistics_plural_diagnosis	= ($statistics_alert_diagnosis	=== 1)	? 'is' : 'es';
+
+	// Coverage
+	$coverage_actual	= array_unique($coverage_actual, SORT_NUMERIC);
+	$coverage_theory	= is_email_list(ISEMAIL_META_VALUE);
+	$coverage_count_actual	= count($coverage_actual);
+	$coverage_count_theory	= count($coverage_theory);
+	$coverage_percent	= sprintf('%d', 100 * $coverage_count_actual / $coverage_count_theory);
+	$coverage_diff		= array_diff($coverage_theory, $coverage_actual);
+	$coverage_missing	= '';
+	$separator		= '';
+
+	foreach($coverage_diff as $value) {
+		$constant		= is_email_analysis((int) $value, ISEMAIL_META_CONSTANT);
+		$coverage_missing	.= $separator . $constant;
+		$separator		= ', ';
+	}
+
+	if ($coverage_missing !== '') $coverage_missing = " Missing outcomes: $coverage_missing";
 
 	echo <<<PHP
-	<p class="statistics $statistics_class">$statistics_count test$statistics_plural_count: $statistics_alert_valid unexpected result$statistics_plural_valid, $statistics_alert_warn unexpected warning$statistics_plural_warn</p>
-	<hr/>
-	<p class="navigation"><a id="bottom" href="#top">&laquo; back to top</a></p>
+	<p class="rubric">Coverage: $coverage_percent% ($coverage_count_actual outcomes recorded / $coverage_count_theory defined).$coverage_missing</p>
+	<p class="statistics $statistics_class">$statistics_count test$statistics_plural_count: $statistics_alert_category unexpected categor$statistics_plural_category, $statistics_alert_diagnosis unexpected diagnos$statistics_plural_diagnosis</p>
+	<table>
+		<thead>
+			<tr>
+				<th><p class="heading address">Address</p></th>
+				<th class="heading infoblock">Results</th>
+				<th class="heading comment">Comments</th>
+			</tr>
+		</thead>
+		<tbody>
+$html		</tbody>
+	</table>
+	<a id="bottom" href="#top">&laquo; back to top</a>
 PHP;
 }
 
 /*.string.*/ function test_single_address(/*.string.*/ $email) {
-	$result		= unitTest($email);
+	$tests			= new is_email_test();
+	$result			= $tests->test($email);
 
-	$valid		= $result['valid'];
-	$warn		= $result['warn'];
-	$constant	= $result['constant'];
-	$diagnosis_text	= $result['text'];
-	$smtpcode	= $result['smtpcode'];
+	$constant_category	= $result['actual']['analysis'][ISEMAIL_META_CATEGORY];
+	$constant_diagnosis	= $result['actual']['analysis'][ISEMAIL_META_CONSTANT];
+	$text_category		= $result['actual']['analysis'][ISEMAIL_META_CAT_DESC];
+	$text_diagnosis		= $result['actual']['analysis'][ISEMAIL_META_DESC];
+	$smtpcode		= $result['actual']['analysis'][ISEMAIL_META_SMTP];
+	$reference		= (array_key_exists(ISEMAIL_META_REF_ALT, $result['actual']['analysis'])) ? "\t\t<p>The following reference is relevant:</p>\r\n" . $result['actual']['analysis'][ISEMAIL_META_REF_ALT] : '';
+	$validity		= ($result['actual']['diagnosis'] < ISEMAIL_THRESHOLD);
+	$valid			= ($validity) ? 'valid' : 'invalid';
 
-	$result_text	= ($valid) ? (($warn) ? 'valid but a warning was raised' : 'valid and no warnings were raised') : '<strong>invalid</strong>';
-	$commentary	= (!$valid || $warn) ? "<br/>The diagnostic code was $constant ($diagnosis_text)" : '';
+	// Other diagnoses
+	$alternates = alternate_diagnoses($result['actual']['parsedata']['status'], $result['actual']['diagnosis']);
+	if ($alternates !== '') $alternates = "<p>$alternates</p>";
 
 	echo <<<HTML
-	<p>Email address tested was <em>$email</em></p>
-	<p>The address is $result_text$commentary</p>
-	<p>The SMTP enhanced status code is <em>$smtpcode</em></p>
-	<hr/>
+	<div class="results">
+		<p>Email address tested was <em>$email</em></p>
+		<p>Short story: the address is <strong>$valid</strong> for common use cases (such as an online registration form)</p>
+		<p>Category: $text_category [$constant_category]<br/>
+		Diagnosis: $text_diagnosis [$constant_diagnosis]</p>
+$alternates		<p>The SMTP enhanced status code would be <em>$smtpcode</em></p>
+$reference	</div>
+
 HTML;
 }
 
@@ -197,11 +209,14 @@ HTML;
 
 	return <<<PHP
 	<form>
-		<label for="address">Test this email address:</label>
-		<input type="text"$value name="address"/>
-		<input type="submit" value="Test"/>
+		<input type="submit" value="Test this" class="menu"/>
+		<input type="text"$value name="address" class="text"/>
 	</form>
-	<hr/>
+	<a class="menu" href="?all" >Run all tests</a>
+	<a class="menu" href="?set=tests-original.xml" >Run original test set</a>
+	<a class="menu" href="http://www.dominicsayers.com/isemail" target="_blank">Read more...</a>
+	<a class="menu" href="mailto:dominic@sayers.cc?subject=is_email()">Contact</a>
+	<br/>
 
 PHP;
 }
@@ -218,6 +233,12 @@ if (isset($_GET) && is_array($_GET)) {
 	} else if (array_key_exists('set', $_GET)) {	// Revision 2.11: Run any arbitrary test set
 		echo forms_html();
 		all_tests($_GET['set']);
+	} elseif (count($_GET) > 0) {
+		$keys	= array_keys($_GET);
+		$email	= array_shift($keys);
+		if (get_magic_quotes_gpc() !== 0) $email = stripslashes($email); // Version 2.6: BUG: The online test page didn't take account of the magic_quotes_gpc setting that some hosting providers insist on setting. Including mine.
+		echo forms_html($email);
+		test_single_address($email);
 	} else {
 		echo forms_html();
 	}

@@ -3,7 +3,7 @@
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>The BNF from RFC5322 defining parts of a valid email address</title>
+<title>The BNF from RFC 5322 defining parts of a valid internet message address</title>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 
    WSP             =   SP / HTAB          ; white space
 
-   obs-FWS         =   1*WSP *(CRLF 1*WSP)
+   obs-FWS         =   1*([CRLF] WSP)     ; As amended in erratum #1908
 
    ctext           =   %d33-39 /          ; Printable US-ASCII
                        %d42-91 /          ;  characters not including
