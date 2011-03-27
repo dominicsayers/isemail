@@ -34,7 +34,7 @@
  * @copyright	2008-2011 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	3.0.13 - Version 3.0
+ * @version	3.01.1 - Fixed examples and readme.txt
  */
 
 /*.
@@ -136,46 +136,42 @@ if (!defined('ISEMAIL_META_DESC')) {
 		$separator_cite	= '';
 		$separator_link	= '';
 
-		if ($references->length === 0) return $status;
+		// Revision 3.1: changed behaviour. These array members are now populated
+		// even if there are no refer3ences to include.
+		if (!array_key_exists(ISEMAIL_META_REF_TEXT, $status)) $status[ISEMAIL_META_REF_TEXT] = '';
+		if (!array_key_exists(ISEMAIL_META_REF_CITE, $status)) $status[ISEMAIL_META_REF_CITE] = '';
+		if (!array_key_exists(ISEMAIL_META_REF_LINK, $status)) $status[ISEMAIL_META_REF_LINK] = '';
+		if (!array_key_exists(ISEMAIL_META_REF_HTML, $status)) $status[ISEMAIL_META_REF_HTML] = '';
+		if (!array_key_exists(ISEMAIL_META_REF_ALT,  $status)) $status[ISEMAIL_META_REF_ALT]  = '';
 
 		foreach ($references as $reference_node) {
 			$reference	= $reference_node->nodeValue;
 			$element_ref	= $XPath->query("/meta/*/item[@id = '$reference']")->item(0);
 
 			if ((bool) ($type & ISEMAIL_META_REF_TEXT)) {
-				if (!array_key_exists(ISEMAIL_META_REF_TEXT, $status)) $status[ISEMAIL_META_REF_TEXT] = '';
-
 				$nodes					= $XPath->query('blockquote', $element_ref);
 				$status[ISEMAIL_META_REF_TEXT]		.= $separator_text . ($nodes->length === 0) ? ISEMAIL_STRING_UNKNOWN : $nodes->item(0)->nodeValue;
 				$separator_text				= PHP_EOL;	// Separate blocks of text with CRLFs
 			}
 
 			if ((bool) ($type & ISEMAIL_META_REF_CITE)) {
-				if (!array_key_exists(ISEMAIL_META_REF_CITE, $status)) $status[ISEMAIL_META_REF_CITE] = '';
-
 				$nodes					= $XPath->query('cite', $element_ref);
 				$status[ISEMAIL_META_REF_CITE]		.= $separator_cite . ($nodes->length === 0) ? ISEMAIL_STRING_UNKNOWN : $nodes->item(0)->nodeValue;
 				$separator_cite				= ', ';	// comma-separated list of reference citations
 			}
 
 			if ((bool) ($type & ISEMAIL_META_REF_LINK)) {
-				if (!array_key_exists(ISEMAIL_META_REF_LINK, $status)) $status[ISEMAIL_META_REF_LINK] = '';
-
 				$nodes					= $XPath->query('blockquote/@cite', $element_ref);
 				$status[ISEMAIL_META_REF_LINK]		.= $separator_link . ($nodes->length === 0) ? ISEMAIL_STRING_UNKNOWN : $nodes->item(0)->nodeValue;
 				$separator_link				.= chr(9);	// tab-separated list of URLs.
 			}
 
 			if ((bool) ($type & ISEMAIL_META_REF_HTML)) {
-				if (!array_key_exists(ISEMAIL_META_REF_HTML, $status)) $status[ISEMAIL_META_REF_HTML] = '';
-
 				// Just pass back the XML we find - it is correct HTML
 				foreach ($element_ref->childNodes as $childNode) $status[ISEMAIL_META_REF_HTML] .= $document->saveXML($childNode);
 			}
 
 			if ((bool) ($type & ISEMAIL_META_REF_ALT)) {
-				if (!array_key_exists(ISEMAIL_META_REF_ALT, $status)) $status[ISEMAIL_META_REF_ALT] = '';
-
 				// The "correct" HTML in the XML file doesn't do anything useful with current browsers
 				// So we can transform it into useful but less semantic HTML
 				$xsl = <<<XSL
@@ -206,6 +202,8 @@ XSL;
 		}
 	}
 
+	// Revision 3.1: BUGFIX This array member gets populated even when there is no reference
+	// material (above)
 	if ((bool) ($type & ISEMAIL_META_VALUE)) {
 		$status[ISEMAIL_META_VALUE] = $value;
 	}

@@ -34,7 +34,7 @@
  * @copyright	2008-2011 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	3.0.13 - Version 3.0
+ * @version	3.01.1 - Fixed examples and readme.txt
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -180,7 +180,7 @@ if (!defined('ISEMAIL_VALID')) {
  * 					$errorlevel = 0
  * @param array		$parsedata	If passed, returns the parsed address components
  */
-/*.mixed.*/ function is_email($email, $checkDNS = false, $errorlevel = false, $parsedata = array()) {
+/*.mixed.*/ function is_email($email, $checkDNS = false, $errorlevel = false, &$parsedata = array()) {
 	// Check that $email is a valid address. Read the following RFCs to understand the constraints:
 	// 	(http://tools.ietf.org/html/rfc5321)
 	// 	(http://tools.ietf.org/html/rfc5322)
@@ -189,7 +189,7 @@ if (!defined('ISEMAIL_VALID')) {
 	// 	(http://tools.ietf.org/html/rfc3696) (guidance only)
 // version 2.0: Enhance $diagnose parameter to $errorlevel
 // version 3.0: Introduced status categories
-// revision 2.5: some syntax changes to make it more PHPLint-friendly. Should be functionally identical.
+// revision 3.1: BUG: $parsedata was passed by value instead of by reference
 
 	if (is_bool($errorlevel)) {
 		$threshold	= ISEMAIL_VALID;

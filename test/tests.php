@@ -34,7 +34,7 @@
  * @copyright	2008-2011 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	3.0.13 - Version 3.0
+ * @version	3.01.1 - Fixed examples and readme.txt
  */
 
 /*.

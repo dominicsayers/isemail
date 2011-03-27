@@ -1,15 +1,22 @@
 <?php
-require_once 'is_email.php';
+// Using is_email() to report unusual addresses
+require_once '../is_email.php';
 
-$email = 'dominic@sayers.cc';
+function test_address($email) {
+	$result = is_email($email, true, true);
 
-$result = is_email($email, true, E_WARNING);
+	if ($result === ISEMAIL_VALID) {
+		echo "$email is a valid email address";
+	} else if ($result < ISEMAIL_THRESHOLD) {
+		echo "Warning! $email has unusual features (result code $result)";
+	} else {
+		echo "$email is not a valid email address (result code $result)";
+	}
 
-if ($result === ISEMAIL_VALID) {
-	echo "$email is a valid email address";
-} else if ($result < ISEMAIL_ERROR) {
-	echo "Warning! $email may not be a real email address (result code $result)";
-} else {
-	echo "$email is not a valid email address (result code $result)";
+	echo '<br/>';
 }
+
+test_address('dominic@sayers.cc');
+test_address('dominic@sayers');
+test_address('dominic.@sayers.cc');
 ?>
