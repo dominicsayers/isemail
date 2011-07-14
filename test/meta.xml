@@ -6,8 +6,9 @@ attribute in the <sections> element below!
 Date       Diagnoses    Version Notes
 .......... ............ ....... ...............................................
 2010-11-15 #0-#151      3.0
+2010-11-15 #0           3.03    Clarified definition of Valid for numpties
 -->
-<meta version="3.0">
+<meta version="3.03">
 	<Categories>
 		<item id="ISEMAIL_VALID_CATEGORY">
 			<value>1</value>
@@ -478,7 +479,7 @@ Date       Diagnoses    Version Notes
 		<item id="ISEMAIL_VALID">
 			<value>0</value>
 			<category>ISEMAIL_VALID_CATEGORY</category>
-			<description>Address is valid</description>
+			<description>Address is valid. Please note that this does not mean the address actually exists, nor even that the domain actually exists. This address could be issued by the domain owner without breaking the rules of any RFCs.</description>
 			<smtp>ISEMAIL_META_SMTP_250_215</smtp>
 		</item>
 		<item id="ISEMAIL_DNSWARN_NO_MX_RECORD">

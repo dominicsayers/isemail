@@ -19,8 +19,9 @@ Date       Tests        Version Notes
 2010-10-18 #1-#279      2.12	New schema designed to enhance fault
 				identification.
 2011-02-21 #193, #202	2.13	bar.com now has an MX record, seemingly.
+2011-07-14 All		3.04	Changed my link to http://isemail.info
 -->
-<tests version="2.13">
+<tests version="3.04">
 	<description>
 		<p><strong>Original test set</strong></p>
 		<p>This test set was compiled from examples given by other authors. It therefore
@@ -36,14 +37,14 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_VALID_CATEGORY</category>
 		<diagnosis>ISEMAIL_VALID</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="2">
 		<address>1234567890123456789012345678901234567890123456789012345678901234@iana.org</address>
 		<category>ISEMAIL_VALID_CATEGORY</category>
 		<diagnosis>ISEMAIL_VALID</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="3">
 		<address>first.last@sub.do,com</address>
@@ -51,14 +52,14 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_EXPECTING_ATEXT</diagnosis>
 		<source>Rob &lt;bob@bob.com&gt;</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="4">
 		<address>"first\"last"@iana.org</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="5">
 		<address>first\@last@iana.org</address>
@@ -66,21 +67,21 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_EXPECTING_ATEXT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="6">
 		<address>"first@last"@iana.org</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="7">
 		<address>"first\\last"@iana.org</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="8">
 		<address>x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x2</address>
@@ -88,7 +89,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DNSWARN</category>
 		<diagnosis>ISEMAIL_DNSWARN_NO_RECORD</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="9">
 		<address>1234567890123456789012345678901234567890123456789012345678901@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.123456789012345678901234567890123456789012345678901234567890123.iana.org</address>
@@ -110,70 +111,70 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="12">
 		<address>first.last@[IPv6:1111:2222:3333::4444:12.34.56.78]</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="13">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:12.34.56.78]</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="14">
 		<address>first.last@[IPv6:::1111:2222:3333:4444:5555:6666]</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="15">
 		<address>first.last@[IPv6:1111:2222:3333::4444:5555:6666]</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="16">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666::]</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="17">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:7777:8888]</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="18">
 		<address>first.last@x23456789012345678901234567890123456789012345678901234567890123.iana.org</address>
 		<category>ISEMAIL_DNSWARN</category>
 		<diagnosis>ISEMAIL_DNSWARN_NO_RECORD</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="19">
 		<address>first.last@3com.com</address>
 		<category>ISEMAIL_VALID_CATEGORY</category>
 		<diagnosis>ISEMAIL_VALID</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="20">
 		<address>first.last@123.iana.org</address>
 		<category>ISEMAIL_DNSWARN</category>
 		<diagnosis>ISEMAIL_DNSWARN_NO_RECORD</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="21">
 		<address>123456789012345678901234567890123456789012345678901234567890@12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345678901234567890123456789012345678901234567890123456789.12345.iana.org</address>
@@ -189,7 +190,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_NODOMAIN</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="23">
 		<address>12345678901234567890123456789012345678901234567890123456789012345@iana.org</address>
@@ -197,7 +198,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_LOCAL_TOOLONG</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="24">
 		<address>.first.last@iana.org</address>
@@ -205,7 +206,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_DOT_START</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="25">
 		<address>first.last.@iana.org</address>
@@ -213,7 +214,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_DOT_END</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="26">
 		<address>first..last@iana.org</address>
@@ -221,7 +222,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_CONSECUTIVEDOTS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="27">
 		<address>"first"last"@iana.org</address>
@@ -229,7 +230,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_ATEXT_AFTER_QS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="28">
 		<address>"first\last"@iana.org</address>
@@ -237,7 +238,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="29">
 		<address>"""@iana.org</address>
@@ -245,7 +246,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_EXPECTING_ATEXT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="30">
 		<address>"\"@iana.org</address>
@@ -253,7 +254,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_UNCLOSEDQUOTEDSTR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="31">
 		<address>""@iana.org</address>
@@ -261,7 +262,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="32">
 		<address>first\\@last@iana.org</address>
@@ -269,7 +270,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_EXPECTING_ATEXT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="33">
 		<address>first.last@</address>
@@ -277,7 +278,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_NODOMAIN</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="34">
 		<address>x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456</address>
@@ -285,7 +286,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_DOMAIN_TOOLONG</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="35">
 		<address>first.last@[.12.34.56.78]</address>
@@ -293,7 +294,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_DOMAINLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="36">
 		<address>first.last@[12.34.56.789]</address>
@@ -301,7 +302,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_DOMAINLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="37">
 		<address>first.last@[::12.34.56.78]</address>
@@ -309,7 +310,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_DOMAINLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="38">
 		<address>first.last@[IPv5:::12.34.56.78]</address>
@@ -317,7 +318,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_DOMAINLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="39">
 		<address>first.last@[IPv6:1111:2222:3333::4444:5555:12.34.56.78]</address>
@@ -325,7 +326,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="40">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:12.34.56.78]</address>
@@ -333,7 +334,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_GRPCOUNT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="41">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:7777:12.34.56.78]</address>
@@ -341,7 +342,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_GRPCOUNT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="42">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:7777]</address>
@@ -349,7 +350,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_GRPCOUNT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="43">
 		<address>first.last@[IPv6:1111:2222:3333:4444:5555:6666:7777:8888:9999]</address>
@@ -357,7 +358,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_GRPCOUNT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="44">
 		<address>first.last@[IPv6:1111:2222::3333::4444:5555:6666]</address>
@@ -365,7 +366,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="45">
 		<address>first.last@[IPv6:1111:2222:3333::4444:5555:6666:7777]</address>
@@ -373,7 +374,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="46">
 		<address>first.last@[IPv6:1111:2222:333x::4444:5555]</address>
@@ -381,7 +382,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="47">
 		<address>first.last@[IPv6:1111:2222:33333::4444:5555]</address>
@@ -389,7 +390,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="48">
 		<address>first.last@example.123</address>
@@ -397,7 +398,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_TLDNUMERIC</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="49">
 		<address>first.last@com</address>
@@ -405,7 +406,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_TLD</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="50">
 		<address>first.last@-xample.com</address>
@@ -413,7 +414,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_DOMAINHYPHENSTART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="51">
 		<address>first.last@exampl-.com</address>
@@ -421,7 +422,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_DOMAINHYPHENEND</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="52">
 		<address>first.last@x234567890123456789012345678901234567890123456789012345678901234.iana.org</address>
@@ -429,7 +430,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_LABEL_TOOLONG</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="53">
 		<address>"Abc\@def"@iana.org</address>
@@ -1088,14 +1089,14 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="141">
 		<address>"first".middle."last"@iana.org</address>
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="142">
 		<address>"first\\"last"@iana.org</address>
@@ -1103,7 +1104,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_ATEXT_AFTER_QS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="143">
 		<address>"first".last@iana.org</address>
@@ -1111,7 +1112,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="144">
 		<address>first."last"@iana.org</address>
@@ -1119,7 +1120,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="145">
 		<address>"first"."middle"."last"@iana.org</address>
@@ -1127,7 +1128,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="146">
 		<address>"first.middle"."last"@iana.org</address>
@@ -1135,14 +1136,14 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="147">
 		<address>"first.middle.last"@iana.org</address>
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="148">
 		<address>"first..last"@iana.org</address>
@@ -1150,7 +1151,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="149">
 		<address>foo@[\1.2.3.4]</address>
@@ -1165,7 +1166,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="151">
 		<address>first."mid\dle"."last"@iana.org</address>
@@ -1173,14 +1174,14 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="152">
 		<address>Test.&#x240D;&#x240A; Folding.&#x240D;&#x240A; Whitespace@iana.org</address>
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_FWS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="153">
 		<address>first."".last@iana.org</address>
@@ -1188,7 +1189,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="154">
 		<address>first\last@iana.org</address>
@@ -1196,7 +1197,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_EXPECTING_ATEXT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="155">
 		<address>Abc\@def@iana.org</address>
@@ -1332,7 +1333,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="172">
 		<address>first.(&#x240D;&#x240A; middle&#x240D;&#x240A; )last@iana.org</address>
@@ -1340,7 +1341,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_COMMENT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="173">
 		<address>first(12345678901234567890123456789012345678901234567890)last@(1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890)iana.org</address>
@@ -1348,7 +1349,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_ATEXT_AFTER_CFWS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="174">
 		<address>first(Welcome to&#x240D;&#x240A; the ("wonderful" (!)) world&#x240D;&#x240A; of email)@iana.org</address>
@@ -1356,7 +1357,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_CFWS_NEAR_AT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="175">
 		<address>pete(his account)@silly.test(his host)</address>
@@ -1396,7 +1397,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_ATEXT_AFTER_CFWS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="180">
 		<address>first(abc.def).last@iana.org</address>
@@ -1404,7 +1405,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="181">
 		<address>first(a"bc.def).last@iana.org</address>
@@ -1412,7 +1413,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_LOCALPART</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="182">
 		<address>first.(")middle.last(")@iana.org</address>
@@ -1420,7 +1421,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_CFWS_NEAR_AT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="183">
 		<address>first(abc("def".ghi).mno)middle(abc("def".ghi).mno).last@(abc("def".ghi).mno)example(abc("def".ghi).mno).(abc("def".ghi).mno)com(abc("def".ghi).mno)</address>
@@ -1428,7 +1429,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_ERR_ATEXT_AFTER_CFWS</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="184">
 		<address>first(abc\(def)@iana.org</address>
@@ -1436,7 +1437,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_CFWS_NEAR_AT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="185">
 		<address>first.last@iana(1234567890123456789012345678901234567890123456789012345678901234567890).org</address>
@@ -1704,14 +1705,14 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="222">
 		<address> &#x240D;&#x240A; (&#x240D;&#x240A; x &#x240D;&#x240A; ) &#x240D;&#x240A; first&#x240D;&#x240A; ( &#x240D;&#x240A; x&#x240D;&#x240A; ) &#x240D;&#x240A; .&#x240D;&#x240A; ( &#x240D;&#x240A; x) &#x240D;&#x240A; last &#x240D;&#x240A; (  x &#x240D;&#x240A; ) &#x240D;&#x240A; @iana.org</address>
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_CFWS_NEAR_AT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="223">
 		<address>first.last @iana.org</address>
@@ -1719,7 +1720,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_DEPREC_CFWS_NEAR_AT</diagnosis>
 		<source>John Kloor</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="224">
 		<address>test. &#x240D;&#x240A; &#x240D;&#x240A; obs@syntax.com</address>
@@ -1767,7 +1768,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_VALID_CATEGORY</category>
 		<diagnosis>ISEMAIL_VALID</diagnosis>
 		<source>cdburgess</source>
-		<sourcelink>http://www.dominicsayers.com/isemail/#comment-30024957</sourcelink>
+		<sourcelink>http://isemail.info/#comment-30024957</sourcelink>
 	</test>
 	<test id="230">
 		<address>first.last@[IPv6:::a2:a3:a4:b1:b2:b3:b4]</address>
@@ -1775,7 +1776,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="231">
 		<address>first.last@[IPv6:a1:a2:a3:a4:b1:b2:b3::]</address>
@@ -1783,7 +1784,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="232">
 		<address>first.last@[IPv6::]</address>
@@ -1791,7 +1792,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONSTRT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="233">
 		<address>first.last@[IPv6:::]</address>
@@ -1799,7 +1800,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="234">
 		<address>first.last@[IPv6::::]</address>
@@ -1807,7 +1808,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="235">
 		<address>first.last@[IPv6::b4]</address>
@@ -1815,7 +1816,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONSTRT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="236">
 		<address>first.last@[IPv6:::b4]</address>
@@ -1823,7 +1824,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="237">
 		<address>first.last@[IPv6::::b4]</address>
@@ -1831,7 +1832,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="238">
 		<address>first.last@[IPv6::b3:b4]</address>
@@ -1839,7 +1840,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONSTRT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="239">
 		<address>first.last@[IPv6:::b3:b4]</address>
@@ -1847,7 +1848,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="240">
 		<address>first.last@[IPv6::::b3:b4]</address>
@@ -1855,7 +1856,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="241">
 		<address>first.last@[IPv6:a1::b4]</address>
@@ -1863,7 +1864,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="242">
 		<address>first.last@[IPv6:a1:::b4]</address>
@@ -1871,7 +1872,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="243">
 		<address>first.last@[IPv6:a1:]</address>
@@ -1879,7 +1880,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONEND</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="244">
 		<address>first.last@[IPv6:a1::]</address>
@@ -1887,7 +1888,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="245">
 		<address>first.last@[IPv6:a1:::]</address>
@@ -1895,7 +1896,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="246">
 		<address>first.last@[IPv6:a1:a2:]</address>
@@ -1903,7 +1904,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONEND</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="247">
 		<address>first.last@[IPv6:a1:a2::]</address>
@@ -1911,7 +1912,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="248">
 		<address>first.last@[IPv6:a1:a2:::]</address>
@@ -1919,7 +1920,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="249">
 		<address>first.last@[IPv6:0123:4567:89ab:cdef::]</address>
@@ -1927,7 +1928,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="250">
 		<address>first.last@[IPv6:0123:4567:89ab:CDEF::]</address>
@@ -1935,7 +1936,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="251">
 		<address>first.last@[IPv6:::a3:a4:b1:ffff:11.22.33.44]</address>
@@ -1943,7 +1944,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="252">
 		<address>first.last@[IPv6:::a2:a3:a4:b1:ffff:11.22.33.44]</address>
@@ -1951,7 +1952,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="253">
 		<address>first.last@[IPv6:a1:a2:a3:a4::11.22.33.44]</address>
@@ -1959,7 +1960,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="254">
 		<address>first.last@[IPv6:a1:a2:a3:a4:b1::11.22.33.44]</address>
@@ -1967,7 +1968,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="255">
 		<address>first.last@[IPv6::11.22.33.44]</address>
@@ -1975,7 +1976,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONSTRT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="256">
 		<address>first.last@[IPv6::::11.22.33.44]</address>
@@ -1983,7 +1984,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="257">
 		<address>first.last@[IPv6:a1:11.22.33.44]</address>
@@ -1991,7 +1992,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_GRPCOUNT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="258">
 		<address>first.last@[IPv6:a1::11.22.33.44]</address>
@@ -1999,7 +2000,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="259">
 		<address>first.last@[IPv6:a1:::11.22.33.44]</address>
@@ -2007,7 +2008,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="260">
 		<address>first.last@[IPv6:a1:a2::11.22.33.44]</address>
@@ -2015,7 +2016,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="261">
 		<address>first.last@[IPv6:a1:a2:::11.22.33.44]</address>
@@ -2023,7 +2024,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="262">
 		<address>first.last@[IPv6:0123:4567:89ab:cdef::11.22.33.44]</address>
@@ -2031,7 +2032,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="263">
 		<address>first.last@[IPv6:0123:4567:89ab:cdef::11.22.33.xx]</address>
@@ -2039,7 +2040,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="264">
 		<address>first.last@[IPv6:0123:4567:89ab:CDEF::11.22.33.44]</address>
@@ -2047,7 +2048,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="265">
 		<address>first.last@[IPv6:0123:4567:89ab:CDEFF::11.22.33.44]</address>
@@ -2055,7 +2056,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="266">
 		<address>first.last@[IPv6:a1::a4:b1::b4:11.22.33.44]</address>
@@ -2063,7 +2064,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="267">
 		<address>first.last@[IPv6:a1::11.22.33]</address>
@@ -2071,7 +2072,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="268">
 		<address>first.last@[IPv6:a1::11.22.33.44.55]</address>
@@ -2079,7 +2080,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="269">
 		<address>first.last@[IPv6:a1::b211.22.33.44]</address>
@@ -2087,7 +2088,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_BADCHAR</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="270">
 		<address>first.last@[IPv6:a1::b2:11.22.33.44]</address>
@@ -2095,7 +2096,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_ADDRESSLITERAL</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="271">
 		<address>first.last@[IPv6:a1::b2::11.22.33.44]</address>
@@ -2103,7 +2104,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_2X2XCOLON</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="272">
 		<address>first.last@[IPv6:a1::b3:]</address>
@@ -2111,7 +2112,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONEND</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="273">
 		<address>first.last@[IPv6::a2::b4]</address>
@@ -2119,7 +2120,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONSTRT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="274">
 		<address>first.last@[IPv6:a1:a2:a3:a4:b1:b2:b3:]</address>
@@ -2127,7 +2128,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONEND</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="275">
 		<address>first.last@[IPv6::a2:a3:a4:b1:b2:b3:b4]</address>
@@ -2135,7 +2136,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_COLONSTRT</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="276">
 		<address>first.last@[IPv6:a1:a2:a3:a4::b1:b2:b3:b4]</address>
@@ -2143,7 +2144,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_RFC5322</category>
 		<diagnosis>ISEMAIL_RFC5322_IPV6_MAXGRPS</diagnosis>
 		<source>Daniel Marschall</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="277">
 		<address>test@test.com</address>
@@ -2151,7 +2152,7 @@ Date       Tests        Version Notes
 		<category>ISEMAIL_DNSWARN</category>
 		<diagnosis>ISEMAIL_DNSWARN_NO_MX_RECORD</diagnosis>
 		<source>Dominic Sayers</source>
-		<sourcelink>http://www.dominicsayers.com/isemail</sourcelink>
+		<sourcelink>http://isemail.info</sourcelink>
 	</test>
 	<test id="278">
 		<address>test@example.com&#x240A;</address>

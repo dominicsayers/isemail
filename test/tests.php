@@ -34,7 +34,7 @@
  * @copyright	2008-2011 Dominic Sayers
  * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	http://www.dominicsayers.com/isemail
- * @version	3.01.1 - Fixed examples and readme.txt
+ * @version	3.04.1 - Changed my link to http://isemail.info throughout
  */
 
 /*.
@@ -167,7 +167,7 @@ class is_email_test {
 		$result			= /*.(array[string]mixed).*/ array('actual' => array());
 		$parsedata		= /*.(array[string]string).*/ array();
 
-		$diagnosis_value		= is_email($email, true, true, &$parsedata);
+		$diagnosis_value		= is_email($email, true, true, $parsedata);
 
 		$result['actual']['diagnosis']	= $diagnosis_value;
 		$result['actual']['parsedata']	= $parsedata;

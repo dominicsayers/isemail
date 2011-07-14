@@ -1,6 +1,6 @@
 is_email()
 Copyright 2008-2011 Dominic Sayers <dominic@sayers.cc>
-http://www.dominicsayers.com/isemail
+http://isemail.info
 BSD License (http://www.opensource.org/licenses/bsd-license.php)
 
 -------------------------------------------------------------------------------
@@ -35,7 +35,19 @@ Version history
 Date       Component    Version Notes
 .......... ............ ....... ...............................................
 2010-10-18 is_email.php 3.0	Forensic categorization of email validity
-.......... ............ ....... ...............................................
+
 2010-10-18 tests.xml    3.0	New schema designed to enhance fault
 				identification.
+
+2011-05-23 tests.xml	3.02	tests.php
+				Argument no longer passed by reference
+				(deprecated)
+
+				Test#32
+				Changed domain to c--n.com because g--a.com no
+				longer has an MX record.
+
+2010-11-15 meta.xml	3.03    Clarified definition of Valid for numpties
+
+2011-07-14 tests.xml	3.04	Changed my link to http://isemail.info
 -------------------------------------------------------------------------------
