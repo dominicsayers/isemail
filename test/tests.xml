@@ -28,8 +28,10 @@ Date       Tests        Version Notes
 2011-05-23 #32		3.02	Changed domain to c dash dash n.com because
 				g dash dash a.com no longer has an MX record.
 2011-07-14 All		3.04	Changed my link to http://isemail.info
+2013-08-09 #41,#71,#96,#98		3.05	Tests changed to ERR or deprecated 
+				based mostly on recent Errata
 -->
-<tests version="3.04">
+<tests version="3.05">
 	<description>
 		<p><strong>New test set</strong></p>
 		<p>This test set is designed to replace and extend the coverage of the original set but with fewer tests.</p>
@@ -334,8 +336,9 @@ Date       Tests        Version Notes
 	</test>
 	<test id="43">
 		<address>""@iana.org</address>
-		<category>ISEMAIL_RFC5321</category>
+		<category>ISEMAIL_ERR</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
+		<comment>No longer valid - see Errata 3135 - changed ISEMAIL_RFC5321 to ISEMAIL_ERR</comment>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
 	</test>
@@ -532,7 +535,8 @@ Date       Tests        Version Notes
 	</test>
 	<test id="71">
 		<address>test@[IPv6:1111:2222:3333:4444:5555:6666::8888]</address>
-		<category>ISEMAIL_RFC5321</category>
+		<category>ISEMAIL_RFC5321_DEPREC</category>
+		<comment>Changed category from ISEMAIL_RFC5321 to ISEMAIL_RFC5321_DEPREC</comment>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
@@ -709,7 +713,8 @@ Date       Tests        Version Notes
 	</test>
 	<test id="96">
 		<address>(comment)abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@iana.org</address>
-		<category>ISEMAIL_CFWS</category>
+		<category>ISEMAIL_ERR</category>
+		<comment>Local-part includes comment and the local-part is thus too long - changed ISEMAIL_CFWS to ISEMAIL_ERR</comment>
 		<diagnosis>ISEMAIL_CFWS_COMMENT</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
@@ -723,7 +728,8 @@ Date       Tests        Version Notes
 	</test>
 	<test id="98">
 		<address>(comment)test@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghik.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghik.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.abcdefghijklmnopqrstuvwxyzabcdefghijk.abcdefghijklmnopqrstu</address>
-		<category>ISEMAIL_CFWS</category>
+		<category>ISEMAIL_ERR</category>
+		<comment>Total local-part includes comment and the whole email is thus too long - changed ISEMAIL_CFWS to ISEMAIL_ERR</comment>
 		<diagnosis>ISEMAIL_CFWS_COMMENT</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
