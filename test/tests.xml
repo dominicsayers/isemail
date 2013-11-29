@@ -336,9 +336,8 @@ Date       Tests        Version Notes
 	</test>
 	<test id="43">
 		<address>""@iana.org</address>
-		<category>ISEMAIL_ERR</category>
+		<category>ISEMAIL_RFC5321</category>
 		<diagnosis>ISEMAIL_RFC5321_QUOTEDSTRING</diagnosis>
-		<comment>No longer valid - see Errata 3135 - changed ISEMAIL_RFC5321 to ISEMAIL_ERR</comment>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
 	</test>
@@ -535,8 +534,7 @@ Date       Tests        Version Notes
 	</test>
 	<test id="71">
 		<address>test@[IPv6:1111:2222:3333:4444:5555:6666::8888]</address>
-		<category>ISEMAIL_RFC5321_DEPREC</category>
-		<comment>Changed category from ISEMAIL_RFC5321 to ISEMAIL_RFC5321_DEPREC</comment>
+		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
@@ -713,8 +711,7 @@ Date       Tests        Version Notes
 	</test>
 	<test id="96">
 		<address>(comment)abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghiklm@iana.org</address>
-		<category>ISEMAIL_ERR</category>
-		<comment>Local-part includes comment and the local-part is thus too long - changed ISEMAIL_CFWS to ISEMAIL_ERR</comment>
+		<category>ISEMAIL_CFWS</category>
 		<diagnosis>ISEMAIL_CFWS_COMMENT</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
@@ -728,8 +725,7 @@ Date       Tests        Version Notes
 	</test>
 	<test id="98">
 		<address>(comment)test@abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghik.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghik.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.abcdefghijklmnopqrstuvwxyzabcdefghijk.abcdefghijklmnopqrstu</address>
-		<category>ISEMAIL_ERR</category>
-		<comment>Total local-part includes comment and the whole email is thus too long - changed ISEMAIL_CFWS to ISEMAIL_ERR</comment>
+		<category>ISEMAIL_CFWS</category>
 		<diagnosis>ISEMAIL_CFWS_COMMENT</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>
