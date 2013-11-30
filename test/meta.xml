@@ -7,6 +7,7 @@ Date       Diagnoses    Version Notes
 .......... ............ ....... ...............................................
 2010-11-15 #0-#151      3.0
 2010-11-15 #0           3.03    Clarified definition of Valid for numpties
+2013-11-30 #13          3.05    Changed category of ISEMAIL_RFC5321_IPV6DEPRECATED to ISEMAIL_DEPREC
 -->
 <meta version="3.03">
 	<Categories>
