@@ -525,7 +525,7 @@ Date       Diagnoses    Version Notes
 		</item>
 		<item id="ISEMAIL_RFC5321_IPV6DEPRECATED">
 			<value>13</value>
-			<category>ISEMAIL_RFC5321</category>
+			<category>ISEMAIL_DEPREC</category>
 			<description>Address is valid but contains a :: that only elides one zero group. All implementations must accept and be able to handle any legitimate RFC 4291 format.</description>
 			<smtp>ISEMAIL_META_SMTP_250_215</smtp>
 			<reference>address-literal-IPv6</reference>
