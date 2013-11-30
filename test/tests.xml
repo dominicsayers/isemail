@@ -28,7 +28,7 @@ Date       Tests        Version Notes
 2011-05-23 #32		3.02	Changed domain to c dash dash n.com because
 				g dash dash a.com no longer has an MX record.
 2011-07-14 All		3.04	Changed my link to http://isemail.info
-2013-11-29 #71		3.05	Changed test from ISEMAIL_RFC5321 to ISEMAIL_DEPREC
+2013-11-29 #71		3.05	Changed ISEMAIL_RFC5321 to ISEMAIL_DEPREC
 -->
 <tests version="3.05">
 	<description>
