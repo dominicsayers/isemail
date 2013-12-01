@@ -28,8 +28,9 @@ Date       Tests        Version Notes
 2011-05-23 #32		3.02	Changed domain to c dash dash n.com because
 				g dash dash a.com no longer has an MX record.
 2011-07-14 All		3.04	Changed my link to http://isemail.info
+2013-11-29 #71		3.05	Changed ISEMAIL_RFC5321 to ISEMAIL_DEPREC 
 -->
-<tests version="3.04">
+<tests version="3.05">
 	<description>
 		<p><strong>New test set</strong></p>
 		<p>This test set is designed to replace and extend the coverage of the original set but with fewer tests.</p>
@@ -532,7 +533,7 @@ Date       Tests        Version Notes
 	</test>
 	<test id="71">
 		<address>test@[IPv6:1111:2222:3333:4444:5555:6666::8888]</address>
-		<category>ISEMAIL_RFC5321</category>
+		<category>ISEMAIL_DEPREC</category>
 		<diagnosis>ISEMAIL_RFC5321_IPV6DEPRECATED</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>http://squiloople.com/tag/email/</sourcelink>

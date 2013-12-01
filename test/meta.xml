@@ -7,6 +7,7 @@ Date       Diagnoses    Version Notes
 .......... ............ ....... ...............................................
 2010-11-15 #0-#151      3.0
 2010-11-15 #0           3.03    Clarified definition of Valid for numpties
+2013-11-30 #13          3.05    Changed category of ISEMAIL_RFC5321_IPV6DEPRECATED to ISEMAIL_DEPREC 
 -->
 <meta version="3.03">
 	<Categories>
@@ -525,8 +526,8 @@ Date       Diagnoses    Version Notes
 		</item>
 		<item id="ISEMAIL_RFC5321_IPV6DEPRECATED">
 			<value>13</value>
-			<category>ISEMAIL_RFC5321</category>
-			<description>Address is valid but contains a :: that only elides one zero group</description>
+			<category>ISEMAIL_DEPREC</category>
+			<description>Address is valid but contains a :: that only elides one zero group. All implementations must accept and be able to handle any legitimate RFC 4291 format.</description>
 			<smtp>ISEMAIL_META_SMTP_250_215</smtp>
 			<reference>address-literal-IPv6</reference>
 		</item>

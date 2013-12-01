@@ -50,4 +50,7 @@ Date       Component    Version Notes
 2010-11-15 meta.xml	3.03    Clarified definition of Valid for numpties
 
 2011-07-14 tests.xml	3.04	Changed my link to http://isemail.info
+
+2013-11-29 tests.xml	3.05	Changed Test #71 from ISEMAIL_RFC5321 to ISEMAIL_DEPREC 
+2013-11-29 meta.xml	3.05	Changed category of ISEMAIL_RFC5321_IPV6DEPRECATED to ISEMAIL_DEPREC 		
 -------------------------------------------------------------------------------
