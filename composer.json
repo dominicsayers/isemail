@@ -1,0 +1,26 @@
+{
+    "name": "dominicsayers/isemail",
+    "description": "Checks an email address against the following RFCs: 3696, 1123, 4291, 5321, 5322",
+    "keywords": [
+        "email",
+        "validation"
+    ],
+    "license": "BSD",
+    "homepage": "http://isemail.info",
+    "support": {
+        "source": "https://github.com/dominicsayers/isemail",
+        "issues": "https://github.com/dominicsayers/isemail/issues"
+    },
+    "authors": [
+        {
+            "name": "Dominic Sayers",
+            "email": "dominic@sayers.cc"
+        }
+    ],
+    "autoload": {
+        "files": ["is_email.php"]
+    },
+    "require": {
+
+    }
+}
