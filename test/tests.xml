@@ -1223,4 +1223,18 @@ Date       Tests        Version Notes
 		<source>Dominic Sayers</source>
 		<sourcelink>http://isemail.info</sourcelink>
 	</test>
+	<test id="169">
+		<address>test@háčkyčárky.cz</address>
+		<comment>Internationalized domain name</comment>
+		<category>ISEMAIL_VALID_CATEGORY</category>
+		<diagnosis>ISEMAIL_VALID</diagnosis>
+		<source>David Grudl</source>
+	</test>
+	<test id="170">
+		<address>test@example.укр</address>
+		<comment>Internationalized country code top-level domain</comment>
+		<category>ISEMAIL_VALID_CATEGORY</category>
+		<diagnosis>ISEMAIL_VALID</diagnosis>
+		<source>David Grudl</source>
+	</test>
 </tests>
