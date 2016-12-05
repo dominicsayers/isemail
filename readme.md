@@ -2,7 +2,9 @@ is_email()
 ==========
 
 Copyright 2008-2016 Dominic Sayers <dominic@sayers.cc>
+
 https://isemail.info
+
 BSD License (https://www.opensource.org/licenses/bsd-license.php)
 
 How to use is_email()
