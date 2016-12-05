@@ -39,11 +39,11 @@ Version history
 
 | Date | Component | Version | Notes |
 | ---- | --------- | ------- | ----- |
-| 2010-10-18 | is_email.php | 3.0 | Forensic categorization of email validity |
-| 2010-10-18 | tests.xml | 3.0 |New schema designed to enhance fault identification. |
-| 2011-05-23 | tests.xml | 3.02 | tests.php:  Argument no longer passed by reference (deprecated). Test#32: Changed domain to c--n.com because g--a.com no longer has an MX record. |
-| 2010-11-15 | meta.xml | 3.03 | Clarified definition of Valid for numpties |
-| 2011-07-14 | tests.xml | 3.04 | Changed my link to https://isemail.info |
+| 2016-12-05 | <all> | 3.06 | Changed all http links to https. Updated my links. Updated copyright. Clarified license |
 | 2013-11-29 | tests.xml | 3.05 | Changed Test #71 from ISEMAIL_RFC5321 to ISEMAIL_DEPREC |
 | 2013-11-29 | meta.xml | 3.05 | Changed category of ISEMAIL_RFC5321_IPV6DEPRECATED to ISEMAIL_DEPREC |
-| 2016-12-05 | <all> | 3.06 | Changed all http links to https. Updated my links. Updated copyright. Clarified license |
+| 2011-07-14 | tests.xml | 3.04 | Changed my link to https://isemail.info |
+| 2011-05-23 | tests.xml | 3.02 | tests.php:  Argument no longer passed by reference (deprecated). Test#32: Changed domain to c--n.com because g--a.com no longer has an MX record. |
+| 2010-11-15 | meta.xml | 3.03 | Clarified definition of Valid for numpties |
+| 2010-10-18 | tests.xml | 3.0 |New schema designed to enhance fault identification. |
+| 2010-10-18 | is_email.php | 3.0 | Forensic categorization of email validity |
