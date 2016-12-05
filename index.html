@@ -1,92 +1,110 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>is_email by dominicsayers</title>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>is_email</h1>
+        <p>Checks an email address against the following RFCs: 3696, 1123, 4291, 5321, 5322</p>
 
-	<title>dominicsayers/isemail @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #29b4b6;
-		  font-family: "helvetica"; 
-  		color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #d64b49; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #d64b49; }
-    h3 { text-align: center; color: #d64b49; }
-    a { color: #d64b49; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
+        <p class="view"><a href="https://github.com/dominicsayers/isemail">View the Project on GitHub <small>dominicsayers/isemail</small></a></p>
 
-<body>
-  <a href="http://github.com/dominicsayers/isemail"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-  
-  <div id="container">
 
-    <div class="download">
-      <a href="http://github.com/dominicsayers/isemail/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/dominicsayers/isemail/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+        <ul>
+          <li><a href="https://github.com/dominicsayers/isemail/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/dominicsayers/isemail/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/dominicsayers/isemail">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="what-is-a-valid-email-address" class="anchor" href="#what-is-a-valid-email-address" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is a valid email address?</h1>
+
+<p>There's only one real answer to this: a valid email address is one that you can send emails to.</p>
+
+<p>There are acknowledged standards for what constitutes a valid email address. These are defined in the Request For Comments documents (RFCs) written by the lords of the internet. These documents are not rules but simply statements of what some people feel is appropriate behaviour.</p>
+
+<p>Consequently, the people who make email software have often ignored the RFCs and done their own thing. Thus it is perfectly possible for you to have been issued an email address by your internet service provider (ISP) that flouts the RFC conventions and is in that sense invalid.</p>
+
+<p>But if your address works then why does it matter if it's invalid?</p>
+
+<p>That brings us onto the most important principle in distributed software.</p>
+
+<h1>
+<a id="the-robustness-principle" class="anchor" href="#the-robustness-principle" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The Robustness Principle</h1>
+
+<p>A <a href="https://en.wikipedia.org/wiki/Jon_Postel">very great man</a>, now sadly dead, once said</p>
+
+<blockquote>
+<p>be conservative in what you do, be liberal in what you accept from others</p>
+</blockquote>
+
+<p>We take this to mean that all messages you send out should conform carefully to the accepted standards. Messages you receive should be interpreted as the sender intended so long as the meaning is clear.</p>
+
+<p>This is a very valuable principle that allows networked software written by different people at different times to work together. If we are picky about the standards conformance of other people's work then we will lose useful functions and services.</p>
+
+<h1>
+<a id="how-does-this-apply-to-validating-email-addresses" class="anchor" href="#how-does-this-apply-to-validating-email-addresses" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How does this apply to validating email addresses?</h1>
+
+<p>If a friend says to you “this is my email address” then there's no point saying to her “Ah, but it violates RFC 5321”. That's not her fault. Her ISP has given her that address and it works and she's committed to it.</p>
+
+<p>If you've got an online business that she wants to register for, she will enter her email address into the registration page. If you then refuse to create her account on the grounds that her email address is non-conformant then you've lost a customer. More fool you.</p>
+
+<p>If she says her address is <a href="mailto:sally.@herisp.com">sally.@herisp.com</a> the chances are she's typed it in wrong. Maybe she missed off her surname. So there is a point in validating the address – you can ask her if she's sure it's right before you lose her attention and your only mean of communicating with a potential customer. Most likely she'll say “Oh yes, silly me” and correct it.</p>
+
+<p>Occasionally a user might say “Damn right that's my email address. Quit bugging me and register my account”. Better register the account before you lose a customer, even if it's not a valid email address.</p>
+
+<h1>
+<a id="getting-it-right" class="anchor" href="#getting-it-right" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting it right</h1>
+
+<p>If you're going to validate an email address you should get it right. Hardly anybody does.</p>
+
+<p>The worst error is to reject email addresses that are perfectly valid. If you have a Gmail account (e.g. <a href="mailto:sally.phillips@gmail.com">sally.phillips@gmail.com</a>) then you can send emails to <a href="mailto:sally.phillips+anything@gmail.com">sally.phillips+anything@gmail.com</a>. It will arrive in your inbox perfectly. This is great for registering with websites because you can see if they've passed your address on to somebody else when email starts arriving addressed to the unique address you gave to the website (e.g. <a href="mailto:sally.phillips+unique_reference@gmail.com">sally.phillips+unique_reference@gmail.com</a>).</p>
+
+<p>But.</p>
+
+<p>Sadly, many websites won't let you register an address with a plus sign in it. Not because they are trying to defeat your tracking strategy but just because they are crap. They've copied a broken regular expression from a dodgy website and they are using it to validate email addresses. And losing customers as a result.</p>
+
+<p>How long can an email address be? A lot of people say 320 characters. A lot of people are wrong. It's 254 characters.</p>
+
+<p>What RFC is the authority for mailbox formats? RFC 822? RFC 2822? Nope, it's RFC 5321.</p>
+
+<p>Getting it right is hard because the RFCs that define the conventions are trying to serve many masters and they document conventions that grew up in the early wild west days of email.</p>
+
+<p>My recommendation is: don't try this yourself. There's free code out there in many languages that will do this better than anybody's first attempt. My own first attempt was particularly laughable.</p>
+
+<h1>
+<a id="test-cases" class="anchor" href="#test-cases" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test cases</h1>
+
+<p>If you do try to write validation code yourself then you should at least test it. Even if you're adopting somebody else's validator you should test it.</p>
+
+<p>To do this you're going to have to write a series of unit tests that explore all the nooks and crannies of what is allowed by the RFCs.</p>
+
+<p>Oh wait. You don't have to do that because I've done it for you.</p>
+
+<p>Packaged along with the free is_email() code is an XML file of 164 unit tests. If you can write a validator that passes all of them: congratulations, you've done something hard.</p>
+
+<p>See the tests and the results for is_email() here.</p>
+
+<p>If you think any of the test cases is wrong please leave a comment here.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/dominicsayers">dominicsayers</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-      
-    <h1><a href="http://github.com/dominicsayers/isemail">isemail</a> 
-      <span class="small">by <a href="http://github.com/dominicsayers">dominicsayers</a></small></h1>
-
-    <div class="description">
-      Checks an email address against the following RFCs: 3696, 1123, 4291, 5321, 5322
-    </div>
-
-    <h2>License</h2>
-<p>This source file is subject to the Common Public Attribution License Version 1.0 (CPAL) license.
-The license terms are available through the world-wide-web at http://www.opensource.org/licenses/cpal_1.0
-</p>
-<h2>Authors</h2>
-<p>U-aw-insitearts\Dominic (dominic_sayers@hotmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Dominic Sayers (dominic_sayers@hotmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/dominicsayers/isemail/zipball/master">zip</a> or
-      <a href="http://github.com/dominicsayers/isemail/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/dominicsayers/isemail</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/dominicsayers/isemail">dominicsayers/isemail</a>
-    </div>
+    <script src="javascripts/scale.fix.js"></script>
     
-  </div>
-
-  <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-5894012-7");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-</body>
+  </body>
 </html>
