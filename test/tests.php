@@ -1,14 +1,14 @@
 <?php
 /**
  * To validate an email address according to RFCs 5321, 5322 and others
- * 
- * Copyright © 2008-2011, Dominic Sayers					<br>
+ *
+ * Copyright © 2008-2016, Dominic Sayers					<br>
  * Test schema documentation Copyright © 2011, Daniel Marschall			<br>
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  *     - Redistributions of source code must retain the above copyright notice,
  *       this list of conditions and the following disclaimer.
  *     - Redistributions in binary form must reproduce the above copyright notice,
@@ -17,7 +17,7 @@
  *     - Neither the name of Dominic Sayers nor the names of its contributors may be
  *       used to endorse or promote products derived from this software without
  *       specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,13 +28,13 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * @package	is_email
  * @author	Dominic Sayers <dominic@sayers.cc>
- * @copyright	2008-2011 Dominic Sayers
- * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link	http://www.dominicsayers.com/isemail
- * @version	3.04.1 - Changed my link to http://isemail.info throughout
+ * @copyright	2008-2016 Dominic Sayers
+ * @license	https://www.opensource.org/licenses/bsd-license.php BSD License
+ * @link	https://www.dominicsayers.com/isemail
+ * @version	3.06 - Changed my link to https://isemail.info throughout
  */
 
 /*.
@@ -147,7 +147,7 @@ class is_email_test {
 		$substitutes_html	= array("$span_start&#x2420;$span_end", "$span_start&#x240D;&#x240A;$span_end<br/>");
 
 		for ($i = 0; $i < 32; $i++) {
-			$entity			= mb_convert_encoding('&#' . (string) (9216 + $i) . ';', 'UTF-8', 'HTML-ENTITIES');	// PHP bug doesn't allow us to use hex notation (http://bugs.php.net/48645)
+			$entity			= mb_convert_encoding('&#' . (string) (9216 + $i) . ';', 'UTF-8', 'HTML-ENTITIES');	// PHP bug doesn't allow us to use hex notation (https://bugs.php.net/48645)
 			$entity_html		= '&#x24' . substr('0'.dechex($i), -2) . ';';
 			$needles[]		= $entity;
 			$substitutes[]		= chr($i);

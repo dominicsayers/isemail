@@ -214,7 +214,7 @@ HTML;
 	</form>
 	<a class="menu" href="?all" >Run all tests</a>
 	<a class="menu" href="?set=tests-original.xml" >Run original test set</a>
-	<a class="menu" href="http://isemail.info" target="_blank">Read more...</a>
+	<a class="menu" href="https://isemail.info" target="_blank">Read more...</a>
 	<a class="menu" href="mailto:dominic@sayers.cc?subject=is_email()">Contact</a>
 	<br/>
 

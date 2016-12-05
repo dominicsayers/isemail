@@ -1,14 +1,14 @@
 <?php
 /**
  * To validate an email address according to RFCs 5321, 5322 and others
- * 
- * Copyright © 2008-2011, Dominic Sayers					<br>
+ *
+ * Copyright © 2008-2016, Dominic Sayers					<br>
  * Test schema documentation Copyright © 2011, Daniel Marschall			<br>
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  *     - Redistributions of source code must retain the above copyright notice,
  *       this list of conditions and the following disclaimer.
  *     - Redistributions in binary form must reproduce the above copyright notice,
@@ -17,7 +17,7 @@
  *     - Neither the name of Dominic Sayers nor the names of its contributors may be
  *       used to endorse or promote products derived from this software without
  *       specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,19 +28,19 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * @package	is_email
  * @author	Dominic Sayers <dominic@sayers.cc>
- * @copyright	2008-2011 Dominic Sayers
- * @license	http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link	http://www.dominicsayers.com/isemail
- * @version	3.04.1 - Changed my link to http://isemail.info throughout
+ * @copyright	2008-2016 Dominic Sayers
+ * @license	https://www.opensource.org/licenses/bsd-license.php BSD License
+ * @link	https://www.dominicsayers.com/isemail
+ * @version	3.06 - Changed my link to https://isemail.info throughout
  */
 
 // The quality of this code has been improved greatly by using PHPLint
 // Copyright (c) 2010 Umberto Salsi
 // This is free software; see the license for copying conditions.
-// More info: http://www.icosaedro.it/phplint/
+// More info: https://www.icosaedro.it/phplint/
 /*.
 	require_module 'standard';
 	require_module 'pcre';
@@ -150,7 +150,7 @@ if (!defined('ISEMAIL_VALID')) {
 	define('ISEMAIL_STRING_CR'		, "\r");
 	define('ISEMAIL_STRING_LF'		, "\n");
 	define('ISEMAIL_STRING_IPV6TAG'		, 'IPv6:');
-	// US-ASCII visible characters not valid for atext (http://tools.ietf.org/html/rfc5322#section-3.2.3)
+	// US-ASCII visible characters not valid for atext (https://tools.ietf.org/html/rfc5322#section-3.2.3)
 	define('ISEMAIL_STRING_SPECIALS'	, '()<>[]:;@\\,."');
 }
 
@@ -182,11 +182,11 @@ if (!defined('ISEMAIL_VALID')) {
  */
 /*.mixed.*/ function is_email($email, $checkDNS = false, $errorlevel = false, &$parsedata = array()) {
 	// Check that $email is a valid address. Read the following RFCs to understand the constraints:
-	// 	(http://tools.ietf.org/html/rfc5321)
-	// 	(http://tools.ietf.org/html/rfc5322)
-	// 	(http://tools.ietf.org/html/rfc4291#section-2.2)
-	// 	(http://tools.ietf.org/html/rfc1123#section-2.1)
-	// 	(http://tools.ietf.org/html/rfc3696) (guidance only)
+	// 	(https://tools.ietf.org/html/rfc5321)
+	// 	(https://tools.ietf.org/html/rfc5322)
+	// 	(https://tools.ietf.org/html/rfc4291#section-2.2)
+	// 	(https://tools.ietf.org/html/rfc1123#section-2.1)
+	// 	(https://tools.ietf.org/html/rfc3696) (guidance only)
 // version 2.0: Enhance $diagnose parameter to $errorlevel
 // version 3.0: Introduced status categories
 // revision 3.1: BUG: $parsedata was passed by value instead of by reference
@@ -237,7 +237,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// local-part
 		//-------------------------------------------------------------
 		case ISEMAIL_COMPONENT_LOCALPART:
-			// http://tools.ietf.org/html/rfc5322#section-3.4.1
+			// https://tools.ietf.org/html/rfc5322#section-3.4.1
 			//   local-part      =   dot-atom / quoted-string / obs-local-part
 			//
 			//   dot-atom        =   [CFWS] dot-atom-text [CFWS]
@@ -326,16 +326,16 @@ if (!defined('ISEMAIL_VALID')) {
 				if	($parsedata[ISEMAIL_COMPONENT_LOCALPART] === '')
 								$return_status[]	= ISEMAIL_ERR_NOLOCALPART;	// Fatal error
 				elseif	($element_len === 0)	$return_status[]	= ISEMAIL_ERR_DOT_END;	// Fatal error
-				// http://tools.ietf.org/html/rfc5321#section-4.5.3.1.1
+				// https://tools.ietf.org/html/rfc5321#section-4.5.3.1.1
 				//   The maximum total length of a user name or other local-part is 64
 				//   octets.
 				elseif	(strlen($parsedata[ISEMAIL_COMPONENT_LOCALPART]) > 64)
 								$return_status[]	= ISEMAIL_RFC5322_LOCAL_TOOLONG;
-				// http://tools.ietf.org/html/rfc5322#section-3.4.1
+				// https://tools.ietf.org/html/rfc5322#section-3.4.1
 				//   Comments and folding white space
 				//   SHOULD NOT be used around the "@" in the addr-spec.
 				//
-				// http://tools.ietf.org/html/rfc2119
+				// https://tools.ietf.org/html/rfc2119
 				// 4. SHOULD NOT   This phrase, or the phrase "NOT RECOMMENDED" mean that
 				//    there may exist valid reasons in particular circumstances when the
 				//    particular behavior is acceptable or even useful, but the full
@@ -354,7 +354,7 @@ if (!defined('ISEMAIL_VALID')) {
 				break;
 			// atext
 			default:
-				// http://tools.ietf.org/html/rfc5322#section-3.2.3
+				// https://tools.ietf.org/html/rfc5322#section-3.2.3
 				//    atext           =   ALPHA / DIGIT /    ; Printable US-ASCII
 				//                        "!" / "#" /        ;  characters not including
 				//                        "$" / "%" /        ;  specials.  Used for atoms.
@@ -397,7 +397,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// Domain
 		//-------------------------------------------------------------
 		case ISEMAIL_COMPONENT_DOMAIN:
-			// http://tools.ietf.org/html/rfc5322#section-3.4.1
+			// https://tools.ietf.org/html/rfc5322#section-3.4.1
 			//   domain          =   dot-atom / domain-literal / obs-domain
 			//
 			//   dot-atom        =   [CFWS] dot-atom-text [CFWS]
@@ -415,7 +415,7 @@ if (!defined('ISEMAIL_VALID')) {
 			//   atom            =   [CFWS] 1*atext [CFWS]
 
 
-			// http://tools.ietf.org/html/rfc5321#section-4.1.2
+			// https://tools.ietf.org/html/rfc5321#section-4.1.2
 			//   Mailbox        = Local-part "@" ( Domain / address-literal )
 			//
 			//   Domain         = sub-domain *("." sub-domain)
@@ -425,7 +425,7 @@ if (!defined('ISEMAIL_VALID')) {
 			//                    General-address-literal ) "]"
 			//                    ; See Section 4.1.3
 
-			// http://tools.ietf.org/html/rfc5322#section-3.4.1
+			// https://tools.ietf.org/html/rfc5322#section-3.4.1
 			//      Note: A liberal syntax for the domain portion of addr-spec is
 			//      given here.  However, the domain portion contains addressing
 			//      information specified by and used in other protocols (e.g.,
@@ -443,7 +443,7 @@ if (!defined('ISEMAIL_VALID')) {
 				if ($element_len === 0)
 					// Comments at the start of the domain are deprecated in the text
 					// Comments at the start of a subdomain are obs-domain
-					// (http://tools.ietf.org/html/rfc5322#section-3.4.1)
+					// (https://tools.ietf.org/html/rfc5322#section-3.4.1)
 					$return_status[]	= ($element_count === 0) ? ISEMAIL_DEPREC_CFWS_NEAR_AT : ISEMAIL_DEPREC_COMMENT;
 				else {
 					$return_status[]	= ISEMAIL_CFWS_COMMENT;
@@ -472,7 +472,7 @@ if (!defined('ISEMAIL_VALID')) {
 					// must conclude that the RFC 1035 restriction on label length
 					// also applies to RFC 5321 domains.
 					//
-					// http://tools.ietf.org/html/rfc1035#section-2.3.4
+					// https://tools.ietf.org/html/rfc1035#section-2.3.4
 					// labels          63 octets or less
 					if ($element_len > 63) $return_status[]	= ISEMAIL_RFC5322_LABEL_TOOLONG;
 
@@ -518,7 +518,7 @@ if (!defined('ISEMAIL_VALID')) {
 			// atext
 			default:
 				// RFC 5322 allows any atext...
-				// http://tools.ietf.org/html/rfc5322#section-3.2.3
+				// https://tools.ietf.org/html/rfc5322#section-3.2.3
 				//    atext           =   ALPHA / DIGIT /    ; Printable US-ASCII
 				//                        "!" / "#" /        ;  characters not including
 				//                        "$" / "%" /        ;  specials.  Used for atoms.
@@ -532,7 +532,7 @@ if (!defined('ISEMAIL_VALID')) {
 				//                        "~"
 
 				// But RFC 5321 only allows letter-digit-hyphen to comply with DNS rules (RFCs 1034 & 1123)
-				// http://tools.ietf.org/html/rfc5321#section-4.1.2
+				// https://tools.ietf.org/html/rfc5321#section-4.1.2
 				//   sub-domain     = Let-dig [Ldh-str]
 				//
 				//   Let-dig        = ALPHA / DIGIT
@@ -581,7 +581,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// Domain literal
 		//-------------------------------------------------------------
 		case ISEMAIL_COMPONENT_LITERAL:
-			// http://tools.ietf.org/html/rfc5322#section-3.4.1
+			// https://tools.ietf.org/html/rfc5322#section-3.4.1
 			//   domain-literal  =   [CFWS] "[" *([FWS] dtext) [FWS] "]" [CFWS]
 			//
 			//   dtext           =   %d33-90 /          ; Printable US-ASCII
@@ -595,13 +595,13 @@ if (!defined('ISEMAIL_VALID')) {
 				if ((int) max($return_status) < ISEMAIL_DEPREC) {
 					// Could be a valid RFC 5321 address literal, so let's check
 
-					// http://tools.ietf.org/html/rfc5321#section-4.1.2
+					// https://tools.ietf.org/html/rfc5321#section-4.1.2
 					//   address-literal  = "[" ( IPv4-address-literal /
 					//                    IPv6-address-literal /
 					//                    General-address-literal ) "]"
 					//                    ; See Section 4.1.3
 					//
-					// http://tools.ietf.org/html/rfc5321#section-4.1.3
+					// https://tools.ietf.org/html/rfc5321#section-4.1.3
 					//   IPv4-address-literal  = Snum 3("."  Snum)
 					//
 					//   IPv6-address-literal  = "IPv6:" IPv6-addr
@@ -644,7 +644,7 @@ if (!defined('ISEMAIL_VALID')) {
 					// IPv4 addresses because it accepts abbreviated addresses
 					// (xxx.xxx.xxx), expanding the last group to complete the address.
 					// filter_var() validates IPv6 address inconsistently (up to PHP 5.3.3
-					// at least) -- see http://bugs.php.net/bug.php?id=53236 for example
+					// at least) -- see https://bugs.php.net/bug.php?id=53236 for example
 					$max_groups	= 8;
 					$matchesIP	= array();
 			/*.mixed.*/	$index		= false;
@@ -723,7 +723,7 @@ if (!defined('ISEMAIL_VALID')) {
 				break;
 			// dtext
 			default:
-				// http://tools.ietf.org/html/rfc5322#section-3.4.1
+				// https://tools.ietf.org/html/rfc5322#section-3.4.1
 				//   dtext           =   %d33-90 /          ; Printable US-ASCII
 				//                       %d94-126 /         ;  characters not including
 				//                       obs-dtext          ;  "[", "]", or "\"
@@ -756,7 +756,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// Quoted string
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_QUOTEDSTRING:
-			// http://tools.ietf.org/html/rfc5322#section-3.2.4
+			// https://tools.ietf.org/html/rfc5322#section-3.2.4
 			//   quoted-string   =   [CFWS]
 			//                       DQUOTE *([FWS] qcontent) [FWS] DQUOTE
 			//                       [CFWS]
@@ -775,12 +775,12 @@ if (!defined('ISEMAIL_VALID')) {
 			case ISEMAIL_STRING_HTAB:
 				if (($token === ISEMAIL_STRING_CR) && ((++$i === $raw_length) || ($email[$i] !== ISEMAIL_STRING_LF))) {$return_status[] = ISEMAIL_ERR_CR_NO_LF;	break;}	// Fatal error
 
-				// http://tools.ietf.org/html/rfc5322#section-3.2.2
+				// https://tools.ietf.org/html/rfc5322#section-3.2.2
 				//   Runs of FWS, comment, or CFWS that occur between lexical tokens in a
 				//   structured header field are semantically interpreted as a single
 				//   space character.
 
-				// http://tools.ietf.org/html/rfc5322#section-3.2.4
+				// https://tools.ietf.org/html/rfc5322#section-3.2.4
 				//   the CRLF in any FWS/CFWS that appears within the quoted-string [is]
 				//   semantically "invisible" and therefore not part of the quoted-string
 				$parsedata[ISEMAIL_COMPONENT_LOCALPART]			.= ISEMAIL_STRING_SP;
@@ -802,7 +802,7 @@ if (!defined('ISEMAIL_VALID')) {
 				break;
 			// qtext
 			default:
-				// http://tools.ietf.org/html/rfc5322#section-3.2.4
+				// https://tools.ietf.org/html/rfc5322#section-3.2.4
 				//   qtext           =   %d33 /             ; Printable US-ASCII
 				//                       %d35-91 /          ;  characters not including
 				//                       %d93-126 /         ;  "\" or the quote character
@@ -827,7 +827,7 @@ if (!defined('ISEMAIL_VALID')) {
 				$element_len++;
 			}
 
-			// http://tools.ietf.org/html/rfc5322#section-3.4.1
+			// https://tools.ietf.org/html/rfc5322#section-3.4.1
 			//   If the
 			//   string can be represented as a dot-atom (that is, it contains no
 			//   characters other than atext characters or "." surrounded by atext
@@ -839,7 +839,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// Quoted pair
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_QUOTEDPAIR:
-			// http://tools.ietf.org/html/rfc5322#section-3.2.1
+			// https://tools.ietf.org/html/rfc5322#section-3.2.1
 			//   quoted-pair     =   ("\" (VCHAR / WSP)) / obs-qp
 			//
 			//   VCHAR           =  %d33-126            ; visible (printing) characters
@@ -864,7 +864,7 @@ if (!defined('ISEMAIL_VALID')) {
 			// At this point we know where this qpair occurred so
 			// we could check to see if the character actually
 			// needed to be quoted at all.
-			// http://tools.ietf.org/html/rfc5321#section-4.1.2
+			// https://tools.ietf.org/html/rfc5321#section-4.1.2
 			//   the sending system SHOULD transmit the
 			//   form that uses the minimum quoting possible.
 // To do: check whether the character needs to be quoted (escaped) in this context
@@ -894,7 +894,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// Comment
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_COMMENT:
-			// http://tools.ietf.org/html/rfc5322#section-3.2.2
+			// https://tools.ietf.org/html/rfc5322#section-3.2.2
 			//   comment         =   "(" *([FWS] ccontent) [FWS] ")"
 			//
 			//   ccontent        =   ctext / quoted-pair / comment
@@ -910,7 +910,7 @@ if (!defined('ISEMAIL_VALID')) {
 				$context_prior		= $context;
 				$context		= (int) array_pop($context_stack);
 
-				// http://tools.ietf.org/html/rfc5322#section-3.2.2
+				// https://tools.ietf.org/html/rfc5322#section-3.2.2
 				//   Runs of FWS, comment, or CFWS that occur between lexical tokens in a
 				//   structured header field are semantically interpreted as a single
 				//   space character.
@@ -945,7 +945,7 @@ if (!defined('ISEMAIL_VALID')) {
 				break;
 			// ctext
 			default:
-				// http://tools.ietf.org/html/rfc5322#section-3.2.3
+				// https://tools.ietf.org/html/rfc5322#section-3.2.3
 				//   ctext           =   %d33-39 /          ; Printable US-ASCII
 				//                       %d42-91 /          ;  characters not including
 				//                       %d93-126 /         ;  "(", ")", or "\"
@@ -973,12 +973,12 @@ if (!defined('ISEMAIL_VALID')) {
 		// Folding White Space
 		//-------------------------------------------------------------
 		case ISEMAIL_CONTEXT_FWS:
-			// http://tools.ietf.org/html/rfc5322#section-3.2.2
+			// https://tools.ietf.org/html/rfc5322#section-3.2.2
 			//   FWS             =   ([*WSP CRLF] 1*WSP) /  obs-FWS
 			//                                          ; Folding white space
 
 			// But note the erratum:
-			// http://www.rfc-editor.org/errata_search.php?rfc=5322&eid=1908:
+			// https://www.rfc-editor.org/errata_search.php?rfc=5322&eid=1908:
 			//   In the obsolete syntax, any amount of folding white space MAY be
 			//   inserted where the obs-FWS rule is allowed.  This creates the
 			//   possibility of having two consecutive "folds" in a line, and
@@ -1018,7 +1018,7 @@ if (!defined('ISEMAIL_VALID')) {
 				$context_prior					= $context;
 				$context					= (int) array_pop($context_stack);	// End of FWS
 
-				// http://tools.ietf.org/html/rfc5322#section-3.2.2
+				// https://tools.ietf.org/html/rfc5322#section-3.2.2
 				//   Runs of FWS, comment, or CFWS that occur between lexical tokens in a
 				//   structured header field are semantically interpreted as a single
 				//   space character.
@@ -1059,16 +1059,16 @@ if (!defined('ISEMAIL_VALID')) {
 		elseif	($parsedata[ISEMAIL_COMPONENT_DOMAIN]	=== '')		$return_status[]	= ISEMAIL_ERR_NODOMAIN;			// Fatal error
 		elseif	($element_len	=== 0)					$return_status[]	= ISEMAIL_ERR_DOT_END;			// Fatal error
 		elseif	($hyphen_flag)						$return_status[]	= ISEMAIL_ERR_DOMAINHYPHENEND;		// Fatal error
-		// http://tools.ietf.org/html/rfc5321#section-4.5.3.1.2
+		// https://tools.ietf.org/html/rfc5321#section-4.5.3.1.2
 		//   The maximum total length of a domain name or number is 255 octets.
 		elseif	(strlen($parsedata[ISEMAIL_COMPONENT_DOMAIN]) > 255)
 										$return_status[]	= ISEMAIL_RFC5322_DOMAIN_TOOLONG;
-		// http://tools.ietf.org/html/rfc5321#section-4.1.2
+		// https://tools.ietf.org/html/rfc5321#section-4.1.2
 		//   Forward-path   = Path
 		//
 		//   Path           = "<" [ A-d-l ":" ] Mailbox ">"
 		//
-		// http://tools.ietf.org/html/rfc5321#section-4.5.3.1.3
+		// https://tools.ietf.org/html/rfc5321#section-4.5.3.1.3
 		//   The maximum total length of a reverse-path or forward-path is 256
 		//   octets (including the punctuation and element separators).
 		//
@@ -1076,14 +1076,14 @@ if (!defined('ISEMAIL_VALID')) {
 		// only be 254 characters long. This is confirmed by this verified
 		// erratum to RFC 3696:
 		//
-		// http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690
+		// https://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690
 		//   However, there is a restriction in RFC 2821 on the length of an
 		//   address in MAIL and RCPT commands of 254 characters.  Since addresses
 		//   that do not fit in those fields are not normally useful, the upper
 		//   limit on address lengths should normally be considered to be 254.
 		elseif	(strlen($parsedata[ISEMAIL_COMPONENT_LOCALPART] . ISEMAIL_STRING_AT . $parsedata[ISEMAIL_COMPONENT_DOMAIN]) > 254)
 										$return_status[]	= ISEMAIL_RFC5322_TOOLONG;
-		// http://tools.ietf.org/html/rfc1035#section-2.3.4
+		// https://tools.ietf.org/html/rfc1035#section-2.3.4
 		// labels          63 octets or less
 		elseif ($element_len > 63)					$return_status[]	= ISEMAIL_RFC5322_LABEL_TOOLONG;
 	}
@@ -1092,13 +1092,13 @@ if (!defined('ISEMAIL_VALID')) {
 	$dns_checked = false;
 
 	if ($checkDNS && ((int) max($return_status) < ISEMAIL_DNSWARN) && function_exists('dns_get_record')) {
-		// http://tools.ietf.org/html/rfc5321#section-2.3.5
+		// https://tools.ietf.org/html/rfc5321#section-2.3.5
 		//   Names that can
 		//   be resolved to MX RRs or address (i.e., A or AAAA) RRs (as discussed
 		//   in Section 5) are permitted, as are CNAME RRs whose targets can be
 		//   resolved, in turn, to MX or address RRs.
 		//
-		// http://tools.ietf.org/html/rfc5321#section-5.1
+		// https://tools.ietf.org/html/rfc5321#section-5.1
 		//   The lookup first attempts to locate an MX record associated with the
 		//   name.  If a CNAME record is found, the resulting name is processed as
 		//   if it were the initial name. ... If an empty list of MXs is returned,
@@ -1111,7 +1111,7 @@ if (!defined('ISEMAIL_VALID')) {
 		// raise a warning because we didn't immediately find an MX record.
 		if ($element_count === 0) $parsedata[ISEMAIL_COMPONENT_DOMAIN] .= '.';		// Checking TLD DNS seems to work only if you explicitly check from the root
 
-		$result = @dns_get_record($parsedata[ISEMAIL_COMPONENT_DOMAIN], DNS_MX);	// Not using checkdnsrr because of a suspected bug in PHP 5.3 (http://bugs.php.net/bug.php?id=51844)
+		$result = @dns_get_record($parsedata[ISEMAIL_COMPONENT_DOMAIN], DNS_MX);	// Not using checkdnsrr because of a suspected bug in PHP 5.3 (https://bugs.php.net/bug.php?id=51844)
 
 		if ((is_bool($result) && !(bool) $result))
 			$return_status[] = ISEMAIL_DNSWARN_NO_RECORD;			// Domain can't be found in DNS
@@ -1134,7 +1134,7 @@ if (!defined('ISEMAIL_VALID')) {
 	// to be typos than genuine addresses (unless we've already
 	// established that the domain does have an MX record)
 	//
-	// http://tools.ietf.org/html/rfc5321#section-2.3.5
+	// https://tools.ietf.org/html/rfc5321#section-2.3.5
 	//   In the case
 	//   of a top-level domain used by itself in an email address, a single
 	//   string is used without any dots.  This makes the requirement,
@@ -1154,7 +1154,7 @@ if (!defined('ISEMAIL_VALID')) {
 	// the author can find is in a (rejected!) erratum to RFC 1123
 	// submitted by John Klensin, the author of RFC 5321:
 	//
-	// http://www.rfc-editor.org/errata_search.php?rfc=1123&eid=1353
+	// https://www.rfc-editor.org/errata_search.php?rfc=1123&eid=1353
 	//   However, a valid host name can never have the dotted-decimal
 	//   form #.#.#.#, since this change does not permit the highest-level
 	//   component label to start with a digit even if it is not all-numeric.
