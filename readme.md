@@ -41,7 +41,8 @@ Version history
 
 | Date | Component | Version | Notes |
 | ---- | --------- | ------- | ----- |
-| 2016-12-05 | <all> | 3.06 | Changed all http links to https. Updated my links. Updated copyright. Clarified license |
+| 2016-12-07 | (all) | 3.0.7 | Semantic version numbering |
+| 2016-12-05 | (all) | 3.06 | Changed all http links to https. Updated my links. Updated copyright. Clarified license |
 | 2013-11-29 | tests.xml | 3.05 | Changed Test #71 from ISEMAIL_RFC5321 to ISEMAIL_DEPREC |
 | 2013-11-29 | meta.xml | 3.05 | Changed category of ISEMAIL_RFC5321_IPV6DEPRECATED to ISEMAIL_DEPREC |
 | 2011-07-14 | tests.xml | 3.04 | Changed my link to https://isemail.info |

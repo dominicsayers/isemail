@@ -34,7 +34,7 @@
  * @copyright	2008-2016 Dominic Sayers
  * @license	https://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	https://www.dominicsayers.com/isemail
- * @version	3.06 - Changed my link to https://isemail.info throughout
+ * @version	3.0.7 - Changed my link to https://isemail.info throughout
  */
 
 /*.

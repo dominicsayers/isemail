@@ -34,7 +34,7 @@
  * @copyright	2008-2016 Dominic Sayers
  * @license	https://www.opensource.org/licenses/bsd-license.php BSD License
  * @link	https://www.dominicsayers.com/isemail
- * @version	3.06 - Changed my link to https://isemail.info throughout
+ * @version	3.0.7 - Changed my link to https://isemail.info throughout
  */
 
 // The quality of this code has been improved greatly by using PHPLint
@@ -189,7 +189,7 @@ if (!defined('ISEMAIL_VALID')) {
 	// 	(https://tools.ietf.org/html/rfc3696) (guidance only)
 // version 2.0: Enhance $diagnose parameter to $errorlevel
 // version 3.0: Introduced status categories
-// revision 3.1: BUG: $parsedata was passed by value instead of by reference
+// revision 3.01: BUG: $parsedata was passed by value instead of by reference
 
 	if (is_bool($errorlevel)) {
 		$threshold	= ISEMAIL_VALID;
