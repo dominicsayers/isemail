@@ -46,6 +46,8 @@
 	require_module 'pcre';
 .*/
 
+namespace dominicsayers;
+
 if (!defined('ISEMAIL_VALID')) {
 /*:diagnostic constants start:*/
 // This part of the code is generated using data from test/meta.xml. Beware of making manual alterations
