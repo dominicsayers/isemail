@@ -67,8 +67,8 @@ Date       Tests        Version Notes
 	<test id="5">
 		<address>test@io</address>
 		<comment>io. currently has an MX-record (Feb 2011). Some DNS setups seem to find it, some don't. If you don't see the MX for io. then try setting your DNS server to 8.8.8.8 (the Google DNS server)</comment>
-		<category>ISEMAIL_VALID_CATEGORY</category>
-		<diagnosis>ISEMAIL_VALID</diagnosis>
+		<category>ISEMAIL_RFC5321</category>
+		<diagnosis>ISEMAIL_RFC5321_TLD</diagnosis>
 		<source>Michael Rushton</source>
 		<sourcelink>https://squiloople.com/tag/email/</sourcelink>
 	</test>
